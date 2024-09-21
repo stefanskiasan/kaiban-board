@@ -1,0 +1,292 @@
+import { create } from 'zustand';
+import { devtools, subscribeWithSelector } from 'zustand/middleware';
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+import toast from 'react-hot-toast';
+import { encryptKeys, extractTeamName, replaceKeysWithEnvValues } from '../utils/helper';
+import { resumeCreationOpenai } from '../assets/teams/resume_creation';
+
+// INFO: For code evaluation
+import { Agent, Task, Team } from 'kaibanjs';
+import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+import { SearchApi } from '@langchain/community/tools/searchapi';
+import { DallEAPIWrapper } from '@langchain/openai';
+import { SerperTool, WolframAlphaTool } from '../tools';
+
+const createAgentsPlaygroundStore = (initialState = {}) => {
+    return create(
+        devtools(
+            subscribeWithSelector((set, get) => ({
+                //states
+                teamStore: null,
+                code: null,
+                errorState: { hasError: false, error: null },
+                selectedTab: 0,
+
+                isActivityOpen: false,
+                isExecutionDialogOpen: false,
+                isCelebrationDialogOpen: false,
+
+                selectedTask: null,
+                isTaskDetailsDialogOpen: false,
+
+                db: null,
+                isShareDialogOpen: false,
+                isLoadingShare: false,
+
+                uiSettings: {
+                    fullScreen: false,
+                    showExampleMenu: true,
+                    showShareOption: true,
+                    showSettingsOption: true,
+                    maximizeConfig: {
+                        isActive: false,
+                        scrollPosition: 0
+                    }
+                },
+
+                keys: [],
+                isOpenSettingsDialog: false,
+
+                project: {
+                    name: "Untitled Project",
+                    user: { name: "Anonymous" }
+                },
+
+                ...initialState, // Merge initial state
+
+                //actions
+                setTeamStoreAction: (teamStore) => set({ teamStore }),
+
+                setCodeAction: (code) => {
+                    try {
+                        const createTeam = (code) => {
+                            try {
+                                let valueToEvaluate = code;
+
+                                // Define allowed modules
+                                const allowedModules = ['Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper'];
+
+                                // Check if allowed modules are imported
+                                allowedModules.forEach(module => {
+                                    const usageRegex = new RegExp(`\\b${module}\\b`, 'g');
+                                    const importRegex = new RegExp(`import\\s+.*\\b${module}\\b.*from\\s+['"].*['"]\\s*;?`, 'g');
+                                    if (usageRegex.test(valueToEvaluate) && !importRegex.test(valueToEvaluate)) {
+                                        throw new Error(`Missing required import for used module: ${module}`);
+                                    }
+                                });
+
+                                // Remove import statements
+                                valueToEvaluate = valueToEvaluate.replace(/^import\s+.*;?$/gm, '');
+
+                                // Replace the team start function
+                                valueToEvaluate = valueToEvaluate.replace(/.*?\b(\w+)\s*\.\s*start\(\)(?:\s*\.then\(\s*\(.*?\)\s*=>\s*\{[\s\S]*?\}\s*\))?;?/g, "");
+
+                                // Add the team return statements
+                                let teamNames = [];
+                                valueToEvaluate.replace(/(const|let|var)\s+(\w+)\s*=\s*new\s+Team\s*\([^)]*\)\s*;/g, (match, decl, name) => {
+                                    teamNames.push(name);
+                                    return match;
+                                });
+                                valueToEvaluate = valueToEvaluate + "\n" + teamNames.map(name => `return ${name};`).join("\n");
+
+                                // Get keys
+                                const { keys } = get();
+
+                                // Replace keys with their corresponding values
+                                if (keys && keys.length > 0) {
+                                    keys.forEach(({ key, value }) => {
+                                        const keyRegex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                                        valueToEvaluate = valueToEvaluate.replace(keyRegex, value);
+                                    });
+                                }
+
+                                // Create the function and evaluate
+                                const func = new Function('Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper', 'WolframAlphaTool', 'SerperTool', valueToEvaluate);
+                                const team = func(Agent, Task, Team, TavilySearchResults, SearchApi, DallEAPIWrapper, WolframAlphaTool, SerperTool);
+
+                                return team;
+                            } catch (error) {
+                                console.error('Invalid code:', error);
+                                set({ errorState: { hasError: true, error: error.message } });
+                            }
+                        };
+
+                        const team = createTeam(code);
+                        if (team && typeof team.useStore === 'function') {
+                            const store = team.useStore(team);
+                            if (store) {
+                                const { setTeamStoreAction } = get();
+                                setTeamStoreAction(store);
+                                set({ code, selectedTab: 0, errorState: { hasError: false, error: null } });
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Invalid code:', error);
+                        set({ errorState: { hasError: true, error: error.message } });
+                    }
+                },
+
+                setTabAction: (selectedTab) => set({ selectedTab }),
+
+                setActivityOpenAction: (isActivityOpen) => set({ isActivityOpen }),
+                setExecutionDialogOpenAction: (isExecutionDialogOpen) => set({ isExecutionDialogOpen }),
+                setCelebrationDialogOpenAction: (isCelebrationDialogOpen) => set({ isCelebrationDialogOpen }),
+
+                setTaskDetailsDialogOpenAction: (isTaskDetailsDialogOpen) => set({ isTaskDetailsDialogOpen }),
+                setSelectedTaskAction: (selectedTask) => {
+                    set({ selectedTask, isTaskDetailsDialogOpen: true });
+                },
+
+                initDbAction: () => {
+                    const isClient = typeof window !== 'undefined';
+                    const getEnvValue = (key) => isClient ? import.meta.env[`VITE_${key.slice(11)}`] : process.env[key];
+
+                    const firebaseConfig = {
+                        apiKey: getEnvValue('NEXT_PUBLIC_FIREBASE_API_KEY'),
+                        authDomain: getEnvValue('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
+                        projectId: getEnvValue('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+                        storageBucket: getEnvValue('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+                        messagingSenderId: getEnvValue('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+                        appId: getEnvValue('NEXT_PUBLIC_FIREBASE_APP_ID'),
+                        measurementId: getEnvValue('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID')
+                    };
+
+                    const initFirebase = () => {
+                        if (!getApps().length) {
+                            return initializeApp(firebaseConfig);
+                        } else {
+                            return getApp();
+                        }
+                    };
+
+                    const app = initFirebase();
+                    const db = getFirestore(app);
+                    set({ db });
+                },
+                setShareDialogOpenAction: (isShareDialogOpen) => set({ isShareDialogOpen }),
+                shareTeamAction: async (userName) => {
+                    set({ isLoadingShare: true });
+
+                    const { keys, db, code } = get();
+
+                    try {
+                        const encryptedKeys = await encryptKeys(keys);
+                        // console.log('Encrypted keys:', encryptedKeys);
+
+                        const docRef = await addDoc(collection(db, "share"), {
+                            code: code,
+                            keys: encryptedKeys,
+                            user: { name: userName },
+                        });
+                        // console.log("Document written with ID: ", docRef.id);
+
+                        const url = `${window.location.origin}/share/${docRef.id}`;
+                        await navigator.clipboard.writeText(url);
+
+                        set({ isLoadingShare: false, isShareDialogOpen: false });
+                        toast.success('Your team has been shared! URL copied to clipboard.');
+                    } catch (error) {
+                        set({ isLoadingShare: false, isShareDialogOpen: false });
+                        toast.error('Failed to process encryption or document creation.');
+                        console.error('Failed to process encryption or document creation:', error);
+                    }
+                },
+
+                setUiSettingsAction: (newSettings) => set(state => ({
+                    uiSettings: { ...state.uiSettings, ...newSettings }
+                })),
+                toggleMaximizeAction: () => {
+                    set((state) => {
+                        const isMaximized = !state.uiSettings.maximizeConfig.isActive;
+                        const scrollPosition = isMaximized ? window.scrollY : state.uiSettings.maximizeConfig.scrollPosition;
+
+                        return {
+                            uiSettings: {
+                                ...state.uiSettings,
+                                isMaximized,
+                                maximizeConfig: {
+                                    isActive: isMaximized,
+                                    scrollPosition
+                                }
+                            }
+                        };
+                    });
+
+                    const { uiSettings } = get();
+
+                    if (uiSettings.maximizeConfig.isActive) {
+                        document.body.classList.add('overflow-hidden');
+                        document.querySelector('header').classList.add('hidden');
+                        window.scrollTo(0, 0);
+                    } else {
+                        document.body.classList.remove('overflow-hidden');
+                        document.querySelector('header').classList.remove('hidden');
+                        window.scrollTo(0, uiSettings.maximizeConfig.scrollPosition);
+                    }
+                },
+
+                setKeysAction: (keys) => set({ keys }),
+                setSettingsDialogOpenAction: (isOpenSettingsDialog) => set({ isOpenSettingsDialog }),
+
+                setProjectAction: (project) => set({ project }),
+                checkAndSetProject: () => {
+                    const { project, code, setProjectAction } = get();
+
+                    if (project.name === 'Untitled Project') {
+                        const name = extractTeamName(code);
+                        if (name) {
+                            setProjectAction({ ...project, name });
+                        }
+                    }
+                    if (project.user.name === 'Anonymous') {
+                        setProjectAction({ ...project, user: { name: 'AI Champions Team' } });
+                    }
+                },
+
+                setExampleCodeAction: (exampleCode) => {
+                    const { setCodeAction } = get();
+
+                    const team = exampleCode();
+                    const code = team.code;
+                    const keys = replaceKeysWithEnvValues(team.keys || []);
+                    const user = team.user;
+                    const name = extractTeamName(code);
+
+                    const project = {
+                        name: name || "Untitled Project",
+                        user: { name: user || "Anonymous" }
+                    }
+                    set({ keys, project });
+
+                    setCodeAction(code);
+                },
+
+                initAction: () => {
+                    const { code, setCodeAction, initDbAction, checkAndSetProject } = get();
+
+                    let initialCode = code;
+
+                    if (!code) {
+                        const team = resumeCreationOpenai();
+                        const keys = replaceKeysWithEnvValues(team.keys || []);
+                        const user = team.user;
+                        const project = {
+                            name: "Untitled Project",
+                            user: { name: user || "Anonymous" }
+                        }
+                        initialCode = team.code;
+                        set({ keys, project });
+                    }
+
+                    setCodeAction(initialCode);
+                    initDbAction();
+                    checkAndSetProject();
+                }
+            }))
+        )
+    );
+};
+
+export { createAgentsPlaygroundStore };
+

@@ -1,0 +1,10 @@
+"@headlessui/react",
+"@heroicons/react",
+"@monaco-editor/react",
+"@uiw/react-md-editor",
+"js-confetti",
+"react-hot-toast",
+"zustand",
+"firebase",
+"crypto-js",
+"zod"

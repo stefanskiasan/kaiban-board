@@ -1,0 +1,24 @@
+/* Global styles for the Agents Playground */
+
+/* Scrollbar Styling */
+/* width */
+#kaibanjs ::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#kaibanjs ::-webkit-scrollbar-track {
+    background: #0f172a;
+    border-radius: 5px;
+}
+
+/* Handle */
+#kaibanjs ::-webkit-scrollbar-thumb {
+    background: #020617;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+#kaibanjs ::-webkit-scrollbar-thumb:hover {
+    background: #1e293b;
+}

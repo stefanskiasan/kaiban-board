@@ -1,0 +1,1 @@
+export { sportsNewsOpenai } from './openai';
