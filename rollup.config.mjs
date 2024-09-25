@@ -46,5 +46,5 @@ export default {
     image(), // Handle image imports
     json(), // Handle JSON imports
   ],
-  external: ['react', 'react-dom'], // Mark these as external to prevent bundling
+  external: ['react', 'react-dom', 'kaibanjs'], // Mark these as external to prevent bundling
 };
