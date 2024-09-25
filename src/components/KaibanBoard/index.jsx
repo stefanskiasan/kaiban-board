@@ -3,6 +3,7 @@ import AgentsEditor from './components/AgentsEditor';
 import PlaygroundLayout from './views/layout/PlaygroundLayout';
 import ExamplesMenu from './components/ExamplesMenu';
 import { PlaygroundProvider, usePlaygroundStore } from './store/PlaygroundProvider';
+import './styles/index.css';
 
 const filterUndefinedProps = (obj) => {
     const filteredProps = {};

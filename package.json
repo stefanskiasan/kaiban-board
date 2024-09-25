@@ -1,10 +1,13 @@
 {
-  "name": "kaibanjs-ui",
-  "private": true,
+  "name": "kaiban-board",
   "version": "0.1.0",
   "type": "module",
-  "main": "dist/components/KaibanBoard/index.js",
-  "module": "dist/components/KaibanBoard/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,6 +16,10 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.1",
@@ -27,8 +34,6 @@
     "mathjs": "^13.0.3",
     "next": "^14.2.13",
     "octokit": "^4.0.2",
-    "react": "^18",
-    "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"
@@ -39,9 +44,11 @@
     "@babel/preset-react": "^7.24.7",
     "@chromatic-com/storybook": "^1.6.1",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "@storybook/addon-essentials": "^8.2.6",
     "@storybook/addon-interactions": "^8.2.6",
     "@storybook/addon-links": "^8.2.6",
@@ -61,11 +68,11 @@
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8.4.47",
     "prop-types": "^15.8.1",
-    "rollup-plugin-import-css": "^3.5.1",
+    "rollup": "^4.22.4",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-terser": "^7.0.2",
     "storybook": "^8.2.6",
-    "tailwindcss": "^3.4.12",
+    "tailwindcss": "^3.4.13",
     "vite": "^5.2.0"
   }
 }
