@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Squares2X2Icon, ListBulletIcon } from '@heroicons/react/24/outline';
 import { Button } from '@headlessui/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+
 import TaskCard from '../../components/Common/TaskCard';
 import AgentAvatar from '../../components/Common/AgentAvatar';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
@@ -99,7 +104,8 @@ const BoardView = () => {
                     </div>
                 </div>
             </div>
-            <div className="relative grid grid-cols-4 justify-stretch gap-3 divide-x divide-slate-700 px-6 h-full">
+            {/* --- DESKTOP --- */}
+            <div className="relative hidden md:grid grid-cols-4 justify-stretch gap-3 divide-x divide-slate-700 px-6 h-full">
                 {/* --- TODO --- */}
                 <div className="flex flex-col gap-3 pb-3">
                     <div className="flex gap-2 items-center pt-4">
@@ -145,6 +151,66 @@ const BoardView = () => {
                 </div>
                 {/* --- DONE --- */}
             </div>
+            {/* --- DESKTOP --- */}
+            {/* --- MOBILE --- */}
+            {/* --- MOBILE --- */}
+            <div className="block md:hidden relative px-6 h-full">
+                <Swiper spaceBetween={12} pagination={{ clickable: true }} modules={[Pagination]}>
+                    {/* --- TODO --- */}
+                    <SwiperSlide>
+                        <div className="flex flex-col gap-3 pb-3">
+                            <div className="flex gap-2 items-center pt-4">
+                                <span className="text-sm font-medium text-slate-400">To Do</span>
+                                <span className="text-sm font-semibold text-slate-700">{tasksToDo.length}</span>
+                            </div>
+                            {tasksToDo.map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))}
+                        </div>
+                    </SwiperSlide>
+                    {/* --- TODO --- */}
+                    {/* --- DOING --- */}
+                    <SwiperSlide>
+                        <div className="flex flex-col gap-3 pl-3 pb-3">
+                            <div className="flex gap-2 items-center pt-4">
+                                <span className="text-sm font-medium text-slate-400">Doing</span>
+                                <span className="text-sm font-semibold text-slate-700">{tasksDoing.length}</span>
+                            </div>
+                            {tasksDoing.map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))}
+                        </div>
+                    </SwiperSlide>
+                    {/* --- DOING --- */}
+                    {/* --- BLOCKED --- */}
+                    <SwiperSlide>
+                        <div className="flex flex-col gap-3 pl-3 pb-3">
+                            <div className="flex gap-2 items-center pt-4">
+                                <span className="text-sm font-medium text-slate-400">Blocked</span>
+                                <span className="text-sm font-semibold text-slate-700">{tasksBlocked.length}</span>
+                            </div>
+                            {tasksBlocked.map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))}
+                        </div>
+                    </SwiperSlide>
+                    {/* --- BLOCKED --- */}
+                    {/* --- DONE --- */}
+                    <SwiperSlide>
+                        <div className="flex flex-col gap-3 pl-3 pb-3">
+                            <div className="flex gap-2 items-center pt-4">
+                                <span className="text-sm font-medium text-slate-400">Done</span>
+                                <span className="text-sm font-semibold text-slate-700">{tasksDone.length}</span>
+                            </div>
+                            {tasksDone.map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))}
+                        </div>
+                    </SwiperSlide>
+                    {/* --- DONE --- */}
+                </Swiper>
+            </div>
+            {/* --- MOBILE --- */}
         </>
     );
 };

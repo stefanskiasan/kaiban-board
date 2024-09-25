@@ -29,7 +29,7 @@ const TeamsMenu = () => {
         <Popover>
             <PopoverButton disabled={teamWorkflowStatus === 'RUNNING'}
                 className={`relative group w-min flex items-center p-2 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white ${!teams.length ? 'hidden' : ''}`}>
-                <div className="hidden md:block border-r border-slate-700 h-[32px] mr-5"></div>
+                <div className="border-r border-slate-700 h-[32px] mr-5"></div>
                 Teams
                 <ChevronDownIcon className="w-4 h-4 ml-1" />
             </PopoverButton>

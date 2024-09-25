@@ -94,7 +94,7 @@ const Header = ({ examplesMenu, teamsMenu }) => {
 
     return (
         <div className="flex h-[55px] items-center gap-4 border-b border-slate-700">
-            <div className="flex gap-4 w-max pl-3">
+            <div className="flex md:gap-4 w-max pl-3">
                 <ProjectName />
                 {uiSettings.showExampleMenu && (
                     <>{examplesMenu}</>
