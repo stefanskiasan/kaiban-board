@@ -10,11 +10,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -43,7 +38,7 @@ jobs:
       run: npm install --also=dev
 
     - name: Build production version
-      run: npm run build        
+      run: npm run build-prod        
 
     - name: Display changes
       run: |
