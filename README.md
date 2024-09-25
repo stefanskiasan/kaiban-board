@@ -1,9 +1,8 @@
 # KaibanJS: The JavaScript Framework for AI
-Workflows
 
-AI workflows are the future of software development, but building robust, multi-agent systems in JavaScript can be challenging. That’s why we created **KaibanJS**, an open-source framework designed to make integrating AI agents into JavaScript applications straightforward, flexible, and powerful.
+AI workflows are the future of software development, but building robust, multi-agent systems in JavaScript can be challenging. That’s why we created [KaibanJS](https://github.com/kaiban-ai/KaibanJS), an open-source framework designed to make integrating AI agents into JavaScript applications straightforward, flexible, and powerful.
 
-With **KaibanJS**, you have the freedom to build AI-powered systems without being tied down by specific platforms or ecosystems. It's built from the ground up for JavaScript developers, with the MIT License, allowing you to freely use, modify, and deploy it wherever you need.
+With [KaibanJS](https://github.com/kaiban-ai/KaibanJS), you have the freedom to build AI-powered systems without being tied down by specific platforms or ecosystems. It's built from the ground up for JavaScript developers, with the MIT License, allowing you to freely use, modify, and deploy it wherever you need.
 
 ---
 
@@ -88,6 +87,6 @@ If you have suggestions or run into issues, please let us know! We're committed 
 
 **Kaiban Board** is licensed under a **custom license**. You can use it for free, even in commercial projects. However, if you want to modify the existing UI in any way, you will need to obtain a separate license.
 
-For inquiries about licensing modifications or extended features, please [contact us](mailto:hello@kaibanjs.com). 
+For inquiries about licensing modifications or extended features, please [contact us](mailto:hello@kaiban.ai). 
 
 > *We're always open to helping innovative people with great ideas, even if they have limited budgets 😉.*
