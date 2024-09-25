@@ -1,3 +1,4 @@
+import React from 'react';
 import {Anthropic, Google, Mistral, OpenAI} from "../../../assets/models";
 
 const ModelLogo = ({ model, size }) => {

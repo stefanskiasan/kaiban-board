@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Popover, PopoverButton, PopoverPanel, CloseButton } from '@headlessui/react';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
 import AgentCard from '../../components/Common/AgentCard';

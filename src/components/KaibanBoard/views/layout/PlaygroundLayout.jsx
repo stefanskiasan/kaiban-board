@@ -1,3 +1,4 @@
+import React from 'react';
 import { TabGroup, TabPanel, TabPanels } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
 import '../../assets/styles/index.css';

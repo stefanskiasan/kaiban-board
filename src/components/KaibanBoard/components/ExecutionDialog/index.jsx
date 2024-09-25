@@ -1,3 +1,4 @@
+import React from 'react';
 const ExecutionDialog = () => {
     return (
         <div className="absolute w-full h-full inset-0 bg-slate-950/50">

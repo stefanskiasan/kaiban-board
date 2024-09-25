@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Input } from '@headlessui/react';
 import { useEffect, useRef, useState } from 'react';
 import { PlusIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';

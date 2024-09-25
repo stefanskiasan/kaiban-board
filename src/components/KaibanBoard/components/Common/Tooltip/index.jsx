@@ -1,3 +1,4 @@
+import React from 'react';
 const Tooltip = ({ text, styles="left-4" }) => {
     return (
         <div className={`absolute ${styles} z-20 w-max flex items-center hidden ml-6 group-hover:flex`}>

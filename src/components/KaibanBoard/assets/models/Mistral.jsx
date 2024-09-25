@@ -1,3 +1,4 @@
+import React from 'react';
 const Mistral = ({ size = 16 }) => {
   return (
     <svg

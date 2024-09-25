@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@headlessui/react';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 

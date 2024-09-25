@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import CustomTheme from './themes/nightowl.json';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';

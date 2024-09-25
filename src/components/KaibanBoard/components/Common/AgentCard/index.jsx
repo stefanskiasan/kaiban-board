@@ -1,6 +1,6 @@
+import React from 'react';
 import AgentAvatar from "../AgentAvatar";
 import ModelLogo from "../ModelLogo";
-
 const AgentCard = ({ agent }) => {
 
     return (

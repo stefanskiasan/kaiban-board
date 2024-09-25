@@ -1,3 +1,4 @@
+import React from 'react';
 const AgentAvatar = ({ agent, size }) => {
     const avatarUrl = `https://robohash.org/${agent?.name}`;
 

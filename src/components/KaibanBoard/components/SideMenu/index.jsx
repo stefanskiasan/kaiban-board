@@ -1,3 +1,4 @@
+import React from 'react';
 import { Squares2X2Icon, SparklesIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
 import { Tab, TabList } from '@headlessui/react';
 import Tooltip from "../Common/Tooltip";

@@ -1,3 +1,4 @@
+import React from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { Button } from '@headlessui/react';
 import { SparklesIcon } from '@heroicons/react/24/solid';
