@@ -11,7 +11,7 @@ With **KaibanJS**, you have the freedom to build AI-powered systems without bein
 
 While KaibanJS provides the framework to build your AI workflows, visualizing those workflows can be time-consuming and complex. To address this, we developed **Kaiban Board**—an experimental UI designed to help you **visualize, manage, and share** your AI agent teams in a Kanban-style interface.
 
-### Why the Kaiban Board UI is not Open Sourced
+### Kaiban Board UI License
 
 We could have easily built a SaaS platform with free and paid tiers, as many others do. But instead, we understand that developers want full control over their AI projects, including how they handle data and where they choose to host their solutions. 
 
