@@ -13,12 +13,18 @@ export default {
 export const basic = {
     args: {
         uiSettings:{
-            fullScreen: true,
-            showExampleMenu: true,
-            showShareOption: true,
-            showSettingsOption: true
+            showExampleMenu: false,
+            showShareOption: false,
+            showSettingsOption: false,
+            isPreviewMode: true,
         }, 
         teams: [teamOpenAI, teamProductSpecs],       
-        title: "Basic",
+        title: "Basic",// Title in Storybook
+    },
+};
+
+export const standard = {
+    args: {    
+        title: "Default",// Title in Storybook
     },
 };

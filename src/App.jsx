@@ -3,7 +3,7 @@ import KaibanBoard from './components/KaibanBoard';
 import team from "./teams/product_specs/openai";
 
 const uiSettings = {
-    fullScreen: true,
+    showFullScreen: true,
     showExampleMenu: true,
     showShareOption: true,
     showSettingsOption: true

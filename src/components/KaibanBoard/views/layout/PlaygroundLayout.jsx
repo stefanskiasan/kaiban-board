@@ -16,7 +16,7 @@ import ShareDialog from '../../components/ShareDialog';
 import SettingsDialog from '../../components/SettingsDialog';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
-const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
+const PlaygroundLayout = ({ editorComponent, examplesMenu, teamsMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
     const {
         uiSettings,
@@ -40,16 +40,16 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
 
 
     return (
-        <div className={`bg-slate-900 overflow-hidden ${uiSettings.fullScreen || uiSettings.maximizeConfig?.isActive ? "fixed top-0 left-0 w-screen h-screen z-50" : "relative container rounded-xl ring-1 ring-slate-700"}`} id="kaibanjs">
+        <div className={`bg-slate-900 overflow-hidden ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "fixed top-0 left-0 w-screen h-screen z-50" : "relative container rounded-xl ring-1 ring-slate-700"}`} id="kaibanjs">
             <div className="hidden sm:block">
                 <canvas id="confetti_canvas" className="absolute w-full h-full inset-0" style={{
                     zIndex: isCelebrationDialogOpen ? 20 : -1
                 }}></canvas>
                 <TabGroup selectedIndex={selectedTab} className="flex flex-col">
-                    <Header examplesMenu={examplesMenu} />
+                    <Header examplesMenu={examplesMenu} teamsMenu={teamsMenu} />
                     <div className="relative isolate flex divide-x divide-slate-700">
                         <SideMenu />
-                        <TabPanels className={`${uiSettings.fullScreen || uiSettings.maximizeConfig?.isActive ? "w-[calc(100vw-55px)] h-[calc(100vh-55px)]" : "w-[550px] sm:w-[590px] md:w-[723px] lg:w-[979px] xl:w-[1235px] 2xl:w-[1493px] h-[255px] sm:h-[355px] md:h-[455px] lg:h-[555px] xl:h-[655px] 2xl:h-[755px]"}`}>
+                        <TabPanels className={`${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "w-[calc(100vw-55px)] h-[calc(100vh-55px)]" : "w-[550px] sm:w-[590px] md:w-[723px] lg:w-[979px] xl:w-[1235px] 2xl:w-[1493px] h-[255px] sm:h-[355px] md:h-[455px] lg:h-[555px] xl:h-[655px] 2xl:h-[755px]"}`}>
                             <TabPanel className="h-full">
                                 <EditPreviewView editorComponent={editorComponent} />
                             </TabPanel>

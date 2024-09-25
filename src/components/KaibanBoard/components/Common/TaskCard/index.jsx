@@ -30,7 +30,7 @@ const TaskCard = ({ task, isFullWidth = true, showOptions = true }) => {
     }, [workflowLogs]);
 
     return (
-        <div className={`flex flex-col gap-3 p-4 ring-1 ring-slate-950 rounded-lg bg-slate-800 ${isFullWidth ? "w-full" : "w-[350px]"} ${showOptions ? "hover:ring-indigo-500 cursor-pointer" : ""}`}
+        <div className={`flex flex-col gap-3 p-4 ring-1 ring-slate-950 rounded-lg bg-slate-800 ${isFullWidth ? "w-full" : "w-full md:w-[350px]"} ${showOptions ? "hover:ring-indigo-500 cursor-pointer" : ""}`}
             onClick={() => { if (showOptions) setSelectedTaskAction(task); }}>
             <p className="text-sm text-white line-clamp-2">
                 {task.description}

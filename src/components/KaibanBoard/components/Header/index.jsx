@@ -10,7 +10,7 @@ import Tooltip from '../Common/Tooltip';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { getLastBlockedWorkflowDescription, isAwaitingValidation } from '../../utils/helper';
 
-const Header = ({ examplesMenu }) => {
+const Header = ({ examplesMenu, teamsMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
     const {
         teamStore,
@@ -67,7 +67,7 @@ const Header = ({ examplesMenu }) => {
             case 'BLOCKED':
                 const isAwaiting = isAwaitingValidation(workflowLogs);
                 if (isAwaiting) {
-                    toast('The workflow is awaiting validation. Please validate the task to continue.', { icon: '⚠️' });
+                    toast('The workflow is awaiting validation. Please validate the task to continue.', { icon: '🚦' });
                 } else {
                     const message = getLastBlockedWorkflowDescription(workflowLogs);
                     toast.error(`${message} Please try running it again.`, {
@@ -99,12 +99,15 @@ const Header = ({ examplesMenu }) => {
                 {uiSettings.showExampleMenu && (
                     <>{examplesMenu}</>
                 )}
+                {uiSettings.isPreviewMode && (
+                    <>{teamsMenu}</>
+                )}
             </div>
             <div className="flex items-center gap-2 w-max h-max ml-auto pr-3.5">
                 <>
                     {teamWorkflowStatus !== 'RUNNING' && (
                         <>
-                            {!uiSettings.fullScreen && (
+                            {!uiSettings.showFullScreen && (
                                 <div className="relative group flex items-center">
                                     <button className="w-min inline-flex items-center p-2 text-slate-400 focus:outline-none hover:text-indigo-500"
                                         onClick={() => { toggleMaximizeAction() }}

@@ -71,7 +71,7 @@ const Activity = () => {
                             <XMarkIcon className="w-5 h-5" onClick={() => { setActivityOpenAction(false) }} />
                         </Button>
                     </div>
-                    <div className={`flex flex-col gap-4 p-4 min-w-full overflow-auto ${uiSettings.fullScreen || uiSettings.maximizeConfig?.isActive ? "h-[calc(100vh-98px)]" : "h-[202px] sm:h-[302px] md:h-[402px] lg:h-[502px] xl:h-[602px] 2xl:h-[702px]"}`}>
+                    <div className={`flex flex-col gap-4 p-4 min-w-full overflow-auto ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "h-[calc(100vh-98px)]" : "h-[202px] sm:h-[302px] md:h-[402px] lg:h-[502px] xl:h-[602px] 2xl:h-[702px]"}`}>
                         {logsList.map((log, idx) => (
                             <div key={idx} className="grid grid-cols-[28px_1fr] gap-2">
                                 {(log.status === "REVISE" || log.status === "VALIDATED") ? (
