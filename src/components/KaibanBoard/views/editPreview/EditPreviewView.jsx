@@ -10,10 +10,12 @@ const EditPreviewView = ({ editorComponent }) => {
     const {
         teamStore,
         errorState,
+        uiSettings,
     } = useAgentsPlaygroundStore(
         (state) => ({
             teamStore: state.teamStore,
-            errorState: state.errorState
+            errorState: state.errorState,
+            uiSettings: state.uiSettings
         })
     );
 
@@ -28,14 +30,14 @@ const EditPreviewView = ({ editorComponent }) => {
     return (
         <div className="grid grid-cols-5 divide-x divide-slate-700 h-full">
             {/* --- EDITOR --- */}
-            {editorComponent && (
+            {!uiSettings.isPreviewMode && editorComponent && (
                 <div className="col-span-3 h-full">
                     {editorComponent}
                 </div>
             )}
             {/* --- EDITOR --- */}
             {/* --- PREVIEW --- */}
-            <div className={`${editorComponent ? "col-span-2" : "col-span-5"} pb-6 h-full overflow-auto`}>
+            <div className={`${!uiSettings.isPreviewMode && editorComponent ? "col-span-2" : "col-span-5"} pb-6 h-full overflow-auto`}>
                 <div className="flex flex-row">
                     <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
                         <Square3Stack3DIcon className="w-4 h-4 text-white" />
@@ -70,7 +72,7 @@ const EditPreviewView = ({ editorComponent }) => {
                                 <span className="text-slate-400 text-lg font-medium">Tasks</span>
                                 <div className="flex flex-wrap gap-3 mt-2">
                                     {tasks.map((task) => (
-                                        <TaskCard key={task.id} task={task} isFullWidth={editorComponent ? true : false} showOptions={false} />
+                                        <TaskCard key={task.id} task={task} isFullWidth={!uiSettings.isPreviewMode && editorComponent ? true : false} showOptions={false} />
                                     ))}
                                     {tasks.length === 0 && (
                                         <div className="flex flex-col items-center gap-1 p-4 min-w-full">

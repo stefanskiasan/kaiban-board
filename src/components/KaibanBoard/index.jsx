@@ -2,8 +2,21 @@ import React, { useEffect } from 'react';
 import AgentsEditor from './components/AgentsEditor';
 import PlaygroundLayout from './views/layout/PlaygroundLayout';
 import ExamplesMenu from './components/ExamplesMenu';
+import TeamsMenu from './components/TeamsMenu';
 import { PlaygroundProvider, usePlaygroundStore } from './store/PlaygroundProvider';
 import './styles/index.css';
+
+const defaultUiSettings = {
+    showFullScreen: true,
+    showExampleMenu: true,
+    showShareOption: true,
+    showSettingsOption: true,
+    maximizeConfig: {
+        isActive: false,
+        scrollPosition: 0
+    },
+    isPreviewMode: false
+};
 
 const filterUndefinedProps = (obj) => {
     const filteredProps = {};
@@ -13,6 +26,10 @@ const filterUndefinedProps = (obj) => {
         }
     });
     return filteredProps;
+};
+
+const mergeUiSettings = (uiSettings) => {
+    return { ...defaultUiSettings, ...uiSettings };
 };
 
 const KaibanBoardWrapper = () => {
@@ -36,13 +53,15 @@ const KaibanBoardWrapper = () => {
             {teamStore && <PlaygroundLayout
                 editorComponent={<AgentsEditor />}
                 examplesMenu={<ExamplesMenu />}
+                teamsMenu={<TeamsMenu />}
             />}
         </>
     );
 };
 
-const KaibanBoard = ({ uiSettings, code, keys, project }) => {
-    const initialState = filterUndefinedProps({ uiSettings, code, keys, project });
+const KaibanBoard = ({ uiSettings, code, keys, project, teams }) => {
+    const mergedUiSettings = mergeUiSettings(uiSettings);
+    const initialState = filterUndefinedProps({ uiSettings: mergedUiSettings, code, keys, project, teams });
 
     return (
         <PlaygroundProvider initialState={initialState}>

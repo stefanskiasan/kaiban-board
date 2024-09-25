@@ -35,14 +35,15 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 isLoadingShare: false,
 
                 uiSettings: {
-                    fullScreen: false,
+                    showFullScreen: true,
                     showExampleMenu: true,
                     showShareOption: true,
                     showSettingsOption: true,
                     maximizeConfig: {
                         isActive: false,
                         scrollPosition: 0
-                    }
+                    },
+                    isPreviewMode: false,
                 },
 
                 keys: [],
@@ -52,6 +53,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     name: "Untitled Project",
                     user: { name: "Anonymous" }
                 },
+
+                teams: [],
 
                 ...initialState, // Merge initial state
 
@@ -262,26 +265,45 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     setCodeAction(code);
                 },
 
-                initAction: () => {
-                    const { code, setCodeAction, initDbAction, checkAndSetProject } = get();
+                setTeamAction: (team) => {
+                    const { setTeamStoreAction } = get();
+                    setTeamStoreAction(team.store);
 
-                    let initialCode = code;
-
-                    if (!code) {
-                        const team = resumeCreationOpenai();
-                        const keys = replaceKeysWithEnvValues(team.keys || []);
-                        const user = team.user;
-                        const project = {
-                            name: "Untitled Project",
-                            user: { name: user || "Anonymous" }
-                        }
-                        initialCode = team.code;
-                        set({ keys, project });
+                    const project = {
+                        name: team.store.getState().name || "Untitled Project",
+                        user: { name: "Anonymous" }
                     }
+                    set({ project, selectedTab: 0 });
 
-                    setCodeAction(initialCode);
-                    initDbAction();
-                    checkAndSetProject();
+                },
+
+                initAction: () => {
+                    const { code, setCodeAction, initDbAction, checkAndSetProject, teams, setTeamAction } = get();
+
+                    if (teams.length === 0) {
+                        let initialCode = code;
+
+                        if (!code) {
+                            const team = resumeCreationOpenai();
+                            const keys = replaceKeysWithEnvValues(team.keys || []);
+                            const user = team.user;
+                            const project = {
+                                name: "Untitled Project",
+                                user: { name: user || "Anonymous" }
+                            }
+                            initialCode = team.code;
+                            set({ keys, project });
+                        }
+
+                        setCodeAction(initialCode);
+                        initDbAction();
+                        checkAndSetProject();
+
+                    } else {
+                        const team = teams[0];
+                        setTeamAction(team);
+
+                    }
                 }
             }))
         )

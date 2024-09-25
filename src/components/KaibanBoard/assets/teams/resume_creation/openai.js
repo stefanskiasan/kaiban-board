@@ -29,8 +29,7 @@ const processingTask = new Task({
     experience, skills, and job history from the user's 'aboutMe' input. 
     aboutMe: {aboutMe}\`,
     expectedOutput: \'Structured data ready to be used for a resume creation.\', 
-    agent: profileAnalyst,
-    externalValidationRequired: true
+    agent: profileAnalyst
 });
 
 const resumeCreationTask = new Task({ 

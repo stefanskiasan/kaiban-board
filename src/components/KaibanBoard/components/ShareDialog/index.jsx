@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Input } from '@headlessui/react';
-import { use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Spinner from '../Common/Spinner';
 import AgentAvatar from '../Common/AgentAvatar';

@@ -7,4 +7,5 @@
 "zustand",
 "firebase",
 "crypto-js",
-"zod"
+"zod",
+"swiper"
