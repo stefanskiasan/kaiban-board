@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@headlessui/react';
@@ -12,14 +12,14 @@ import TaskCard from '../../components/Common/TaskCard';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import TeamsMenu from '../../components/TeamsMenu';
 
-const Dashboard = () => {
+const Dashboard = ({ onChange = () => {} }) => {
     return (
         <div className="relative flex flex-col mt-6 px-6">
             <div className="flex">
                 <span className="text-2xl font-semibold text-slate-200">Welcome to your Kaiban Board</span>
             </div>
             {/* --- TEAMS --- */}
-            <TeamsMenu />
+            <TeamsMenu onChange={onChange} />
             {/* --- TEAMS --- */}
             {/* --- INFO --- */}
             <ul className="mt-6 ring-1 ring-slate-800 rounded-lg p-4">
@@ -181,6 +181,14 @@ const EditPreviewView = ({ editorComponent }) => {
         })
     );
 
+    const swiperRef = useRef(null);
+
+    const goToPreviewSlide = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slideTo(1);
+        }
+    };
+
     return (
         <>
             {/* --- DESKTOP --- */}
@@ -208,7 +216,13 @@ const EditPreviewView = ({ editorComponent }) => {
             {/* --- DESKTOP --- */}
             {/* --- MOBILE --- */}
             <div className="block md:hidden relative h-full">
-                <Swiper spaceBetween={12} pagination={{ clickable: true }} modules={[Pagination]}>
+                <Swiper
+                    onSwiper={(swiper) => {
+                        swiperRef.current = swiper;
+                    }}
+                    spaceBetween={12}
+                    pagination={{ clickable: true }}
+                    modules={[Pagination]}>
                     <SwiperSlide>
                         {/* --- EDITOR --- */}
                         {!uiSettings.isPreviewMode && editorComponent && (
@@ -220,7 +234,7 @@ const EditPreviewView = ({ editorComponent }) => {
                         {/* --- DASHBOARD --- */}
                         {uiSettings.isPreviewMode && (
                             <div className="pb-6 h-full overflow-auto">
-                                <Dashboard />
+                                <Dashboard onChange={goToPreviewSlide} />
                             </div>
                         )}
                         {/* --- DASHBOARD --- */}
