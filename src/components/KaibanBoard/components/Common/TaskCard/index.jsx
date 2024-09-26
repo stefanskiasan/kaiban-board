@@ -7,7 +7,7 @@ import { usePlaygroundStore } from "../../../store/PlaygroundProvider";
 import { useEffect, useState } from "react";
 import { isAwaitingValidation } from "../../../utils/helper";
 
-const TaskCard = ({ task, isFullWidth = true, showOptions = true }) => {
+const TaskCard = ({ task, showOptions = true }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
     const [isAwaiting, setIsAwaiting] = useState(false);
 
@@ -31,7 +31,7 @@ const TaskCard = ({ task, isFullWidth = true, showOptions = true }) => {
     }, [workflowLogs]);
 
     return (
-        <div className={`flex flex-col gap-3 p-4 ring-1 ring-slate-950 rounded-lg bg-slate-800 ${isFullWidth ? "w-full" : "w-full md:w-[350px]"} ${showOptions ? "hover:ring-indigo-500 cursor-pointer" : ""}`}
+        <div className={`flex flex-col gap-3 p-4 ring-1 ring-slate-950 rounded-lg bg-slate-800 w-full ${showOptions ? "hover:ring-indigo-500 cursor-pointer" : ""}`}
             onClick={() => { if (showOptions) setSelectedTaskAction(task); }}>
             <p className="text-sm text-white line-clamp-2">
                 {task.description}

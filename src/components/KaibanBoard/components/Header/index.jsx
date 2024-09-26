@@ -11,7 +11,7 @@ import Tooltip from '../Common/Tooltip';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { getLastBlockedWorkflowDescription, isAwaitingValidation } from '../../utils/helper';
 
-const Header = ({ examplesMenu, teamsMenu }) => {
+const Header = ({ examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
     const {
         teamStore,
@@ -99,9 +99,6 @@ const Header = ({ examplesMenu, teamsMenu }) => {
                 <ProjectName />
                 {uiSettings.showExampleMenu && (
                     <>{examplesMenu}</>
-                )}
-                {uiSettings.isPreviewMode && (
-                    <>{teamsMenu}</>
                 )}
             </div>
             <div className="flex items-center gap-2 w-max h-max ml-auto pr-3.5">

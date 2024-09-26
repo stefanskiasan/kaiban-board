@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Squares2X2Icon, ListBulletIcon } from '@heroicons/react/24/outline';
+import { ListBulletIcon, ViewColumnsIcon } from '@heroicons/react/24/outline';
 import { Button } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -80,7 +80,7 @@ const BoardView = () => {
         <>
             <div className="flex flex-row">
                 <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
-                    <Squares2X2Icon className="w-4 h-4 text-white" />
+                    <ViewColumnsIcon className="w-4 h-4 text-white" />
                     <span className="text-sm font-medium text-white">{name}</span>
                     <span className="text-sm font-medium text-white">{'  Board'}</span>
                 </div>

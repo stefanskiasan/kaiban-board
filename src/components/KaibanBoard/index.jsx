@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import AgentsEditor from './components/AgentsEditor';
 import PlaygroundLayout from './views/layout/PlaygroundLayout';
 import ExamplesMenu from './components/ExamplesMenu';
-import TeamsMenu from './components/TeamsMenu';
 import { PlaygroundProvider, usePlaygroundStore } from './store/PlaygroundProvider';
 import './styles/index.css';
 
@@ -53,7 +52,6 @@ const KaibanBoardWrapper = () => {
             {teamStore && <PlaygroundLayout
                 editorComponent={<AgentsEditor />}
                 examplesMenu={<ExamplesMenu />}
-                teamsMenu={<TeamsMenu />}
             />}
         </>
     );

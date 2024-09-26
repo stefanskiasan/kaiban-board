@@ -17,7 +17,7 @@ import ShareDialog from '../../components/ShareDialog';
 import SettingsDialog from '../../components/SettingsDialog';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
-const PlaygroundLayout = ({ editorComponent, examplesMenu, teamsMenu }) => {
+const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
     const {
         uiSettings,
@@ -46,7 +46,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu, teamsMenu }) => {
                 zIndex: isCelebrationDialogOpen ? 20 : -1
             }}></canvas>
             <TabGroup selectedIndex={selectedTab} className="flex flex-col">
-                <Header examplesMenu={examplesMenu} teamsMenu={teamsMenu} />
+                <Header examplesMenu={examplesMenu} />
                 <div className="relative isolate flex divide-x divide-slate-700">
                     <SideMenu />
                     <TabPanels className={`${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "w-[calc(100vw-55px)] h-[calc(100vh-55px)]" : "w-[550px] sm:w-[590px] md:w-[723px] lg:w-[979px] xl:w-[1235px] 2xl:w-[1493px] h-[255px] sm:h-[355px] md:h-[455px] lg:h-[555px] xl:h-[655px] 2xl:h-[755px]"}`}>
