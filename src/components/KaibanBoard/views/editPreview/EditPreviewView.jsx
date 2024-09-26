@@ -1,6 +1,7 @@
 import React from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
+import { Textarea } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -73,10 +74,14 @@ const Preview = () => {
 
     const {
         agents,
-        tasks
+        tasks,
+        inputs,
+        setInputs
     } = teamStore(state => ({
         agents: state.agents,
-        tasks: state.tasks
+        tasks: state.tasks,
+        inputs: state.inputs,
+        setInputs: state.setInputs
     }));
 
     return (
@@ -91,8 +96,29 @@ const Preview = () => {
             <div className="mt-4 px-6 divide-y divide-slate-950">
                 {!errorState.hasError ? (
                     <>
-                        {/* AGENTS */}
+                        {/* TOPIC */}
                         <div className="mt-4 pb-6">
+                            <span className="text-slate-400 text-lg font-medium">Inputs</span>
+                            <div className="flex flex-col gap-3 mt-2">
+                                {Object.keys(inputs).map((item, index) => (
+                                    <div key={index} className="flex flex-col gap-1">
+                                        <span className="text-xs font-semibold text-slate-200 capitalize">{item}</span>
+                                        <Textarea
+                                            name="input"
+                                            value={inputs[item]}
+                                            onChange={(event) => {
+                                                setInputs({ ...inputs, [item]: event.target.value });
+                                            }}
+                                            placeholder="Enter input value"
+                                            className="block resize-none w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* TOPIC */}
+                        {/* AGENTS */}
+                        <div className="pt-6 pb-6">
                             <span className="text-slate-400 text-lg font-medium">Agents</span>
                             <div className="flex flex-wrap gap-3 mt-2">
                                 {agents?.map((agent) => (
@@ -143,7 +169,7 @@ const Preview = () => {
             </div>
         </div>
     );
-}
+};
 
 const EditPreviewView = ({ editorComponent }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();

@@ -44,6 +44,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                         scrollPosition: 0
                     },
                     isPreviewMode: false,
+                    showSimpleShareOption: false,
                 },
 
                 keys: [],
@@ -193,6 +194,16 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                         set({ isLoadingShare: false, isShareDialogOpen: false });
                         toast.error('Failed to process encryption or document creation.');
                         console.error('Failed to process encryption or document creation:', error);
+                    }
+                },
+                simpleShareAction: async () => {
+                    try {
+                        const url = window.location.href;
+                        await navigator.clipboard.writeText(url);
+
+                        toast.success(`The URL is copied! Just paste it to share your team.`);
+                    } catch (error) {
+                        toast.error('Failed to share the team.');
                     }
                 },
 

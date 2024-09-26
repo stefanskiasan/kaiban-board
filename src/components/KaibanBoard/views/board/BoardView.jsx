@@ -81,18 +81,20 @@ const BoardView = () => {
             <div className="flex flex-row">
                 <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
                     <ViewColumnsIcon className="w-4 h-4 text-white" />
-                    <span className="text-sm font-medium text-white">{name}</span>
-                    <span className="text-sm font-medium text-white">{'  Board'}</span>
+                    <div className="flex gap-1">
+                        <span className="text-sm font-medium text-white hidden md:block">{name}</span>
+                        <span className="text-sm font-medium text-white">{'Board'}</span>
+                    </div>
                 </div>
                 <div className="flex-grow border border-slate-700 border-r-0 border-t-0 bg-slate-950">
                     <div className="flex items-center gap-4 h-full pr-3.5">
-                        <div className="ml-auto flex -space-x-2">
+                        <div className="ml-auto hidden md:flex -space-x-2">
                             {agents?.map((agent) => (
                                 <AgentAvatar key={agent.id} agent={agent} size="sm" />
                             ))}
                         </div>
                         {logs.length > 0 && (
-                            <Button className="inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-slate-400 text-sm focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white group"
+                            <Button className="ml-auto md:ml-0 inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-slate-400 text-sm focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white group"
                                 onClick={() => { setActivityOpenAction(true) }}>
                                 <ListBulletIcon className="w-5 h-5" />
                                 Activity

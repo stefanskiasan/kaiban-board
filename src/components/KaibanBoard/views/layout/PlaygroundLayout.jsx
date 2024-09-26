@@ -15,7 +15,6 @@ import ExecutionDialog from '../../components/ExecutionDialog';
 import CelebrationDialog from '../../components/CelebrationDialog';
 import ShareDialog from '../../components/ShareDialog';
 import SettingsDialog from '../../components/SettingsDialog';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();

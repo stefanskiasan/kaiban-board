@@ -16,6 +16,7 @@ export const basic = {
             showShareOption: false,
             showSettingsOption: false,
             isPreviewMode: true,
+            showSimpleShareOption: true
         }, 
         teams: [teamOpenAI, teamProductSpecs],       
         title: "Basic",// Title in Storybook

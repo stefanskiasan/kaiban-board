@@ -14,7 +14,8 @@ const defaultUiSettings = {
         isActive: false,
         scrollPosition: 0
     },
-    isPreviewMode: false
+    isPreviewMode: false,
+    showSimpleShareOption: false,
 };
 
 const filterUndefinedProps = (obj) => {

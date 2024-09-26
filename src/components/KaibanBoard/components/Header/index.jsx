@@ -23,7 +23,8 @@ const Header = ({ examplesMenu }) => {
         setTaskDetailsDialogOpenAction,
         setShareDialogOpenAction,
         setSettingsDialogOpenAction,
-        toggleMaximizeAction
+        toggleMaximizeAction,
+        simpleShareAction
     } = useAgentsPlaygroundStore(
         (state) => ({
             teamStore: state.teamStore,
@@ -35,7 +36,8 @@ const Header = ({ examplesMenu }) => {
             setTaskDetailsDialogOpenAction: state.setTaskDetailsDialogOpenAction,
             setShareDialogOpenAction: state.setShareDialogOpenAction,
             setSettingsDialogOpenAction: state.setSettingsDialogOpenAction,
-            toggleMaximizeAction: state.toggleMaximizeAction
+            toggleMaximizeAction: state.toggleMaximizeAction,
+            simpleShareAction: state.simpleShareAction
         })
     );
 
@@ -128,6 +130,13 @@ const Header = ({ examplesMenu }) => {
                             {uiSettings.showShareOption && (
                                 <Button className="inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-slate-800"
                                     onClick={() => { setShareDialogOpenAction(true) }}>
+                                    <ShareIcon className="w-5 h-5" />
+                                    Share
+                                </Button>
+                            )}
+                            {uiSettings.showSimpleShareOption && (
+                                <Button className="inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-slate-800"
+                                    onClick={() => { simpleShareAction() }}>
                                     <ShareIcon className="w-5 h-5" />
                                     Share
                                 </Button>

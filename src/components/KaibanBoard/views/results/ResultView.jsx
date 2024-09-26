@@ -50,7 +50,7 @@ const ResultView = () => {
                     </div>
                 )}
                 {!workflowResult && (
-                    <div className="flex flex-col items-center justify-center gap-2 absolute inset-0 -z-10">
+                    <div className="flex flex-col items-center justify-center gap-2 h-[calc(100vh-250px)]">
                         <SparklesIcon className="w-9 h-9 text-indigo-300" />
                         <div className="flex flex-col items-center">
                             <span className="text-base font-semibold text-slate-200">No Results Yet</span>
