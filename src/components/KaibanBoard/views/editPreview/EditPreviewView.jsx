@@ -105,7 +105,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                 </div>
                 {/* --- RESOURCES --- */}
             </div>
-            {/* Footer */}
+            {/* --- Footer --- */}
             <div className="border-t border-slate-700 p-6">
                 {/* --- PRIVACY --- */}
                 <div className="pb-1">
@@ -116,6 +116,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                 </span>
                 {/* --- PRIVACY --- */}
             </div>
+            {/* --- Footer --- */}
         </div>
     );
 };
