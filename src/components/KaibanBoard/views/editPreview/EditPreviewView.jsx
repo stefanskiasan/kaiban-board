@@ -14,102 +14,104 @@ import TeamsMenu from '../../components/TeamsMenu';
 
 const Dashboard = ({ onChange = () => { } }) => {
     return (
-        <div className="relative flex flex-col mt-6 px-6">
-            <div className="flex">
+        <div className="flex flex-col min-h-[calc(100vh-55px)]">
+            <div className="flex-grow p-6">
                 <span className="text-2xl font-semibold text-slate-200">Welcome to your Kaiban Board</span>
-            </div>
-            {/* --- TEAMS --- */}
-            <TeamsMenu onChange={onChange} />
-            {/* --- TEAMS --- */}
-            {/* --- INFO --- */}
-            <div className="relative mt-6 bg-slate-950 rounded-xl shadow-lg ring-1 ring-slate-800">
-                <div className="relative flex text-slate-400 text-xs leading-6">
-                    <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
-                        Steps
-                    </div>
-                    <div className="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
-                        <div className="flex-auto -mr-px bg-slate-900 border border-slate-800 rounded-tl">
+                {/* --- TEAMS --- */}
+                <TeamsMenu onChange={onChange} />
+                {/* --- TEAMS --- */}
+                {/* --- INFO --- */}
+                <div className="relative mt-8 bg-slate-950 rounded-xl shadow-lg ring-1 ring-slate-800">
+                    <div className="relative flex text-slate-400 text-xs leading-6">
+                        <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
+                            Steps
+                        </div>
+                        <div className="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
+                            <div className="flex-auto -mr-px bg-slate-900 border border-slate-800 rounded-tl">
+                            </div>
                         </div>
                     </div>
+                    <div className="relative px-5 py-3">
+                        <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
+                            <code className="flex-none min-w-full">
+                                <span className="flex">
+                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    </svg>
+                                    <span className="flex-auto">
+                                        Make changes on the sample.kban.js file in the root of your project to start playing around.
+                                    </span>
+                                </span>
+                            </code>
+                            <code className="flex-none min-w-full">
+                                <span className="flex">
+                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    </svg>
+                                    <span className="flex-auto">
+                                        You will need an OpenAI API key to make it work. (The key is being stored locally... So you don't have to have to worry)
+                                    </span>
+                                </span>
+                            </code>
+                            <code className="flex-none min-w-full">
+                                <span className="flex">
+                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    </svg>
+                                    <span className="flex-auto">
+                                        Click Start Workflow to See the Team in Action.
+                                    </span>
+                                </span>
+                            </code>
+                            <code className="flex-none min-w-full">
+                                <span className="flex">
+                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    </svg>
+                                    <span className="flex-auto">
+                                        Add more teams by creating .kban.js files on your project root.
+                                    </span>
+                                </span>
+                            </code>
+                        </pre>
+                    </div>
                 </div>
-                <div className="relative px-5 py-3">
-                    <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
-                        <code className="flex-none min-w-full">
-                            <span className="flex">
-                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                </svg>
-                                <span className="flex-auto">
-                                    Make changes on the sample.kban.js file in the root of your project to start playing around.
-                                </span>
-                            </span>
-                        </code>
-                        <code className="flex-none min-w-full">
-                            <span className="flex">
-                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                </svg>
-                                <span className="flex-auto">
-                                    You will need an OpenAI API key to make it work. (The key is being stored locally... So you don't have to have to worry)
-                                </span>
-                            </span>
-                        </code>
-                        <code className="flex-none min-w-full">
-                            <span className="flex">
-                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                </svg>
-                                <span className="flex-auto">
-                                    Click Start Workflow to See the Team in Action.
-                                </span>
-                            </span>
-                        </code>
-                        <code className="flex-none min-w-full">
-                            <span className="flex">
-                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                </svg>
-                                <span className="flex-auto">
-                                    Add more teams by creating .kban.js files on your project root.
-                                </span>
-                            </span>
-                        </code>
-                    </pre>
+                {/* --- INFO --- */}
+                {/* --- RESOURCES --- */}
+                <div className="mt-8 pb-2">
+                    <span className="text-slate-200 text-lg font-medium">Resources</span>
                 </div>
+                <div className="flex flex-col gap-2">
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
+                        <BookOpenIcon className="w-4 h-4 text-indigo-500" />
+                        Tutorial: Kaiban Board Walkthrough
+                    </a>
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu" target="_blank">
+                        <CubeIcon className="w-4 h-4 text-indigo-500" />
+                        Example: Sports News Creation Team
+                    </a>
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
+                        <LinkIcon className="w-4 h-4 text-indigo-500" />
+                        KaibanJS project Website
+                    </a>
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
+                        <StarIcon className="w-4 h-4 text-indigo-500" />
+                        KaibanJS Github Repository
+                    </a>
+                </div>
+                {/* --- RESOURCES --- */}
             </div>
-            {/* --- INFO --- */}
-            {/* --- RESOURCES --- */}
-            <div className="mt-6 pb-2">
-                <span className="text-slate-200 text-lg font-medium">Resources</span>
-            </div>
-            <div className="flex flex-col gap-2">
-                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
-                    <BookOpenIcon className="w-4 h-4 text-indigo-500" />
-                    Tutorial: Kaiban Board Walkthrough
-                </a>
-                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu" target="_blank">
-                    <CubeIcon className="w-4 h-4 text-indigo-500" />
-                    Example: Sports News Creation Team
-                </a>
-                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
-                    <LinkIcon className="w-4 h-4 text-indigo-500" />
-                    KaibanJS project Website
-                </a>
-                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
-                    <StarIcon className="w-4 h-4 text-indigo-500" />
-                    KaibanJS Github Repository
-                </a>
-            </div>
-            {/* --- RESOURCES --- */}
-            {/* --- PRIVACY --- */}
-            <div className="fixed bottom-0 bg-slate-900 pb-8 pt-4 md:pb-4 pr-4 md:w-3/6">
-                {/* <div className="absolute top-0 -left-6 h-[1px] w-[200%] bg-slate-700"></div> */}
+            {/* Footer */}
+            <div className="border-t border-slate-700 p-6">
+                {/* --- PRIVACY --- */}
                 <div className="pb-1">
                     <span className="text-slate-300 text-xs font-medium">Privacy Notice</span>
                 </div>
-                <span className="text-xs font-normal text-slate-400">All your do on this UI is done at local level... this means we are NOT getting access to your API keys, Data, Code or anything else. Other legal stuff here. Have fun ;)</span>
+                <span className="text-xs font-normal text-slate-400">
+                    All you do on this UI is done at the local level... this means we are NOT getting access to your API keys, Data, Code, or anything else. Other legal stuff here. Have fun ;)
+                </span>
+                {/* --- PRIVACY --- */}
             </div>
-            {/* --- PRIVACY --- */}
         </div>
     );
 };
@@ -271,7 +273,7 @@ const EditPreviewView = ({ editorComponent }) => {
                 {/* --- EDITOR --- */}
                 {/* --- DASHBOARD --- */}
                 {uiSettings.isPreviewMode && (
-                    <div className="col-span-3 pb-6 h-full overflow-auto">
+                    <div className="col-span-3 h-full overflow-auto">
                         <Dashboard />
                     </div>
                 )}
@@ -302,7 +304,7 @@ const EditPreviewView = ({ editorComponent }) => {
                         {/* --- EDITOR --- */}
                         {/* --- DASHBOARD --- */}
                         {uiSettings.isPreviewMode && (
-                            <div className="pb-6 h-full overflow-auto">
+                            <div className="h-full overflow-auto">
                                 <Dashboard onChange={goToPreviewSlide} />
                             </div>
                         )}
