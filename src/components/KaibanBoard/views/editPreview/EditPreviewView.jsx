@@ -93,7 +93,11 @@ const Preview = () => {
             .join(' ');
 
         return formattedStr;
-    }
+    };
+
+    const removeLineBreaksAndExtraSpaces = (text) => {
+        return text.replace(/(\r\n|\n|\r)/gm, " ").replace(/\s+/g, " ");
+    };
 
     return (
         <div className="relative">
@@ -116,7 +120,7 @@ const Preview = () => {
                                         <span className="text-xs font-semibold text-slate-200">{formatString(item)}</span>
                                         <Textarea
                                             name="input"
-                                            value={inputs[item]}
+                                            value={removeLineBreaksAndExtraSpaces(inputs[item])}
                                             onChange={(event) => {
                                                 setInputs({ ...inputs, [item]: event.target.value });
                                             }}
