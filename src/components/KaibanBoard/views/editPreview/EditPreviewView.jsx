@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
-import { BookOpenIcon, CubeIcon, LinkIcon, Square3Stack3DIcon, StarIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, CodeBracketIcon, GlobeAltIcon, Square3Stack3DIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -39,7 +39,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                         <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                     <span className="flex-auto">
-                                        Make changes on the sample.kban.js file in the root of your project to start playing around.
+                                        Edit `sample.kban.js` in your project root to start customizing.
                                     </span>
                                 </span>
                             </code>
@@ -49,7 +49,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                         <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                     <span className="flex-auto">
-                                        You will need an OpenAI API key to make it work. (The key is being stored locally... So you don't have to have to worry)
+                                        Add `VITE_OPENAI_API_KEY` to your `.env` file with your OpenAI API key (stored locally).
                                     </span>
                                 </span>
                             </code>
@@ -59,7 +59,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                         <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                     <span className="flex-auto">
-                                        Click Start Workflow to See the Team in Action.
+                                        Click 'Start Workflow' to see your agents in action.
                                     </span>
                                 </span>
                             </code>
@@ -69,7 +69,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                         <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                     <span className="flex-auto">
-                                        Add more teams by creating .kban.js files on your project root.
+                                        Add more teams by creating `*.kban.js` files in your project.
                                     </span>
                                 </span>
                             </code>
@@ -83,20 +83,24 @@ const Dashboard = ({ onChange = () => { } }) => {
                 </div>
                 <div className="flex flex-col gap-2">
                     <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
-                        <BookOpenIcon className="w-4 h-4 text-indigo-500" />
-                        Tutorial: Kaiban Board Walkthrough
+                        <BookmarkIcon className="w-4 h-4 text-indigo-500" />
+                        Quick Start Guide
                     </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu" target="_blank">
-                        <CubeIcon className="w-4 h-4 text-indigo-500" />
-                        Example: Sports News Creation Team
-                    </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
-                        <LinkIcon className="w-4 h-4 text-indigo-500" />
-                        KaibanJS project Website
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/" target="_blank">
+                    <BookOpenIcon className="w-4 h-4 text-indigo-500" />
+                        Full documentation
                     </a>
                     <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
-                        <StarIcon className="w-4 h-4 text-indigo-500" />
-                        KaibanJS Github Repository
+                        <CodeBracketIcon className="w-4 h-4 text-indigo-500" />
+                        Code & Contribute
+                    </a>
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
+                        <GlobeAltIcon className="w-4 h-4 text-indigo-500" />
+                        Learn about KaibanJS
+                    </a>
+                    <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://kaibanjs.com/discord" target="_blank">
+                        <ChatBubbleLeftEllipsisIcon className="w-4 h-4 text-indigo-500" />
+                        Community Support
                     </a>
                 </div>
                 {/* --- RESOURCES --- */}
@@ -108,7 +112,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                     <span className="text-slate-300 text-xs font-medium">Privacy Notice</span>
                 </div>
                 <span className="text-xs font-normal text-slate-400">
-                    All you do on this UI is done at the local level... this means we are NOT getting access to your API keys, Data, Code, or anything else. Other legal stuff here. Have fun ;)
+                    Everything you do here is local. We don’t access your API keys, data, or code. Have fun and build with confidence!
                 </span>
                 {/* --- PRIVACY --- */}
             </div>
