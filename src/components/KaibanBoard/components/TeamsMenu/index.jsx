@@ -28,8 +28,8 @@ const TeamsMenu = ({ onChange }) => {
                             setTeamAction(team);
                             onChange();
                         }}>
-                        <div className={`w-2 h-2 ring-1 rounded-sm ring-indigo-500 group-hover:bg-indigo-500 ${project?.name === team.store?.getState().name ? 'bg-indigo-500' : 'bg-slate-800'}`}></div>
-                        <span className="text-sm text-indigo-500">
+                        <div className={`w-[10px] h-[10px] ring-1 rounded-sm ring-indigo-500 group-hover:bg-indigo-500 ${project?.name === team.store?.getState().name ? 'bg-indigo-500' : 'bg-slate-800'}`}></div>
+                        <span className="text-sm text-slate-400">
                             {team.store?.getState().name || "Untitled Project"}
                         </span>
                     </a>

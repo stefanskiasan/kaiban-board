@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
-import { Square3Stack3DIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, CubeIcon, LinkIcon, Square3Stack3DIcon, StarIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -22,34 +22,88 @@ const Dashboard = ({ onChange = () => { } }) => {
             <TeamsMenu onChange={onChange} />
             {/* --- TEAMS --- */}
             {/* --- INFO --- */}
-            <ul className="mt-6 ring-1 ring-slate-800 rounded-lg p-4">
-                <li className="text-sm text-slate-400">- Make changes on the sample.kban.js file in the root of your project to start playing around.</li>
-                <li className="text-sm text-slate-400">- You will need an OpenAI API key to make it work. (The key is being stored locally... So you don't have to have to worry)</li>
-                <li className="text-sm text-slate-400">- Click Start Workflow to See the Team in Action.</li>
-                <li className="text-sm text-slate-400">- Add more teams by creating .kban.js files on your project root.</li>
-            </ul>
+            <div className="relative mt-6 bg-slate-950 rounded-xl shadow-lg ring-1 ring-slate-800">
+                <div className="relative flex text-slate-400 text-xs leading-6">
+                    <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
+                        Steps
+                    </div>
+                    <div className="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
+                        <div className="flex-auto -mr-px bg-slate-900 border border-slate-800 rounded-tl">
+                        </div>
+                    </div>
+                </div>
+                <div className="relative px-5 py-3">
+                    <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
+                        <code className="flex-none min-w-full">
+                            <span className="flex">
+                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                                <span className="flex-auto">
+                                    Make changes on the sample.kban.js file in the root of your project to start playing around.
+                                </span>
+                            </span>
+                        </code>
+                        <code className="flex-none min-w-full">
+                            <span className="flex">
+                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                                <span className="flex-auto">
+                                    You will need an OpenAI API key to make it work. (The key is being stored locally... So you don't have to have to worry)
+                                </span>
+                            </span>
+                        </code>
+                        <code className="flex-none min-w-full">
+                            <span className="flex">
+                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                                <span className="flex-auto">
+                                    Click Start Workflow to See the Team in Action.
+                                </span>
+                            </span>
+                        </code>
+                        <code className="flex-none min-w-full">
+                            <span className="flex">
+                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                </svg>
+                                <span className="flex-auto">
+                                    Add more teams by creating .kban.js files on your project root.
+                                </span>
+                            </span>
+                        </code>
+                    </pre>
+                </div>
+            </div>
             {/* --- INFO --- */}
             {/* --- RESOURCES --- */}
             <div className="mt-6 pb-2">
                 <span className="text-slate-200 text-lg font-medium">Resources</span>
             </div>
             <div className="flex flex-col gap-2">
-                <a className="text-sm text-indigo-500 hover:underline" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
+                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
+                    <BookOpenIcon className="w-4 h-4 text-indigo-500" />
                     Tutorial: Kaiban Board Walkthrough
                 </a>
-                <a className="text-sm text-indigo-500 hover:underline" href="https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu" target="_blank">
+                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/share/9lyzu1VjBFPOl6FRgNWu" target="_blank">
+                    <CubeIcon className="w-4 h-4 text-indigo-500" />
                     Example: Sports News Creation Team
                 </a>
-                <a className="text-sm text-indigo-500 hover:underline" href="https://www.kaibanjs.com/" target="_blank">
+                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
+                    <LinkIcon className="w-4 h-4 text-indigo-500" />
                     KaibanJS project Website
                 </a>
-                <a className="text-sm text-indigo-500 hover:underline" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
+                <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
+                    <StarIcon className="w-4 h-4 text-indigo-500" />
                     KaibanJS Github Repository
                 </a>
             </div>
             {/* --- RESOURCES --- */}
             {/* --- PRIVACY --- */}
-            <div className="fixed bottom-0 bg-slate-900 pb-8 md:pb-4 pr-4 md:w-3/6">
+            <div className="fixed bottom-0 bg-slate-900 pb-8 pt-4 md:pb-4 pr-4 md:w-3/6">
+                {/* <div className="absolute top-0 -left-6 h-[1px] w-[200%] bg-slate-700"></div> */}
                 <div className="pb-1">
                     <span className="text-slate-300 text-xs font-medium">Privacy Notice</span>
                 </div>
