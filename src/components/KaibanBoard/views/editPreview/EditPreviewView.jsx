@@ -12,7 +12,7 @@ import TaskCard from '../../components/Common/TaskCard';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import TeamsMenu from '../../components/TeamsMenu';
 
-const Dashboard = ({ onChange = () => {} }) => {
+const Dashboard = ({ onChange = () => { } }) => {
     return (
         <div className="relative flex flex-col mt-6 px-6">
             <div className="flex">
@@ -84,6 +84,17 @@ const Preview = () => {
         setInputs: state.setInputs
     }));
 
+    const formatString = (str) => {
+        let formattedStr = str.replace(/([a-z])([A-Z])/g, '$1 $2')
+            .replace(/[_:]/g, ' ');
+
+        formattedStr = formattedStr.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
+        return formattedStr;
+    }
+
     return (
         <div className="relative">
             <div className="flex flex-row">
@@ -102,7 +113,7 @@ const Preview = () => {
                             <div className="flex flex-col gap-3 mt-2">
                                 {Object.keys(inputs).map((item, index) => (
                                     <div key={index} className="flex flex-col gap-1">
-                                        <span className="text-xs font-semibold text-slate-200 capitalize">{item}</span>
+                                        <span className="text-xs font-semibold text-slate-200">{formatString(item)}</span>
                                         <Textarea
                                             name="input"
                                             value={inputs[item]}
