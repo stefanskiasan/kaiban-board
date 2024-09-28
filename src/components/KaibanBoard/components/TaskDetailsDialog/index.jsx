@@ -148,7 +148,7 @@ const TaskDetailsDialog = () => {
                         <div>
                             <span className="text-xs font-medium text-slate-200">Members</span>
                             <div className="flex mt-1">
-                                <AgentAvatar agent={task?.agent} size="md" />
+                                <AgentAvatar agent={task?.agent} size="md" showBorder={false} />
                             </div>
                         </div>
                         <div>
@@ -321,7 +321,7 @@ const TaskDetailsDialog = () => {
                                             </div>
                                         ) : (
                                             <div>
-                                                <AgentAvatar agent={{ name: log.agent }} />
+                                                <AgentAvatar agent={{ name: log.agent }} showBorder={false} />
                                             </div>
                                         )}
                                         <div className="flex flex-col gap-1">

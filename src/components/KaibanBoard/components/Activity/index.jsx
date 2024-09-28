@@ -80,7 +80,7 @@ const Activity = () => {
                                     </div>
                                 ) : (
                                     <div>
-                                        <AgentAvatar agent={{ name: log.agent }} />
+                                        <AgentAvatar agent={{ name: log.agent }} showBorder={false} />
                                     </div>
                                 )}
                                 <div className="flex flex-col gap-1">
