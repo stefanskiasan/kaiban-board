@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
-import { BookmarkIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, CodeBracketIcon, GlobeAltIcon, Square3Stack3DIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, GlobeAltIcon, Square3Stack3DIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -11,11 +11,12 @@ import AgentCard from '../../components/Common/AgentCard';
 import TaskCard from '../../components/Common/TaskCard';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import TeamsMenu from '../../components/TeamsMenu';
+import { GitHubIcon } from '../../assets/icons';
 
 const Dashboard = ({ onChange = () => { } }) => {
     return (
-        <div className="flex flex-col min-h-[calc(100vh-55px)]">
-            <div className="flex-grow p-6">
+        <div className="flex flex-col min-h-[calc(100vh-55px)] p-6">
+            <div className="flex-grow">
                 <span className="text-2xl font-semibold text-slate-200">Welcome to your Kaiban Board</span>
                 {/* --- TEAMS --- */}
                 <TeamsMenu onChange={onChange} />
@@ -87,11 +88,11 @@ const Dashboard = ({ onChange = () => { } }) => {
                         Quick Start Guide
                     </a>
                     <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/" target="_blank">
-                    <BookOpenIcon className="w-4 h-4 text-indigo-500" />
+                        <BookOpenIcon className="w-4 h-4 text-indigo-500" />
                         Full documentation
                     </a>
                     <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
-                        <CodeBracketIcon className="w-4 h-4 text-indigo-500" />
+                        <span className="text-indigo-500"><GitHubIcon /></span>
                         Code & Contribute
                     </a>
                     <a className="flex gap-1 items-center text-sm text-slate-400 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
@@ -106,7 +107,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                 {/* --- RESOURCES --- */}
             </div>
             {/* --- Footer --- */}
-            <div className="border-t border-slate-700 p-6">
+            <div className="border-t border-slate-950 pt-6">
                 {/* --- PRIVACY --- */}
                 <div className="pb-1">
                     <span className="text-slate-300 text-xs font-medium">Privacy Notice</span>
