@@ -20,9 +20,9 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
+    "kaibanjs": "^0.8.0-rc2",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "kaibanjs": "^0.7.0"
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.1",
