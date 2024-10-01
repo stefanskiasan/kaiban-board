@@ -34,6 +34,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 isShareDialogOpen: false,
                 isLoadingShare: false,
 
+                isMissingKeysDialogOpen: false,
+
                 uiSettings: {
                     showFullScreen: true,
                     showExampleMenu: true,
@@ -206,6 +208,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                         toast.error('Failed to share the team.');
                     }
                 },
+
+                setMissingKeysDialogOpenAction: (isMissingKeysDialogOpen) => set({ isMissingKeysDialogOpen }),
 
                 setUiSettingsAction: (newSettings) => set(state => ({
                     uiSettings: { ...state.uiSettings, ...newSettings }

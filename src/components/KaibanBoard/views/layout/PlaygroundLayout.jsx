@@ -15,6 +15,7 @@ import ExecutionDialog from '../../components/ExecutionDialog';
 import CelebrationDialog from '../../components/CelebrationDialog';
 import ShareDialog from '../../components/ShareDialog';
 import SettingsDialog from '../../components/SettingsDialog';
+import MissingKeysDialog from '../../components/MissingKeysDialog';
 
 const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -25,7 +26,8 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
         isCelebrationDialogOpen,
         isTaskDetailsDialogOpen,
         isShareDialogOpen,
-        isOpenSettingsDialog
+        isOpenSettingsDialog,
+        isMissingKeysDialogOpen
     } = useAgentsPlaygroundStore(
         (state) => ({
             uiSettings: state.uiSettings,
@@ -34,7 +36,8 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
             isCelebrationDialogOpen: state.isCelebrationDialogOpen,
             isTaskDetailsDialogOpen: state.isTaskDetailsDialogOpen,
             isShareDialogOpen: state.isShareDialogOpen,
-            isOpenSettingsDialog: state.isOpenSettingsDialog
+            isOpenSettingsDialog: state.isOpenSettingsDialog,
+            isMissingKeysDialogOpen: state.isMissingKeysDialogOpen
         })
     );
 
@@ -66,6 +69,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
             {isCelebrationDialogOpen && <CelebrationDialog />}
             {isShareDialogOpen && <ShareDialog />}
             {isOpenSettingsDialog && <SettingsDialog />}
+            {isMissingKeysDialogOpen && <MissingKeysDialog />}
             <Activity />
             <Toaster
                 toastOptions={{

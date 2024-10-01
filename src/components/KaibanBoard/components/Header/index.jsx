@@ -9,7 +9,7 @@ import Spinner from '../Common/Spinner';
 import ProjectName from '../ProjectName';
 import Tooltip from '../Common/Tooltip';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
-import { getLastBlockedWorkflowDescription, isAwaitingValidation } from '../../utils/helper';
+import { checkApiKeys, getLastBlockedWorkflowDescription, isAwaitingValidation } from '../../utils/helper';
 
 const Header = ({ examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -24,7 +24,8 @@ const Header = ({ examplesMenu }) => {
         setShareDialogOpenAction,
         setSettingsDialogOpenAction,
         toggleMaximizeAction,
-        simpleShareAction
+        simpleShareAction,
+        setMissingKeysDialogOpenAction
     } = useAgentsPlaygroundStore(
         (state) => ({
             teamStore: state.teamStore,
@@ -37,7 +38,8 @@ const Header = ({ examplesMenu }) => {
             setShareDialogOpenAction: state.setShareDialogOpenAction,
             setSettingsDialogOpenAction: state.setSettingsDialogOpenAction,
             toggleMaximizeAction: state.toggleMaximizeAction,
-            simpleShareAction: state.simpleShareAction
+            simpleShareAction: state.simpleShareAction,
+            setMissingKeysDialogOpenAction: state.setMissingKeysDialogOpenAction
         })
     );
 
@@ -85,14 +87,21 @@ const Header = ({ examplesMenu }) => {
     }, [teamWorkflowStatus]);
 
     const handleStartWorkflow = () => {
-        setExecutionDialogOpenAction(true);
-        setTimeout(() => {
-            setExecutionDialogOpenAction(false);
-            setTabAction(1);
+        const missingKeys = checkApiKeys(teamStore);
+
+        if (missingKeys.length > 0) {
+            setMissingKeysDialogOpenAction(true);
+
+        } else {
+            setExecutionDialogOpenAction(true);
             setTimeout(() => {
-                startWorkflow();
-            }, 1000);
-        }, 3000);
+                setExecutionDialogOpenAction(false);
+                setTabAction(1);
+                setTimeout(() => {
+                    startWorkflow();
+                }, 1000);
+            }, 3000);
+        }
     };
 
     return (

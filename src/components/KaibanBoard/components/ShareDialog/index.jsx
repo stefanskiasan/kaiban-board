@@ -97,7 +97,7 @@ const ShareDialog = () => {
                                 <span className="text-xs font-medium text-slate-400">Sharing team details...</span>
                             </div>
                         )}
-                        <Button className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 ring-1 ring-indigo-500/15 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                         <Button className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-slate-800 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
                             onClick={() => setShareDialogOpenAction(false)}>
                             Cancel
                         </Button>

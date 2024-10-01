@@ -237,7 +237,7 @@ export const replaceKeysWithEnvValues = (keys) => {
             const envKey = isClient
                 ? `VITE_${item.value.replace('NEXT_PUBLIC_', '')}`
                 : item.value;
-            
+
             const envValue = isClient
                 ? import.meta.env[envKey]
                 : process.env[envKey];
@@ -246,4 +246,21 @@ export const replaceKeysWithEnvValues = (keys) => {
         }
         return item;
     });
+};
+
+export const checkApiKeys = (team) => {
+    const missingKeys = [];
+
+    const env = team?.getState().env;
+    for (const [key, value] of Object.entries(env)) {
+        if (value === undefined || value === 'YOUR_OPENAI_API_KEY_HERE' || value === '') {
+            missingKeys.push({
+                name: key,
+                projectLocation: `In the .env file on the root of the project: ${key}=your-api-key-value`,
+                valueLocation: key === 'OPENAI_API_KEY' ? 'https://platform.openai.com/account/api-keys' : 'Depends on the specific API provider'
+            });
+        }
+    }
+
+    return missingKeys;
 };
