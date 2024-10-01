@@ -255,9 +255,11 @@ export const checkApiKeys = (team) => {
     for (const [key, value] of Object.entries(env)) {
         if (value === undefined || value === 'YOUR_OPENAI_API_KEY_HERE' || value === '') {
             missingKeys.push({
-                name: key,
-                projectLocation: `In the .env file on the root of the project: ${key}=your-api-key-value`,
-                valueLocation: key === 'OPENAI_API_KEY' ? 'https://platform.openai.com/account/api-keys' : 'Depends on the specific API provider'
+                key: key,
+                line: `VITE_${key}=your-api-key-value`,
+                get: key === 'OPENAI_API_KEY' ?
+                    `Get it from <a class="text-sky-300" href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI's API Keys pages.</a>` :
+                    'Depends on the specific API provider.'
             });
         }
     }

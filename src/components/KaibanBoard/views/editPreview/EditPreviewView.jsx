@@ -21,7 +21,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                 {/* --- TEAMS --- */}
                 <TeamsMenu onChange={onChange} />
                 {/* --- TEAMS --- */}
-                {/* --- INFO --- */}
+                {/* --- STEPS --- */}
                 <div className="relative mt-8 bg-slate-950 rounded-xl shadow-lg ring-1 ring-slate-800">
                     <div className="relative flex text-slate-400 text-xs leading-6">
                         <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
@@ -34,16 +34,6 @@ const Dashboard = ({ onChange = () => { } }) => {
                     </div>
                     <div className="relative px-5 py-3">
                         <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
-                            <code className="flex-none min-w-full">
-                                <span className="flex">
-                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    </svg>
-                                    <span className="flex-auto">
-                                        Edit `sample.kban.js` in your project root to start customizing.
-                                    </span>
-                                </span>
-                            </code>
                             <code className="flex-none min-w-full">
                                 <span className="flex">
                                     <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
@@ -70,6 +60,16 @@ const Dashboard = ({ onChange = () => { } }) => {
                                         <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                     </svg>
                                     <span className="flex-auto">
+                                        Edit `sample.kban.js` in your project root to start customizing.
+                                    </span>
+                                </span>
+                            </code>
+                            <code className="flex-none min-w-full">
+                                <span className="flex">
+                                    <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                        <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    </svg>
+                                    <span className="flex-auto">
                                         Add more teams by creating `*.kban.js` files in your project.
                                     </span>
                                 </span>
@@ -77,7 +77,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                         </pre>
                     </div>
                 </div>
-                {/* --- INFO --- */}
+                {/* --- STEPS --- */}
                 {/* --- RESOURCES --- */}
                 <div className="mt-8 pb-2">
                     <span className="text-slate-200 text-lg font-medium">Resources</span>

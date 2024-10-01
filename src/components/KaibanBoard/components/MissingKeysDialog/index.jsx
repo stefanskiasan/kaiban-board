@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@headlessui/react';
 import { useEffect, useRef, useState } from 'react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { ClipboardIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { checkApiKeys } from '../../utils/helper';
 
@@ -60,21 +60,56 @@ const MissingKeysDialog = () => {
                     <div className="mt-4">
                         <div className="flex flex-col gap-2 mb-2">
                             {keys.map((key, idx) => (
-                                <div key={idx} className="flex items-stretch gap-3 relative bg-white/5 p-3 rounded-lg">
-                                    <div className="w-2 flex-grow rounded-full bg-red-500/75"></div>
-                                    <div className="flex flex-col gap-[2px]">
-                                        <p className="leading-[normal]">
-                                            <span className="text-xs font-medium text-slate-200">{`Name: `}</span>
-                                            <span className="text-xs font-normal text-slate-400">{key.name}</span>
-                                        </p>
-                                        <p className="leading-[normal]">
-                                            <span className="text-xs font-medium text-slate-200">{`Where to put it: `}</span>
-                                            <span className="text-xs font-normal text-slate-400">{key.projectLocation}</span>
-                                        </p>
-                                        <p className="leading-[normal]">
-                                            <span className="text-xs font-medium text-slate-200">{`Get the value here: `}</span>
-                                            <span className="text-xs font-normal text-slate-400">{key.valueLocation}</span>
-                                        </p>
+                                <div key={idx} className="flex items-stretch gap-3 relative bg-white/5 p-3 rounded-lg ring-1 ring-slate-900">
+                                    <div className="max-w-1 flex-grow rounded-full bg-red-500/75"></div>
+                                    <div key={idx} className="flex flex-col gap-2">
+                                        <div className="flex gap-1">
+                                            <span className="text-xs font-medium text-slate-200">{`Key:`}</span>
+                                            <span className="text-xs font-normal text-slate-400">{key.key}</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-xs font-medium text-slate-200">{`How to add it:`}</span>
+                                            <span className="text-xs font-normal text-slate-400">{`In your project's .env file on the root of the project:`}</span>
+                                            <div className="w-[360px] relative mt-2 bg-slate-900 rounded-xl shadow-lg">
+                                                <div className="relative flex text-slate-400 text-xs leading-6">
+                                                    <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
+                                                        .env
+                                                    </div>
+                                                    <div className="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
+                                                        <div className="flex-auto -mr-px bg-slate-800 border border-slate-700 rounded-tl">
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-2 right-0 h-8 flex items-center pr-4">
+                                                        <div className="relative flex -mr-2">
+                                                            <button type="button" className="text-slate-400 hover:text-slate-200"
+                                                                onClick={() => {
+                                                                    navigator.clipboard.writeText(`${key.line}`);
+                                                                }}>
+                                                                <ClipboardIcon className="w-[18px] h-[18px]" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="relative px-5 py-3">
+                                                    <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
+                                                        <code className="flex-none min-w-full">
+                                                            <span className="flex">
+                                                                <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                                                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                                                </svg>
+                                                                <span className="flex-auto">
+                                                                    {key.line}
+                                                                </span>
+                                                            </span>
+                                                        </code>
+                                                    </pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-xs font-medium text-slate-200">{`Where to get the key:`}</span>
+                                            <span className="text-xs font-normal text-slate-400" dangerouslySetInnerHTML={{ __html: key.get }}></span>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -84,7 +119,7 @@ const MissingKeysDialog = () => {
                         <Button
                             className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-indigo-500/15"
                             onClick={() => {
-                                setMissingKeysDialogOpenAction(true);
+                                setMissingKeysDialogOpenAction(false);
                             }}
                         >
                             Ok
