@@ -256,7 +256,6 @@ export const checkApiKeys = (team) => {
         if (value === undefined || value === 'YOUR_OPENAI_API_KEY_HERE' || value === '') {
             missingKeys.push({
                 key: key,
-                line: `VITE_${key}=your-api-key-value`,
                 get: key === 'OPENAI_API_KEY' ?
                     `Get it from <a class="text-sky-300" href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI's API Keys pages.</a>` :
                     'Depends on the specific API provider.'
