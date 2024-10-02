@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
+import AgentAvatar from '../Common/AgentAvatar';
 
 const TeamsMenu = ({ onChange }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -19,20 +20,32 @@ const TeamsMenu = ({ onChange }) => {
     return (
         <>
             <div className="mt-6 pb-2">
-                <span className="text-slate-200 text-lg font-medium">Your Teams</span>
+                <span className="text-slate-400 text-lg font-medium">Your Teams</span>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {teams.map((team, idx) => (
-                    <a key={idx} className={`group flex gap-2 items-center cursor-pointer`}
+                    <div key={idx} className={`group flex flex-col gap-3 cursor-pointer p-4 bg-slate-800 rounded-lg ring-1 hover:ring-indigo-500 transition-all ${project?.name === team.store?.getState().name ? "ring-indigo-500" : "ring-slate-950"}`}
                         onClick={() => {
                             setTeamAction(team);
                             onChange();
                         }}>
-                        <div className={`w-[10px] h-[10px] ring-1 rounded-sm ring-indigo-500 group-hover:bg-indigo-500 ${project?.name === team.store?.getState().name ? 'bg-indigo-500' : 'bg-slate-800'}`}></div>
-                        <span className="text-sm text-slate-400">
-                            {team.store?.getState().name || "Untitled Project"}
-                        </span>
-                    </a>
+                        <div className="flex gap-2 relative">
+                            <span className="text-sm font-medium text-slate-200 w-[70%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                {team.store?.getState().name || "Untitled Project"}
+                            </span>
+                            {project?.name === team.store?.getState().name && (
+                                <div className="absolute top-0 right-0 flex items-center bg-indigo-500/15 py-1 px-2 rounded-full">
+                                    <span className="text-xs text-indigo-500 font-medium">Active</span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex -space-x-2">
+                            {team.store?.getState().agents?.map((agent) => (
+                                <AgentAvatar key={agent.id} agent={agent} />
+                            ))}
+                        </div>
+
+                    </div>
                 ))}
             </div>
         </>

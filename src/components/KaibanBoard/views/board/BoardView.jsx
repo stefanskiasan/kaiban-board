@@ -82,8 +82,7 @@ const BoardView = () => {
                 <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
                     <ViewColumnsIcon className="w-4 h-4 text-white" />
                     <div className="flex gap-1">
-                        <span className="text-sm font-medium text-white hidden md:block">{name}</span>
-                        <span className="text-sm font-medium text-white">{'Board'}</span>
+                        <span className="text-sm font-medium text-white">{'Kaiban Board'}</span>
                     </div>
                 </div>
                 <div className="flex-grow border border-slate-700 border-r-0 border-t-0 bg-slate-950">

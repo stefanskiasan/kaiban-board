@@ -2,7 +2,7 @@ import { Agent, Task, Team } from 'kaibanjs';
 
 // Define agents
 const profileAnalyst = new Agent({
-    name: 'Mary', 
+    name: 'Gizmo', 
     role: 'Profile Analyst', 
     goal: 'Extract structured information from conversational user input.', 
     background: 'Data Processor',
@@ -10,7 +10,7 @@ const profileAnalyst = new Agent({
 });
 
 const resumeWriter = new Agent({
-    name: 'Alex Mercer', 
+    name: 'Raven', 
     role: 'Resume Writer', 
     goal: `Craft compelling, well-structured resumes 
     that effectively showcase job seekers qualifications and achievements.`,

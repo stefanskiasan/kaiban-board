@@ -7,15 +7,15 @@ import './styles/index.css';
 
 const defaultUiSettings = {
     showFullScreen: true,
-    showExampleMenu: true,
-    showShareOption: true,
-    showSettingsOption: true,
+    showExampleMenu: false,
+    showShareOption: false,
+    showSettingsOption: false,
     maximizeConfig: {
         isActive: false,
         scrollPosition: 0
     },
-    isPreviewMode: false,
-    showSimpleShareOption: false,
+    isPreviewMode: true,
+    showSimpleShareOption: true,
 };
 
 const filterUndefinedProps = (obj) => {

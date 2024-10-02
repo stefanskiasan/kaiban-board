@@ -11,21 +11,22 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const basic = {
     args: {
-        uiSettings:{
-            showExampleMenu: false,
-            showShareOption: false,
-            showSettingsOption: false,
-            isPreviewMode: true,
-            showSimpleShareOption: true
-        }, 
-        teams: [teamOpenAI, teamProductSpecs],       
+        teams: [teamOpenAI, teamProductSpecs],
         title: "Basic",// Title in Storybook
     },
 };
 
-export const standard = {
-    args: {    
-        title: "Default",// Title in Storybook
+export const ourOptions = {
+    args: {
+        uiSettings: {
+            showFullScreen: false,
+            showExampleMenu: true,
+            showShareOption: true,
+            showSettingsOption: true,
+            isPreviewMode: false,
+            showSimpleShareOption: false,
+        },
+        title: "Our Options",// Title in Storybook
     },
 };
 
