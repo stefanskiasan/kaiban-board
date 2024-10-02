@@ -14,6 +14,16 @@ import TeamsMenu from '../../components/TeamsMenu';
 import { GitHubIcon } from '../../assets/icons';
 
 const Dashboard = ({ onChange = () => { } }) => {
+    const useAgentsPlaygroundStore = usePlaygroundStore();
+
+    const {
+        uiSettings
+    } = useAgentsPlaygroundStore(
+        (state) => ({
+            uiSettings: state.uiSettings
+        })
+    );
+
     return (
         <div className="flex flex-col min-h-[calc(100vh-55px)] p-6">
             <div className="flex-grow">
@@ -21,95 +31,88 @@ const Dashboard = ({ onChange = () => { } }) => {
                 {/* --- TEAMS --- */}
                 <TeamsMenu onChange={onChange} />
                 {/* --- TEAMS --- */}
-                {/* --- STEPS --- */}
-                <div className="mt-8 pb-2">
-                    <span className="text-slate-400 text-lg font-medium">Steps</span>
-                </div>
-                <div className="p-2 bg-slate-800 rounded-lg ring-1 ring-slate-950">
-                    <div className="relative bg-slate-950 rounded-lg">
-                        {/* <div className="relative flex text-slate-400 text-xs leading-6">
-                        <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
-                            Steps
+                {uiSettings.showWelcomeInfo && (
+                    <>
+                        {/* --- STEPS --- */}
+                        <div className="mt-8 pb-2">
+                            <span className="text-slate-400 text-lg font-medium">Steps</span>
                         </div>
-                        <div className="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
-                            <div className="flex-auto -mr-px bg-slate-900 border border-slate-800 rounded-tl">
+                        <div className="relative bg-slate-950 rounded-xl ring-1 ring-slate-800">
+                            <div className="relative px-5 py-4">
+                                <pre className="text-xs leading-6 text-slate-300 flex flex-col gap-1 overflow-auto">
+                                    <code className="flex-none min-w-full">
+                                        <span className="flex">
+                                            <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                                <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </svg>
+                                            <span className="flex-auto">
+                                                Add `VITE_OPENAI_API_KEY` to your `.env` file with your OpenAI API key (stored locally).
+                                            </span>
+                                        </span>
+                                    </code>
+                                    <code className="flex-none min-w-full">
+                                        <span className="flex">
+                                            <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                                <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </svg>
+                                            <span className="flex-auto">
+                                                Click 'Start Workflow' to see your agents in action.
+                                            </span>
+                                        </span>
+                                    </code>
+                                    <code className="flex-none min-w-full">
+                                        <span className="flex">
+                                            <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                                <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </svg>
+                                            <span className="flex-auto">
+                                                Edit `sample.kban.js` in your project root to start customizing.
+                                            </span>
+                                        </span>
+                                    </code>
+                                    <code className="flex-none min-w-full">
+                                        <span className="flex">
+                                            <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
+                                                <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </svg>
+                                            <span className="flex-auto">
+                                                Add more teams by creating `*.kban.js` files in your project.
+                                            </span>
+                                        </span>
+                                    </code>
+                                </pre>
                             </div>
                         </div>
-                    </div> */}
-                        <div className="relative px-5 py-4">
-                            <pre className="text-xs leading-6 text-slate-300 flex flex-col gap-1 overflow-auto">
-                                <code className="flex-none min-w-full">
-                                    <span className="flex">
-                                        <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                            <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                        </svg>
-                                        <span className="flex-auto">
-                                            Add `VITE_OPENAI_API_KEY` to your `.env` file with your OpenAI API key (stored locally).
-                                        </span>
-                                    </span>
-                                </code>
-                                <code className="flex-none min-w-full">
-                                    <span className="flex">
-                                        <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                            <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                        </svg>
-                                        <span className="flex-auto">
-                                            Click 'Start Workflow' to see your agents in action.
-                                        </span>
-                                    </span>
-                                </code>
-                                <code className="flex-none min-w-full">
-                                    <span className="flex">
-                                        <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                            <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                        </svg>
-                                        <span className="flex-auto">
-                                            Edit `sample.kban.js` in your project root to start customizing.
-                                        </span>
-                                    </span>
-                                </code>
-                                <code className="flex-none min-w-full">
-                                    <span className="flex">
-                                        <svg viewBox="0 -9 3 24" aria-hidden="true" className="flex-none overflow-visible text-pink-400 w-auto h-6 mr-3">
-                                            <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                        </svg>
-                                        <span className="flex-auto">
-                                            Add more teams by creating `*.kban.js` files in your project.
-                                        </span>
-                                    </span>
-                                </code>
-                            </pre>
+                        {/* --- STEPS --- */}
+                        {/* --- RESOURCES --- */}
+                        <div className="mt-8 pb-2">
+                            <span className="text-slate-400 text-lg font-medium">Resources</span>
                         </div>
-                    </div>
-                </div>
-                {/* --- STEPS --- */}
-                {/* --- RESOURCES --- */}
-                <div className="mt-8 pb-2">
-                    <span className="text-slate-400 text-lg font-medium">Resources</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
-                        <BookmarkIcon className="w-4 h-4 text-indigo-500" />
-                        Quick Start Guide
-                    </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/" target="_blank">
-                        <BookOpenIcon className="w-4 h-4 text-indigo-500" />
-                        Full documentation
-                    </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
-                        <span className="text-indigo-500"><GitHubIcon /></span>
-                        Code & Contribute
-                    </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
-                        <GlobeAltIcon className="w-4 h-4 text-indigo-500" />
-                        Learn about KaibanJS
-                    </a>
-                    <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://kaibanjs.com/discord" target="_blank">
-                        <ChatBubbleLeftEllipsisIcon className="w-4 h-4 text-indigo-500" />
-                        Community Support
-                    </a>
-                </div>
-                {/* --- RESOURCES --- */}
+                        <div className="flex flex-col gap-2">
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
+                                <BookmarkIcon className="w-4 h-4 text-indigo-500" />
+                                Quick Start Guide
+                            </a>
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/" target="_blank">
+                                <BookOpenIcon className="w-4 h-4 text-indigo-500" />
+                                Full documentation
+                            </a>
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://github.com/kaiban-ai/KaibanJS" target="_blank">
+                                <span className="text-indigo-500"><GitHubIcon /></span>
+                                Code & Contribute
+                            </a>
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://www.kaibanjs.com/" target="_blank">
+                                <GlobeAltIcon className="w-4 h-4 text-indigo-500" />
+                                Learn about KaibanJS
+                            </a>
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://kaibanjs.com/discord" target="_blank">
+                                <ChatBubbleLeftEllipsisIcon className="w-4 h-4 text-indigo-500" />
+                                Community Support
+                            </a>
+                        </div>
+                        {/* --- RESOURCES --- */}
+                    </>
+                )}
             </div>
             {/* --- Footer --- */}
             <div className="border-t border-slate-950 pt-6">

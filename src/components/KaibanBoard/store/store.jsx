@@ -47,6 +47,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     },
                     isPreviewMode: true,
                     showSimpleShareOption: true,
+                    showWelcomeInfo: true,
                 },
 
                 keys: [],
