@@ -66,7 +66,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                                 <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                             </svg>
                                             <span className="flex-auto">
-                                                Edit `sample.kban.js` in your project root to start customizing.
+                                                Edit `team.kban.js` in your project root to start customizing.
                                             </span>
                                         </span>
                                     </code>
@@ -89,7 +89,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                             <span className="text-slate-400 text-lg font-medium">Resources</span>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Using%20the%20Agentic%20Kanban%20Board" target="_blank">
+                            <a className="flex gap-1 items-center text-sm text-slate-200 hover:underline hover:text-slate-200" href="https://docs.kaibanjs.com/get-started/Quick%20Start" target="_blank">
                                 <BookmarkIcon className="w-4 h-4 text-indigo-500" />
                                 Quick Start Guide
                             </a>
