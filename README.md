@@ -49,10 +49,7 @@ const teams = [
 ];
 
 const uiSettings = {
-  fullScreen: true,
-  showExampleMenu: true,
-  showShareOption: true,
-  showSettingsOption: true,
+  //showWelcomeInfo: false,
 };
 
 function App() {
