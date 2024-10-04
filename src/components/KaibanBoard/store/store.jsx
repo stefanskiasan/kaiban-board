@@ -148,15 +148,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 initDbAction: () => {
                     const firebaseConfig = {
                         apiKey: findSingleEnvValue('FIREBASE_API_KEY'),
-                        authDomain: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
-                        projectId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
-                        storageBucket: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
-                        messagingSenderId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
-                        appId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_APP_ID'),
-                        measurementId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID')
+                        authDomain: findSingleEnvValue('FIREBASE_AUTH_DOMAIN'),
+                        projectId: findSingleEnvValue('FIREBASE_PROJECT_ID'),
+                        storageBucket: findSingleEnvValue('FIREBASE_STORAGE_BUCKET'),
+                        messagingSenderId: findSingleEnvValue('FIREBASE_MESSAGING_SENDER_ID'),
+                        appId: findSingleEnvValue('FIREBASE_APP_ID'),
+                        measurementId: findSingleEnvValue('FIREBASE_MEASUREMENT_ID')
                     };
-
-                    console.log('Firebase config:', firebaseConfig);
 
                     const initFirebase = () => {
                         if (!getApps().length) {
