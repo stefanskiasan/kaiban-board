@@ -3,7 +3,7 @@ import { devtools, subscribeWithSelector } from 'zustand/middleware';
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import toast from 'react-hot-toast';
-import { encryptKeys, extractTeamName, replaceKeysWithEnvValues } from '../utils/helper';
+import { encryptKeys, extractTeamName, findEnvValues, findSingleEnvValue } from '../utils/helper';
 import { resumeCreationOpenai } from '../assets/teams/resume_creation';
 
 // INFO: For code evaluation
@@ -146,18 +146,17 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 },
 
                 initDbAction: () => {
-                    const isClient = typeof window !== 'undefined';
-                    const getEnvValue = (key) => isClient ? import.meta.env[`VITE_${key.slice(11)}`] : process.env[key];
-
                     const firebaseConfig = {
-                        apiKey: getEnvValue('NEXT_PUBLIC_FIREBASE_API_KEY'),
-                        authDomain: getEnvValue('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
-                        projectId: getEnvValue('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
-                        storageBucket: getEnvValue('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
-                        messagingSenderId: getEnvValue('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
-                        appId: getEnvValue('NEXT_PUBLIC_FIREBASE_APP_ID'),
-                        measurementId: getEnvValue('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID')
+                        apiKey: findSingleEnvValue('FIREBASE_API_KEY'),
+                        authDomain: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
+                        projectId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+                        storageBucket: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+                        messagingSenderId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+                        appId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_APP_ID'),
+                        measurementId: findSingleEnvValue('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID')
                     };
+
+                    console.log('Firebase config:', firebaseConfig);
 
                     const initFirebase = () => {
                         if (!getApps().length) {
@@ -268,7 +267,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
                     const team = exampleCode();
                     const code = team.code;
-                    const keys = replaceKeysWithEnvValues(team.keys || []);
+                    const keys = findEnvValues(team.keys || []);
                     const user = team.user;
                     const name = extractTeamName(code);
 
@@ -301,7 +300,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
                         if (!code) {
                             const team = resumeCreationOpenai();
-                            const keys = replaceKeysWithEnvValues(team.keys || []);
+                            const keys = findEnvValues(team.keys || []);
                             const user = team.user;
                             const project = {
                                 name: "Untitled Project",

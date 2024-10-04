@@ -229,50 +229,6 @@ export const getRandomUsername = () => {
     return USER_NAMES[randomIndex];
 };
 
-export const replaceKeysWithEnvValues = (keys) => {
-    const getEnvValue = (cleanedKey, environmentPrefix) => {
-        const finalKey = `${environmentPrefix}${cleanedKey}`;
-
-        if (environmentPrefix === 'NEXT_PUBLIC_' && typeof process !== 'undefined') {
-            const envVars = {
-                NEXT_PUBLIC_OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-                NEXT_PUBLIC_ANTHROPIC_API_KEY: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
-                NEXT_PUBLIC_GOOGLE_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-                NEXT_PUBLIC_MISTRAL_API_KEY: process.env.NEXT_PUBLIC_MISTRAL_API_KEY,
-                NEXT_PUBLIC_TRAVILY_API_KEY: process.env.NEXT_PUBLIC_TRAVILY_API_KEY,
-            };
-
-            return envVars[finalKey];
-        } else if (environmentPrefix === 'VITE_' && typeof import.meta.env !== 'undefined') {
-            return import.meta.env[finalKey];
-        } else {
-            return undefined;
-        }
-    };
-
-    return keys.map(item => {
-        let envValue = undefined;
-        const cleanedKey = item.value.replace(/^NEXT_PUBLIC_|^VITE_/, '');
-
-        const envPrefixes = {
-            next: 'NEXT_PUBLIC_',
-            vite: 'VITE_',
-        };
-
-        for (const [type, prefix] of Object.entries(envPrefixes)) {
-            envValue = getEnvValue(cleanedKey, prefix);
-            if (envValue !== undefined) {
-                break;
-            }
-        }
-
-        return {
-            ...item,
-            value: envValue !== undefined ? envValue : item.value
-        };
-    });
-};
-
 export const checkApiKeys = (team) => {
     const missingKeys = [];
 
@@ -289,4 +245,59 @@ export const checkApiKeys = (team) => {
     }
 
     return missingKeys;
+};
+
+const getEnvValue = (cleanedKey, environmentPrefix) => {
+    const finalKey = `${environmentPrefix}${cleanedKey}`;
+
+    if (environmentPrefix === 'NEXT_PUBLIC_' && typeof process !== 'undefined') {
+        const envVars = {
+            NEXT_PUBLIC_OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+            NEXT_PUBLIC_ANTHROPIC_API_KEY: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
+            NEXT_PUBLIC_GOOGLE_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+            NEXT_PUBLIC_MISTRAL_API_KEY: process.env.NEXT_PUBLIC_MISTRAL_API_KEY,
+            NEXT_PUBLIC_TRAVILY_API_KEY: process.env.NEXT_PUBLIC_TRAVILY_API_KEY,
+        };
+        return envVars[finalKey];
+    } else if (environmentPrefix === 'VITE_' && typeof import.meta.env !== 'undefined') {
+        return import.meta.env[finalKey];
+    } else {
+        return undefined;
+    }
+};
+
+const cleanKey = (key) => key.replace(/^NEXT_PUBLIC_|^VITE_/, '');
+
+const findEnvValueByPrefixes = (cleanedKey) => {
+    const envPrefixes = {
+        next: 'NEXT_PUBLIC_',
+        vite: 'VITE_',
+    };
+
+    let envValue = undefined;
+    for (const [type, prefix] of Object.entries(envPrefixes)) {
+        envValue = getEnvValue(cleanedKey, prefix);
+        if (envValue !== undefined) {
+            break;
+        }
+    }
+    return envValue;
+};
+
+export const findSingleEnvValue = (key) => {
+    const cleanedKey = cleanKey(key);
+    const envValue = findEnvValueByPrefixes(cleanedKey);
+    return envValue !== undefined ? envValue : null;
+};
+
+export const findEnvValues = (keys) => {
+    return keys.map(item => {
+        const cleanedKey = cleanKey(item.value);
+        const envValue = findEnvValueByPrefixes(cleanedKey);
+
+        return {
+            ...item,
+            value: envValue !== undefined ? envValue : item.value
+        };
+    });
 };
