@@ -5,7 +5,7 @@ import { Agent, Task, Team } from 'kaibanjs';
 
 // Define agents with specific roles and goals
 const profileAnalyst = new Agent({
-    name: 'Mary', 
+    name: 'Zoe', 
     role: 'Profile Analyst', 
     goal: 'Extract structured information from conversational user input.', 
     background: 'Data Processor',

@@ -166,6 +166,9 @@ const Preview = () => {
     };
 
     const removeLineBreaksAndExtraSpaces = (text) => {
+        if (typeof text !== 'string') {
+            return text;
+        }
         return text.replace(/(\r\n|\n|\r)/gm, " ").replace(/\s+/g, " ");
     };
 

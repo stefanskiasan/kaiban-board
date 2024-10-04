@@ -41,7 +41,7 @@ npm install kaiban-board
 Here’s a basic example of how to use **Kaiban Board** in your project:
 
 ```jsx
-import 'kaibanjs-ui/dist/index.css';  // Import the minified CSS
+import 'kaiban-board/dist/index.css';  // Import the minified CSS
 import KaibanBoard from 'kaiban-board';  // Import the minified JS
 
 const teams = [

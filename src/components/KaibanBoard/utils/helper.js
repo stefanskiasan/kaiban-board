@@ -230,21 +230,46 @@ export const getRandomUsername = () => {
 };
 
 export const replaceKeysWithEnvValues = (keys) => {
-    const isClient = typeof window !== 'undefined';
+    const getEnvValue = (cleanedKey, environmentPrefix) => {
+        const finalKey = `${environmentPrefix}${cleanedKey}`;
+
+        if (environmentPrefix === 'NEXT_PUBLIC_' && typeof process !== 'undefined') {
+            const envVars = {
+                NEXT_PUBLIC_OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+                NEXT_PUBLIC_ANTHROPIC_API_KEY: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
+                NEXT_PUBLIC_GOOGLE_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+                NEXT_PUBLIC_MISTRAL_API_KEY: process.env.NEXT_PUBLIC_MISTRAL_API_KEY,
+                NEXT_PUBLIC_TRAVILY_API_KEY: process.env.NEXT_PUBLIC_TRAVILY_API_KEY,
+            };
+
+            return envVars[finalKey];
+        } else if (environmentPrefix === 'VITE_' && typeof import.meta.env !== 'undefined') {
+            return import.meta.env[finalKey];
+        } else {
+            return undefined;
+        }
+    };
 
     return keys.map(item => {
-        if (item.value.startsWith('NEXT_PUBLIC_')) {
-            const envKey = isClient
-                ? `VITE_${item.value.replace('NEXT_PUBLIC_', '')}`
-                : item.value;
+        let envValue = undefined;
+        const cleanedKey = item.value.replace(/^NEXT_PUBLIC_|^VITE_/, '');
 
-            const envValue = isClient
-                ? import.meta.env[envKey]
-                : process.env[envKey];
+        const envPrefixes = {
+            next: 'NEXT_PUBLIC_',
+            vite: 'VITE_',
+        };
 
-            return { ...item, value: envValue || '' };
+        for (const [type, prefix] of Object.entries(envPrefixes)) {
+            envValue = getEnvValue(cleanedKey, prefix);
+            if (envValue !== undefined) {
+                break;
+            }
         }
-        return item;
+
+        return {
+            ...item,
+            value: envValue !== undefined ? envValue : item.value
+        };
     });
 };
 

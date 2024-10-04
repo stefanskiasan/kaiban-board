@@ -26,12 +26,10 @@ const BoardView = () => {
     const {
         tasks,
         agents,
-        name,
         workflowLogs
     } = teamStore(state => ({
         tasks: state.tasks,
         agents: state.agents,
-        name: state.name,
         workflowLogs: state.workflowLogs
     }));
 
@@ -81,9 +79,7 @@ const BoardView = () => {
             <div className="flex flex-row">
                 <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
                     <ViewColumnsIcon className="w-4 h-4 text-white" />
-                    <div className="flex gap-1">
-                        <span className="text-sm font-medium text-white">{'Kaiban Board'}</span>
-                    </div>
+                    <span className="text-sm font-medium text-white">{'Kaiban Board'}</span>
                 </div>
                 <div className="flex-grow border border-slate-700 border-r-0 border-t-0 bg-slate-950">
                     <div className="flex items-center gap-4 h-full pr-3.5">
