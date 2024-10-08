@@ -88,32 +88,32 @@ const SettingsDialog = () => {
     };
 
     return (
-        <div className="absolute w-full h-full inset-0 bg-slate-950/50">
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div ref={containerRef} className="z-40 w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                    <div className="flex items-center">
-                        <h3 className="text-base/7 font-medium text-white">
+        <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+            <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
+                <div ref={containerRef} className="kb-z-40 kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
+                    <div className="kb-flex kb-items-center">
+                        <h3 className="kb-text-base/7 kb-font-medium kb-text-white">
                             Settings
                         </h3>
-                        <Button className="ml-auto text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                        <Button className="kb-ml-auto kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => setSettingsDialogOpenAction(false)}
                         >
-                            <XMarkIcon className="w-5 h-5" />
+                            <XMarkIcon className="kb-w-5 kb-h-5" />
                         </Button>
                     </div>
-                    <p className="mt-2 text-sm/6 text-slate-400">
+                    <p className="kb-mt-2 kb-text-sm/6 kb-text-slate-400">
                         Please enter the keys you plan to use throughout your code.
                     </p>
-                    <div className="mt-2">
+                    <div className="kb-mt-2">
                         {keys.map((item, index) => (
-                            <div key={index} className="grid grid-cols-[1fr_1fr_auto] gap-2 mb-2">
+                            <div key={index} className="kb-grid kb-grid-cols-[1fr_1fr_auto] kb-gap-2 kb-mb-2">
                                 <Input
                                     type="text"
                                     name="key"
                                     value={item.key}
                                     onChange={(event) => handleInputChange(index, event)}
                                     placeholder="Key"
-                                    className="block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                                    className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25"
                                 />
                                 <Input
                                     type="text"
@@ -122,27 +122,27 @@ const SettingsDialog = () => {
                                     onChange={(event) => handleInputChange(index, event)}
                                     disabled={!item.isNew}
                                     placeholder="Value"
-                                    className="block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                                    className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25"
                                 />
-                                <Button className="w-min inline-flex items-center rounded-lg bg-red-500/5 p-2 text-red-500 focus:outline-none data-[hover]:bg-red-500/20 data-[hover]:text-red-600 data-[focus]:outline-1 data-[focus]:outline-white"
+                                <Button className="kb-w-min kb-inline-flex kb-items-center kb-rounded-lg kb-bg-red-500/5 kb-p-2 kb-text-red-500 focus:kb-outline-none data-[hover]:kb-bg-red-500/20 data-[hover]:kb-text-red-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                                     onClick={() => handleRemoveKey(index)}>
-                                    <TrashIcon className="w-5 h-5" />
+                                    <TrashIcon className="kb-w-5 kb-h-5" />
                                 </Button>
                             </div>
                         ))}
-                        <Button className="inline-flex items-center gap-2 rounded-lg bg-indigo-500/10 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                        <Button className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-indigo-500/10 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={handleAddKey}>
-                            <PlusIcon className="w-5 h-5" />
+                            <PlusIcon className="kb-w-5 kb-h-5" />
                             Add Key
                         </Button>
                     </div>
-                    <div className="mt-4 flex gap-2 items-center">
-                        <Button className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-slate-800 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                    <div className="kb-mt-4 kb-flex kb-gap-2 kb-items-center">
+                        <Button className="kb-ml-auto kb-min-w-20 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-slate-800 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => setSettingsDialogOpenAction(false)}>
                             Cancel
                         </Button>
                         <Button
-                            className="min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:text-slate-600 data-[disabled]:bg-indigo-500/10"
+                            className="kb-min-w-20 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-text-slate-600 data-[disabled]:kb-bg-indigo-500/10"
                             onClick={() => {
                                 handleSaveKeys();
                             }}

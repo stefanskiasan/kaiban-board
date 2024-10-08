@@ -43,28 +43,28 @@ const ExamplesMenu = () => {
 
     return (
         <Popover>
-            <PopoverButton disabled={teamWorkflowStatus === 'RUNNING'} className="relative group w-min flex items-center p-2 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white">
-                <div className="border-r border-slate-700 h-[32px] mr-5"></div>
+            <PopoverButton disabled={teamWorkflowStatus === 'RUNNING'} className="kb-relative kb-group kb-w-min kb-flex kb-items-center kb-p-2 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white">
+                <div className="kb-border-r kb-border-slate-700 kb-h-[32px] kb-mr-5"></div>
                 Examples
-                <ChevronDownIcon className="w-4 h-4 ml-1" />
+                <ChevronDownIcon className="kb-w-4 kb-h-4 kb-ml-1" />
             </PopoverButton>
             <PopoverPanel
                 transition
                 anchor="bottom"
-                className="min-w-[125px] z-[51] rounded-xl bg-slate-900 p-2 ring-1 ring-slate-950 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0"
+                className="kb-min-w-[125px] kb-z-[51] kb-rounded-xl kb-bg-slate-900 kb-p-2 kb-ring-1 kb-ring-slate-950 kb-text-sm/6 kb-transition kb-duration-200 kb-ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-kb-translate-y-1 data-[closed]:kb-opacity-0"
             >
-                <div className="p-1">
-                    <CloseButton className="group block w-full rounded-lg py-2 px-3 transition hover:bg-indigo-500/15"
+                <div className="kb-p-1">
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("sportsNewsOpenai") }}>
-                        <p className="text-sm font-medium text-slate-400 text-left group-hover:text-indigo-500">Sports News Team</p>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Sports News Team</p>
                     </CloseButton>
-                    <CloseButton className="group block w-full rounded-lg py-2 px-3 transition hover:bg-indigo-500/15"
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("tripPlanningOpenai") }}>
-                        <p className="text-sm font-medium text-slate-400 text-left group-hover:text-indigo-500">Trip Planning Team</p>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Trip Planning Team</p>
                     </CloseButton>
-                    <CloseButton className="group block w-full rounded-lg py-2 px-3 transition hover:bg-indigo-500/15"
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("resumeCreationOpenai") }}>
-                        <p className="text-sm font-medium text-slate-400 text-left group-hover:text-indigo-500">Resume Creation Team</p>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Resume Creation Team</p>
                     </CloseButton>
                 </div>
             </PopoverPanel>

@@ -52,31 +52,31 @@ const ShareDialog = () => {
 
 
     return (
-        <div className="absolute w-full h-full inset-0 bg-slate-950/50">
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div ref={containerRef} className="z-40 w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                    <div className="flex items-center">
-                        <h3 className="text-base/7 font-medium text-white">
+        <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+            <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
+                <div ref={containerRef} className="kb-z-40 kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
+                    <div className="kb-flex kb-items-center">
+                        <h3 className="kb-text-base/7 kb-font-medium kb-text-white">
                             Share Team
                         </h3>
-                        <Button className="ml-auto text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                        <Button className="kb-ml-auto kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => setShareDialogOpenAction(false)}
                         >
-                            <XMarkIcon className="w-5 h-5" />
+                            <XMarkIcon className="kb-w-5 kb-h-5" />
                         </Button>
                     </div>
-                    <p className="mt-2 text-sm/6 text-slate-400">
+                    <p className="kb-mt-2 kb-text-sm/6 kb-text-slate-400">
                         Pick a username or stick with the default.
                     </p>
-                    <p className="text-xs text-slate-600">
+                    <p className="kb-text-xs kb-text-slate-600">
                         Your agents and team will be publicly visible on the internet. Ensure all information is suitable for public sharing.
                     </p>
-                    <div className="mt-4">
-                        <div className="grid grid-cols-[auto_1fr] gap-2 mb-2">
+                    <div className="kb-mt-4">
+                        <div className="kb-grid kb-grid-cols-[auto_1fr] kb-gap-2 kb-mb-2">
                             {executed.current && (
-                                <div className="relative group flex items-center">
+                                <div className="kb-relative kb-group kb-flex kb-items-center">
                                     <AgentAvatar agent={{ name: userName !== "" ? userName : "Username" }} size="xl" />
-                                    {userName === defaultUsername.username && <Tooltip text={defaultUsername.explanation} styles="left-[22px]" />}
+                                    {userName === defaultUsername.username && <Tooltip text={defaultUsername.explanation} styles="kb-left-[22px]" />}
                                 </div>
                             )}
                             <Input
@@ -86,23 +86,23 @@ const ShareDialog = () => {
                                 onChange={(e) => setUserName(e.target.value)}
                                 disabled={isLoadingShare}
                                 placeholder="Username"
-                                className="block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                                className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25"
                             />
                         </div>
                     </div>
-                    <div className="mt-6 flex gap-2 items-center">
+                    <div className="kb-mt-6 kb-flex kb-gap-2 kb-items-center">
                         {isLoadingShare && (
-                            <div className="flex items-center gap-2">
+                            <div className="kb-flex kb-items-center kb-gap-2">
                                 <Spinner />
-                                <span className="text-xs font-medium text-slate-400">Sharing team details...</span>
+                                <span className="kb-text-xs kb-font-medium kb-text-slate-400">Sharing team details...</span>
                             </div>
                         )}
-                         <Button className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-slate-800 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                        <Button className="kb-ml-auto kb-min-w-20 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-slate-800 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => setShareDialogOpenAction(false)}>
                             Cancel
                         </Button>
                         <Button
-                            className="min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-indigo-500/15"
+                            className="kb-min-w-20 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-indigo-500/15"
                             onClick={() => {
                                 shareTeamAction(userName);
                             }}

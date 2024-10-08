@@ -32,7 +32,7 @@
     padding: 0 .25rem;
 }
 
-#kaibanjs .swiper-pagination {
+#kaibanjs.kb-full-screen .swiper-pagination {
     position: fixed;
     left: 1.5rem;
 }

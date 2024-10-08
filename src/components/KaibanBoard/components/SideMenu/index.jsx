@@ -25,35 +25,35 @@ const SideMenu = () => {
     }));
 
     return (
-        <TabList className="w-[55px] flex flex-col">
-            <Tab className="relative z-10 isolate group w-full h-[55px] flex justify-center items-center border-l-2 pr-[2px] border-slate-900 text-sm font-medium text-slate-400 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-500 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:text-slate-500"
+        <TabList className="kb-w-[55px] kb-flex kb-flex-col">
+            <Tab className="kb-relative kb-z-10 kb-isolate kb-group kb-w-full kb-h-[55px] kb-flex kb-justify-center kb-items-center kb-border-l-2 kb-pr-[2px] kb-border-slate-900 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[selected]:kb-border-indigo-500 data-[selected]:kb-text-indigo-500 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-text-slate-500"
                 onClick={() => setTabAction(0)}
                 disabled={teamWorkflowStatus === 'RUNNING'}
             >
                 {!uiSettings.isPreviewMode ? (
                     <>
-                        <CodeBracketIcon className="w-6 h-6" />
+                        <CodeBracketIcon className="kb-w-6 kb-h-6" />
                         <Tooltip text="Setup Team" />
                     </>
                 ) : (
                     <>
-                        <Squares2X2Icon className="w-6 h-6" />
+                        <Squares2X2Icon className="kb-w-6 kb-h-6" />
                         <Tooltip text="Dashboard" />
                     </>
                 )}
 
             </Tab>
-            <Tab className="relative z-10 isolate group w-full h-[55px] flex justify-center items-center border-l-2 pr-[2px] border-slate-900 text-sm font-medium text-slate-400 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-500 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+            <Tab className="kb-relative kb-z-10 kb-isolate kb-group kb-w-full kb-h-[55px] kb-flex kb-justify-center kb-items-center kb-border-l-2 kb-pr-[2px] kb-border-slate-900 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[selected]:kb-border-indigo-500 data-[selected]:kb-text-indigo-500 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                 onClick={() => setTabAction(1)}
             >
-                <ViewColumnsIcon className="w-6 h-6" />
+                <ViewColumnsIcon className="kb-w-6 kb-h-6" />
                 <Tooltip text="Kaiban Board" />
             </Tab>
-            <Tab className="relative z-10 isolate group w-full h-[55px] flex justify-center items-center border-l-2 pr-[2px] border-slate-900 text-sm font-medium text-slate-400 focus:outline-none data-[selected]:border-indigo-500 data-[selected]:text-indigo-500 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:text-slate-500"
+            <Tab className="kb-relative kb-z-10 kb-isolate kb-group kb-w-full kb-h-[55px] kb-flex kb-justify-center kb-items-center kb-border-l-2 kb-pr-[2px] kb-border-slate-900 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[selected]:kb-border-indigo-500 data-[selected]:kb-text-indigo-500 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-text-slate-500"
                 onClick={() => setTabAction(2)}
                 disabled={teamWorkflowStatus === 'RUNNING'}
             >
-                <SparklesIcon className="w-6 h-6" />
+                <SparklesIcon className="kb-w-6 kb-h-6" />
                 <Tooltip text="Results Overview" />
             </Tab>
         </TabList>

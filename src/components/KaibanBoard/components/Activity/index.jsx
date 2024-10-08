@@ -63,33 +63,33 @@ const Activity = () => {
 
     return (
         <Transition show={isActivityOpen && selectedTab === 1 && logsList.length > 0}>
-            <div className="absolute top-0 -right-[1px] transition ease-in-out data-[closed]:opacity-0 data-[enter]:duration-300 data-[enter]:data-[closed]:translate-x-full data-[leave]:duration-300 data-[leave]:data-[closed]:translate-x-full">
-                <div ref={containerRef} className="mt-[54px] bg-slate-900 w-[400px] h-full border border-slate-700 divide-y divide-slate-700 shadow-2xl shadow-slate-950 backdrop-blur-2xl">
-                    <div className="relative py-2 px-4 h-[43px] flex items-center justify-center">
-                        <span className="text-sm font-medium text-white">Activity</span>
-                        <Button className="ml-auto inline-flex items-center rounded-full p-1 text-slate-400 text-sm focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
-                            <XMarkIcon className="w-5 h-5" onClick={() => { setActivityOpenAction(false) }} />
+            <div className="kb-absolute kb-top-0 -kb-right-[1px] kb-transition kb-ease-in-out data-[closed]:kb-opacity-0 data-[enter]:kb-duration-300 data-[enter]:data-[closed]:kb-translate-x-full data-[leave]:kb-duration-300 data-[leave]:data-[closed]:kb-translate-x-full">
+                <div ref={containerRef} className="kb-mt-[54px] kb-bg-slate-900 kb-w-[400px] kb-h-full kb-border kb-border-slate-700 kb-divide-y kb-divide-slate-700 kb-shadow-2xl kb-shadow-slate-950 kb-backdrop-blur-2xl">
+                    <div className="kb-relative kb-py-2 kb-px-4 kb-h-[43px] kb-flex kb-items-center kb-justify-center">
+                        <span className="kb-text-sm kb-font-medium kb-text-white">Activity</span>
+                        <Button className="kb-ml-auto kb-inline-flex kb-items-center kb-rounded-full kb-p-1 kb-text-slate-400 kb-text-sm focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[open]:kb-bg-gray-700 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white">
+                            <XMarkIcon className="kb-w-5 kb-h-5" onClick={() => { setActivityOpenAction(false) }} />
                         </Button>
                     </div>
-                    <div className={`flex flex-col gap-4 p-4 min-w-full overflow-auto ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "h-[calc(100vh-98px)]" : "h-[202px] sm:h-[302px] md:h-[402px] lg:h-[502px] xl:h-[602px] 2xl:h-[702px]"}`}>
+                    <div className={`kb-flex kb-flex-col kb-gap-4 kb-p-4 kb-min-w-full kb-overflow-auto ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-h-[calc(100vh-98px)]" : "kb-h-[202px] sm:kb-h-[302px] md:kb-h-[402px] lg:kb-h-[502px] xl:kb-h-[602px] 2xl:kb-h-[702px]"}`}>
                         {logsList.map((log, idx) => (
-                            <div key={idx} className="grid grid-cols-[28px_1fr] gap-2">
+                            <div key={idx} className="kb-grid kb-grid-cols-[28px_1fr] kb-gap-2">
                                 {(log.status === "REVISE" || log.status === "VALIDATED") ? (
-                                    <div className="bg-slate-950/50 text-slate-500 rounded-full w-7 h-7 flex justify-center relative">
-                                        <UserIcon className="w-5 h-5 absolute bottom-0" />
+                                    <div className="kb-bg-slate-950/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
+                                        <UserIcon className="kb-w-5 kb-h-5 kb-absolute kb-bottom-0" />
                                     </div>
                                 ) : (
                                     <div>
                                         <AgentAvatar agent={{ name: log.agent }} showBorder={false} />
                                     </div>
                                 )}
-                                <div className="flex flex-col gap-1">
+                                <div className="kb-flex kb-flex-col kb-gap-1">
                                     <p>
-                                        <span className="text-sm font-medium text-slate-200">{(log.status === "REVISE" || log.status === "VALIDATED") ? 'Anonymous' : log.agent}</span>
-                                        <span className="text-sm font-normal text-slate-400">{log.description}</span>
+                                        <span className="kb-text-sm kb-font-medium kb-text-slate-200">{(log.status === "REVISE" || log.status === "VALIDATED") ? 'Anonymous' : log.agent}</span>
+                                        <span className="kb-text-sm kb-font-normal kb-text-slate-400">{log.description}</span>
                                     </p>
                                     {log.details !== "" && (
-                                        <ActivityDetails details={log.details} styles={"max-w-[320px]"} />
+                                        <ActivityDetails details={log.details} styles={"kb-max-w-[320px]"} />
                                     )}
                                 </div>
                             </div>

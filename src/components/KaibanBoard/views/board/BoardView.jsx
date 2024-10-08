@@ -76,24 +76,24 @@ const BoardView = () => {
 
     return (
         <>
-            <div className="flex flex-row">
-                <div className="px-6 mt-3 pb-3 flex items-center gap-1.5">
-                    <ViewColumnsIcon className="w-4 h-4 text-white" />
-                    <span className="text-sm font-medium text-white">{'Kaiban Board'}</span>
+            <div className="kb-flex kb-flex-row">
+                <div className="kb-px-6 kb-mt-3 kb-pb-3 kb-flex kb-items-center kb-gap-1.5">
+                    <ViewColumnsIcon className="kb-w-4 kb-h-4 kb-text-white" />
+                    <span className="kb-text-sm kb-font-medium kb-text-white">{'Kaiban Board'}</span>
                 </div>
-                <div className="flex-grow border border-slate-700 border-r-0 border-t-0 bg-slate-950">
-                    <div className="flex items-center gap-4 h-full pr-3.5">
-                        <div className="ml-auto hidden md:flex -space-x-2">
+                <div className="kb-flex-grow border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-950">
+                    <div className="kb-flex kb-items-center kb-gap-4 kb-h-full kb-pr-3.5">
+                        <div className="kb-ml-auto kb-hidden md:kb-flex -kb-space-x-2">
                             {agents?.map((agent) => (
                                 <AgentAvatar key={agent.id} agent={agent} size="sm" />
                             ))}
                         </div>
                         {logs.length > 0 && (
-                            <Button className="ml-auto md:ml-0 inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-slate-400 text-sm focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white group"
+                            <Button className="kb-ml-auto md:kb-ml-0 kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-slate-400 kb-text-sm focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[open]:kb-bg-gray-700 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white kb-group"
                                 onClick={() => { setActivityOpenAction(true) }}>
-                                <ListBulletIcon className="w-5 h-5" />
+                                <ListBulletIcon className="kb-w-5 kb-h-5" />
                                 Activity
-                                <span className="text-xs text-slate-900 bg-slate-400 rounded-full px-1 group-hover:bg-indigo-500 group-hover:text-slate-900">
+                                <span className="kb-text-xs kb-text-slate-900 kb-bg-slate-400 kb-rounded-full kb-px-1 group-hover:kb-bg-indigo-500 group-hover:kb-text-slate-900">
                                     {logs.length}
                                 </span>
                             </Button>
@@ -102,12 +102,12 @@ const BoardView = () => {
                 </div>
             </div>
             {/* --- DESKTOP --- */}
-            <div className="relative hidden md:grid grid-cols-4 justify-stretch gap-3 divide-x divide-slate-700 px-6 h-full">
+            <div className="kb-relative kb-hidden md:kb-grid kb-grid-cols-4 kb-justify-stretch kb-gap-3 kb-divide-x kb-divide-slate-700 kb-px-6 kb-h-full">
                 {/* --- TODO --- */}
-                <div className="flex flex-col gap-3 pb-3">
-                    <div className="flex gap-2 items-center pt-4">
-                        <span className="text-sm font-medium text-slate-400">To Do</span>
-                        <span className="text-sm font-semibold text-slate-700">{tasksToDo.length}</span>
+                <div className="kb-flex kb-flex-col kb-gap-3 kb-pb-3">
+                    <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                        <span className="kb-text-sm kb-font-medium kb-text-slate-400">To Do</span>
+                        <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksToDo.length}</span>
                     </div>
                     {tasksToDo.map((task) => (
                         <TaskCard key={task.id} task={task} />
@@ -115,10 +115,10 @@ const BoardView = () => {
                 </div>
                 {/* --- TODO --- */}
                 {/* --- DOING --- */}
-                <div className="flex flex-col gap-3 pl-3 pb-3">
-                    <div className="flex gap-2 items-center pt-4">
-                        <span className="text-sm font-medium text-slate-400">Doing</span>
-                        <span className="text-sm font-semibold text-slate-700">{tasksDoing.length}</span>
+                <div className="kb-flex kb-flex-col kb-gap-3 kb-pl-3 kb-pb-3">
+                    <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                        <span className="kb-text-sm kb-font-medium kb-text-slate-400">Doing</span>
+                        <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksDoing.length}</span>
                     </div>
                     {tasksDoing.map((task) => (
                         <TaskCard key={task.id} task={task} />
@@ -126,10 +126,10 @@ const BoardView = () => {
                 </div>
                 {/* --- DOING --- */}
                 {/* --- BLOCKED --- */}
-                <div className="flex flex-col gap-3 pl-3 pb-3">
-                    <div className="flex gap-2 items-center pt-4">
-                        <span className="text-sm font-medium text-slate-400">Blocked</span>
-                        <span className="text-sm font-semibold text-slate-700">{tasksBlocked.length}</span>
+                <div className="kb-flex kb-flex-col kb-gap-3 kb-pl-3 kb-pb-3">
+                    <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                        <span className="kb-text-sm kb-font-medium kb-text-slate-400">Blocked</span>
+                        <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksBlocked.length}</span>
                     </div>
                     {tasksBlocked.map((task) => (
                         <TaskCard key={task.id} task={task} />
@@ -137,10 +137,10 @@ const BoardView = () => {
                 </div>
                 {/* --- BLOCKED --- */}
                 {/* --- DONE --- */}
-                <div className="flex flex-col gap-3 pl-3 pb-3">
-                    <div className="flex gap-2 items-center pt-4">
-                        <span className="text-sm font-medium text-slate-400">Done</span>
-                        <span className="text-sm font-semibold text-slate-700">{tasksDone.length}</span>
+                <div className="kb-flex kb-flex-col kb-gap-3 kb-pl-3 kb-pb-3">
+                    <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                        <span className="kb-text-sm kb-font-medium kb-text-slate-400">Done</span>
+                        <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksDone.length}</span>
                     </div>
                     {tasksDone.map((task) => (
                         <TaskCard key={task.id} task={task} />
@@ -151,14 +151,14 @@ const BoardView = () => {
             {/* --- DESKTOP --- */}
             {/* --- MOBILE --- */}
             {/* --- MOBILE --- */}
-            <div className="block md:hidden relative px-6 h-full">
+            <div className="kb-block md:kb-hidden kb-relative kb-px-6 kb-h-full">
                 <Swiper spaceBetween={12} pagination={{ clickable: true }} modules={[Pagination]}>
                     {/* --- TODO --- */}
                     <SwiperSlide>
-                        <div className="flex flex-col gap-3 pb-3">
-                            <div className="flex gap-2 items-center pt-4">
-                                <span className="text-sm font-medium text-slate-400">To Do</span>
-                                <span className="text-sm font-semibold text-slate-700">{tasksToDo.length}</span>
+                        <div className="kb-flex kb-flex-col kb-gap-3 kb-pb-3">
+                            <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                                <span className="kb-text-sm kb-font-medium kb-text-slate-400">To Do</span>
+                                <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksToDo.length}</span>
                             </div>
                             {tasksToDo.map((task) => (
                                 <TaskCard key={task.id} task={task} />
@@ -168,10 +168,10 @@ const BoardView = () => {
                     {/* --- TODO --- */}
                     {/* --- DOING --- */}
                     <SwiperSlide>
-                        <div className="flex flex-col gap-3 pl-3 pb-3">
-                            <div className="flex gap-2 items-center pt-4">
-                                <span className="text-sm font-medium text-slate-400">Doing</span>
-                                <span className="text-sm font-semibold text-slate-700">{tasksDoing.length}</span>
+                        <div className="kb-flex kb-flex-col kb-gap-3 kb-pb-3">
+                            <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                                <span className="kb-text-sm kb-font-medium kb-text-slate-400">Doing</span>
+                                <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksDoing.length}</span>
                             </div>
                             {tasksDoing.map((task) => (
                                 <TaskCard key={task.id} task={task} />
@@ -181,10 +181,10 @@ const BoardView = () => {
                     {/* --- DOING --- */}
                     {/* --- BLOCKED --- */}
                     <SwiperSlide>
-                        <div className="flex flex-col gap-3 pl-3 pb-3">
-                            <div className="flex gap-2 items-center pt-4">
-                                <span className="text-sm font-medium text-slate-400">Blocked</span>
-                                <span className="text-sm font-semibold text-slate-700">{tasksBlocked.length}</span>
+                        <div className="kb-flex kb-flex-col kb-gap-3 kb-pb-3">
+                            <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                                <span className="kb-text-sm kb-font-medium kb-text-slate-400">Blocked</span>
+                                <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksBlocked.length}</span>
                             </div>
                             {tasksBlocked.map((task) => (
                                 <TaskCard key={task.id} task={task} />
@@ -194,10 +194,10 @@ const BoardView = () => {
                     {/* --- BLOCKED --- */}
                     {/* --- DONE --- */}
                     <SwiperSlide>
-                        <div className="flex flex-col gap-3 pl-3 pb-3">
-                            <div className="flex gap-2 items-center pt-4">
-                                <span className="text-sm font-medium text-slate-400">Done</span>
-                                <span className="text-sm font-semibold text-slate-700">{tasksDone.length}</span>
+                        <div className="kb-flex kb-flex-col kb-gap-3 kb-pb-3">
+                            <div className="kb-flex kb-gap-2 kb-items-center kb-pt-4">
+                                <span className="kb-text-sm kb-font-medium kb-text-slate-400">Done</span>
+                                <span className="kb-text-sm kb-font-semibold kb-text-slate-700">{tasksDone.length}</span>
                             </div>
                             {tasksDone.map((task) => (
                                 <TaskCard key={task.id} task={task} />

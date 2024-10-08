@@ -238,7 +238,7 @@ export const checkApiKeys = (team) => {
             missingKeys.push({
                 key: key,
                 get: key === 'OPENAI_API_KEY' ?
-                    `Get it from <a class="text-sky-300" href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI's API Keys pages.</a>` :
+                    `Get it from <a class="kb-text-sky-300" href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI's API Keys pages.</a>` :
                     'Depends on the specific API provider.'
             });
         }

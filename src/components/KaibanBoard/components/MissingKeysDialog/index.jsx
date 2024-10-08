@@ -41,67 +41,67 @@ const MissingKeysDialog = () => {
 
 
     return (
-        <div className="absolute w-full h-full inset-0 bg-slate-950/50">
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div ref={containerRef} className="z-40 w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                    <div className="flex items-center">
-                        <h3 className="text-base/7 font-medium text-white">
+        <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+            <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
+                <div ref={containerRef} className="kb-z-40 kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
+                    <div className="kb-flex kb-items-center">
+                        <h3 className="kb-text-base/7 kb-font-medium kb-text-white">
                             Missing Keys
                         </h3>
-                        <Button className="ml-auto text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                        <Button className="kb-ml-auto kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => setMissingKeysDialogOpenAction(false)}
                         >
-                            <XMarkIcon className="w-5 h-5" />
+                            <XMarkIcon className="kb-w-5 kb-h-5" />
                         </Button>
                     </div>
-                    <p className="mt-2 text-sm/6 text-slate-400">
+                    <p className="kb-mt-2 kb-text-sm/6 kb-text-slate-400">
                         Please configure the environment variables in the .env file by setting the keys listed below.
                     </p>
-                    <div className="mt-4">
-                        <div className="flex flex-col gap-2 mb-2">
+                    <div className="kb-mt-4">
+                        <div className="kb-flex kb-flex-col kb-gap-2 kb-mb-2">
                             {keys.map((key, idx) => (
-                                <div key={idx} className="flex items-stretch gap-3 relative bg-white/5 p-3 rounded-lg ring-1 ring-slate-900">
-                                    <div className="max-w-1 flex-grow rounded-full bg-red-500/75"></div>
-                                    <div key={idx} className="flex flex-col gap-2">
-                                        <div className="flex gap-1">
-                                            <span className="text-xs font-medium text-slate-200">{`Key:`}</span>
-                                            <span className="text-xs font-normal text-slate-400">{key.key}</span>
+                                <div key={idx} className="kb-flex kb-items-stretch kb-gap-3 kb-relative kb-bg-white/5 kb-p-3 kb-rounded-lg kb-ring-1 kb-ring-slate-900">
+                                    <div className="kb-max-w-1 kb-flex-grow kb-rounded-full kb-bg-red-500/75"></div>
+                                    <div key={idx} className="kb-flex kb-flex-col kb-gap-2">
+                                        <div className="kb-flex kb-gap-1">
+                                            <span className="kb-text-xs kb-font-medium kb-text-slate-200">{`Key:`}</span>
+                                            <span className="kb-text-xs kb-font-normal kb-text-slate-400">{key.key}</span>
                                         </div>
-                                        <div className="flex flex-col">
-                                            <div className="w-[360px] relative bg-slate-900 rounded-lg shadow-lg">
-                                                <div className="relative p-3">
-                                                    <pre className="text-xs leading-6 text-slate-400 flex flex-col gap-1 overflow-auto">
-                                                        <code className="flex-none min-w-full">
-                                                            <span className="flex">
-                                                                <span className="text-lime-300">{`VITE_${key.key}`}</span>
-                                                                <span className="text-fuchsia-300">{`=`}</span>
-                                                                <span className="text-yellow-400">{`your-api-key-value`}</span>
+                                        <div className="kb-flex kb-flex-col">
+                                            <div className="kb-w-[360px] kb-relative kb-bg-slate-900 kb-rounded-lg kb-shadow-lg">
+                                                <div className="kb-relative kb-p-3">
+                                                    <pre className="kb-text-xs kb-leading-6 kb-text-slate-400 kb-flex kb-flex-col kb-gap-1 kb-overflow-auto">
+                                                        <code className="kb-flex-none kb-min-w-full">
+                                                            <span className="kb-flex">
+                                                                <span className="kb-text-lime-300">{`VITE_${key.key}`}</span>
+                                                                <span className="kb-text-fuchsia-300">{`=`}</span>
+                                                                <span className="kb-text-yellow-400">{`your-api-key-value`}</span>
                                                             </span>
                                                         </code>
                                                     </pre>
 
-                                                    <div className="absolute top-2 right-2 h-8 flex items-center">
-                                                        <div className="relative flex">
-                                                            <button type="button" className="text-slate-400 hover:text-slate-200"
+                                                    <div className="kb-absolute kb-top-2 kb-right-2 kb-h-8 kb-flex kb-items-center">
+                                                        <div className="kb-relative kb-flex">
+                                                            <button type="button" className="kb-text-slate-400 hover:kb-text-slate-200"
                                                                 onClick={() => {
                                                                     navigator.clipboard.writeText(`VITE_${key.key}=your-api-key-value`);
                                                                 }}>
-                                                                <ClipboardIcon className="w-[18px] h-[18px]" />
+                                                                <ClipboardIcon className="kb-w-[18px] kb-h-[18px]" />
                                                             </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <span className="text-xs font-normal text-slate-400" dangerouslySetInnerHTML={{ __html: key.get }}></span>
+                                        <span className="kb-text-xs kb-font-normal kb-text-slate-400" dangerouslySetInnerHTML={{ __html: key.get }}></span>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="mt-6 flex gap-2 items-center">
+                    <div className="kb-mt-6 kb-flex kb-gap-2 kb-items-center">
                         <Button
-                            className="ml-auto min-w-20 inline-flex items-center justify-center gap-2 rounded-md bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-indigo-500/15"
+                            className="kb-ml-auto kb-min-w-20 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-indigo-500/15"
                             onClick={() => {
                                 setMissingKeysDialogOpenAction(false);
                             }}

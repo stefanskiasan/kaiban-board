@@ -18,18 +18,18 @@ const TeamsMenu = ({ onChange }) => {
 
     return (
         <>
-            <div className="mt-6 pb-2">
-                <span className="text-slate-400 text-lg font-medium">Your Teams</span>
+            <div className="kb-mt-6 kb-pb-2">
+                <span className="kb-text-slate-400 kb-text-lg kb-font-medium">Your Teams</span>
             </div>
             <div className="flex flex-col gap-2">
                 {teams.map((team, idx) => (
-                    <a key={idx} className={`group flex gap-2 items-center cursor-pointer`}
+                    <a key={idx} className={`kb-group kb-flex kb-gap-2 kb-items-center kb-cursor-pointer`}
                         onClick={() => {
                             setTeamAction(team);
                             onChange();
                         }}>
-                        <div className={`w-[10px] h-[10px] ring-1 rounded-sm ring-indigo-500 group-hover:bg-indigo-500 ${project?.name === team.store?.getState().name ? 'bg-indigo-500' : 'bg-slate-800'}`}></div>
-                        <span className="text-sm text-slate-200">
+                        <div className={`kb-w-[10px] kb-h-[10px] kb-ring-1 kb-rounded-sm kb-ring-indigo-500 group-hover:kb-bg-indigo-500 ${project?.name === team.store?.getState().name ? 'kb-bg-indigo-500' : 'kb-bg-slate-800'}`}></div>
+                        <span className="kb-text-sm kb-text-slate-200">
                             {team.store?.getState().name || "Untitled Project"}
                         </span>
                     </a>

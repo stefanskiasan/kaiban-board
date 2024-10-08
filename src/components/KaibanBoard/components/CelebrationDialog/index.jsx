@@ -15,21 +15,21 @@ const CelebrationDialog = () => {
     );
 
     return (
-        <div className="absolute w-full h-full inset-0 bg-slate-950/50">
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div className="z-40 w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                    <h3 className="text-base/7 font-medium text-white">
+        <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+            <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
+                <div className="kb-z-40 kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
+                    <h3 className="kb-text-base/7 kb-font-medium kb-text-white">
                         Mission Accomplished
                     </h3>
-                    <p className="mt-2 text-sm/6 text-slate-400">
+                    <p className="kb-mt-2 kb-text-sm/6 kb-text-slate-400">
                         Great job! Your team has successfully completed
                     </p>
-                    <p className="text-sm/6 text-slate-400">
+                    <p className="kb-text-sm/6 kb-text-slate-400">
                         the work. 🥳
                     </p>
-                    <div className="mt-4">
+                    <div className="kb-mt-4">
                         <Button
-                            className="inline-flex items-center gap-2 rounded-md bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white"
+                            className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                             onClick={() => {
                                 setCelebrationDialogOpenAction(false);
                                 setTabAction(2);

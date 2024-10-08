@@ -31,26 +31,26 @@ const TaskCard = ({ task, showOptions = true }) => {
     }, [workflowLogs]);
 
     return (
-        <div className={`flex flex-col gap-3 p-4 ring-1 ring-slate-950 rounded-lg bg-slate-800 w-full ${showOptions ? "hover:ring-indigo-500 cursor-pointer" : ""}`}
+        <div className={`kb-flex kb-flex-col kb-gap-3 kb-p-4 kb-ring-1 kb-ring-slate-950 kb-rounded-lg kb-bg-slate-800 kb-w-full ${showOptions ? "hover:kb-ring-indigo-500 kb-cursor-pointer" : ""}`}
             onClick={() => { if (showOptions) setSelectedTaskAction(task); }}>
-            <p className="text-sm text-white line-clamp-2">
+            <p className="kb-text-sm kb-text-white kb-line-clamp-2">
                 {task.description}
             </p>
-            <div className="flex gap-2 items-center flex-wrap">
+            <div className="kb-flex kb-gap-2 kb-items-center kb-flex-wrap">
                 {showOptions && (
-                    <div className="relative group flex items-center">
-                        <Button className="text-slate-400 focus:outline-none data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white">
-                            <Bars3BottomLeftIcon className="w-5 h-5" />
+                    <div className="kb-relative kb-group kb-flex kb-items-center">
+                        <Button className="kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white">
+                            <Bars3BottomLeftIcon className="kb-w-5 kb-h-5" />
                         </Button>
-                        <Tooltip text="View details" styles="left-0" />
+                        <Tooltip text="View details" styles="kb-left-0" />
                     </div>
                 )}
                 {showOptions && isAwaiting && (
-                    <div className="flex items-center bg-indigo-500/15 py-1 px-2 rounded-full">
-                        <span className="text-xs text-indigo-500 font-medium">Awaiting Validation</span>
+                    <div className="kb-flex kb-items-center kb-bg-indigo-500/15 kb-py-1 kb-px-2 kb-rounded-full">
+                        <span className="kb-text-xs kb-text-indigo-500 kb-font-medium">Awaiting Validation</span>
                     </div>
                 )}
-                <div className="ml-auto">
+                <div className="kb-ml-auto">
                     <AgentAvatar agent={task.agent} size="lg" />
                 </div>
             </div>

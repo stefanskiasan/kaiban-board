@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-const ActivityDetails = ({ details, styles="max-w-[428px]" }) => {
+const ActivityDetails = ({ details, styles="kb-max-w-[428px]" }) => {
 
     const [isExpanded, setIsExpanded] = useState(false);
     const textRef = useRef(null);
@@ -24,16 +24,16 @@ const ActivityDetails = ({ details, styles="max-w-[428px]" }) => {
     }, [details, checkOverflow]);
 
     return (
-        <div className={`bg-slate-800 rounded-lg px-3 py-2 ring-1 ring-slate-900 relative ${styles}`}>
-            <div className={`break-words overflow-hidden ${isOverflowing && !isExpanded ? 'max-h-14' : ''}`}>
-                <span ref={textRef} className="text-xs font-normal text-white block leading-normal">
+        <div className={`kb-bg-slate-800 kb-rounded-lg kb-px-3 kb-py-2 kb-ring-1 kb-ring-slate-900 kb-relative ${styles}`}>
+            <div className={`kb-break-words kb-overflow-hidden ${isOverflowing && !isExpanded ? 'kb-max-h-14' : ''}`}>
+                <span ref={textRef} className="kb-text-xs kb-font-normal kb-text-white kb-block kb-leading-normal">
                     {details}
                 </span>
             </div>
             {isOverflowing && (
-                <div className="relative">
-                    {!isExpanded && (<div className="absolute left-0 -top-14 w-full h-14 bg-gradient-to-t from-slate-800 to-transparent"></div>)}
-                    <button type="button" className="relative mt-1.5 flex items-center gap-0.5 text-slate-400 text-xs font-semibold hover:text-slate-200 focus:outline-none transition-colors duration-200 w-auto"
+                <div className="kb-relative">
+                    {!isExpanded && (<div className="kb-absolute kb-left-0 -kb-top-14 kb-w-full kb-h-14 kb-bg-gradient-to-t kb-from-slate-800 kb-to-transparent"></div>)}
+                    <button type="button" className="kb-relative kb-mt-1.5 kb-flex kb-items-center kb-gap-0.5 kb-text-slate-400 kb-text-xs kb-font-semibold hover:kb-text-slate-200 focus:kb-outline-none kb-transition-colors kb-duration-200 kb-w-auto"
                         onClick={() => setIsExpanded(!isExpanded)}>
                         <span>{isExpanded ? 'Show Less' : 'Show More'}</span>
                     </button>

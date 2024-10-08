@@ -4,8 +4,8 @@ const AgentAvatar = ({ agent, size, showBorder = true }) => {
     const avatarUrl = `https://robohash.org/${agent?.name}`;
 
     return (
-        <div className={`rounded-full ${showBorder ? "ring-2 ring-slate-700 bg-slate-800" : ""}`}>
-            <img className={`rounded-full bg-slate-950/50 ${size === "xl" ? "w-11 h-11" : size === "lg" ? "w-9 h-9" : size === "md" ? "w-8 h-8" : "w-[26px] h-[26px]"}`}
+        <div className={`kb-rounded-full ${showBorder ? "kb-ring-2 kb-ring-slate-700 kb-bg-slate-800" : ""}`}>
+            <img className={`kb-rounded-full kb-bg-slate-950/50 ${size === "xl" ? "kb-w-11 kb-h-11" : size === "lg" ? "kb-w-9 kb-h-9" : size === "md" ? "kb-w-8 kb-h-8" : "kb-w-[26px] kb-h-[26px]"}`}
                 src={avatarUrl} alt="agent" />
         </div>
     );

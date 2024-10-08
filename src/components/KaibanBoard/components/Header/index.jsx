@@ -105,65 +105,65 @@ const Header = ({ examplesMenu }) => {
     };
 
     return (
-        <div className="flex h-[55px] items-center gap-4 border-b border-slate-700">
-            <div className="flex md:gap-4 w-max pl-3">
+        <div className="kb-flex kb-h-[55px] kb-items-center kb-gap-4 kb-border-b kb-border-slate-700">
+            <div className="kb-flex md:kb-gap-4 kb-w-max kb-pl-3">
                 <ProjectName />
                 {uiSettings.showExampleMenu && (
                     <>{examplesMenu}</>
                 )}
             </div>
-            <div className="flex items-center gap-2 w-max h-max ml-auto pr-3.5">
+            <div className="kb-flex kb-items-center kb-gap-2 kb-w-max kb-h-max kb-ml-auto kb-pr-3.5">
                 <>
                     {teamWorkflowStatus !== 'RUNNING' && (
                         <>
                             {!uiSettings.showFullScreen && (
-                                <div className="relative group flex items-center">
-                                    <button className="w-min inline-flex items-center p-2 text-slate-400 focus:outline-none hover:text-indigo-500"
+                                <div className="kb-relative kb-group kb-flex kb-items-center">
+                                    <button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 focus:kb-outline-none hover:kb-text-indigo-500"
                                         onClick={() => { toggleMaximizeAction() }}
                                     >
-                                        {uiSettings.maximizeConfig?.isActive ? <ArrowsPointingInIcon className="w-6 h-6" /> : <ArrowsPointingOutIcon className="w-6 h-6" />}
+                                        {uiSettings.maximizeConfig?.isActive ? <ArrowsPointingInIcon className="kb-w-6 kb-h-6" /> : <ArrowsPointingOutIcon className="kb-w-6 kb-h-6" />}
                                     </button>
-                                    {uiSettings.maximizeConfig?.isActive ? <Tooltip text="Exit Full Screen" styles="left-2" /> : <Tooltip text="Full Screen" styles="left-2" />}
+                                    {uiSettings.maximizeConfig?.isActive ? <Tooltip text="Exit Full Screen" styles="kb-left-2" /> : <Tooltip text="Full Screen" styles="kb-left-2" />}
                                 </div>
                             )}
                             {uiSettings.showSettingsOption && (
-                                <div className="relative group flex items-center">
-                                    <button className="w-min inline-flex items-center p-2 text-slate-400 focus:outline-none hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white"
+                                <div className="kb-relative kb-group kb-flex kb-items-center">
+                                    <button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 focus:kb-outline-none hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                                         onClick={() => { setSettingsDialogOpenAction(true) }}
                                     >
-                                        <Cog6ToothIcon className="w-6 h-6" />
+                                        <Cog6ToothIcon className="kb-w-6 kb-h-6" />
                                     </button>
-                                    <Tooltip text="Settings" styles="left-2" />
+                                    <Tooltip text="Settings" styles="kb-left-2" />
                                 </div>
                             )}
                             {uiSettings.showShareOption && (
-                                <Button className="inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-slate-800"
+                                <Button className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
                                     onClick={() => { setShareDialogOpenAction(true) }}>
-                                    <ShareIcon className="w-5 h-5" />
-                                    Share
+                                    <ShareIcon className="kb-w-5 kb-h-5" />
+                                    <span className="kb-hidden md:kb-block">Share</span>
                                 </Button>
                             )}
                             {uiSettings.showSimpleShareOption && (
-                                <Button className="inline-flex items-center gap-2 rounded-lg bg-slate-900 py-1.5 px-3 text-sm font-medium text-slate-400 focus:outline-none data-[hover]:bg-indigo-500/15 data-[hover]:text-indigo-500 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-slate-800"
+                                <Button className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
                                     onClick={() => { simpleShareAction() }}>
-                                    <ShareIcon className="w-5 h-5" />
-                                    Share
+                                    <ShareIcon className="kb-w-5 kb-h-5" />
+                                    <span className="kb-hidden md:kb-block">Share</span>
                                 </Button>
                             )}
                         </>
                     )}
                 </>
                 {teamWorkflowStatus === 'RUNNING' && (
-                    <div className="flex items-center gap-2 px-2">
+                    <div className="kb-flex kb-items-center kb-gap-2 kb-px-2">
                         <Spinner />
-                        <span className="text-xs font-medium text-slate-400">Team is working...</span>
+                        <span className="kb-text-xs kb-font-medium kb-text-slate-400 kb-hidden md:kb-block">Team is working...</span>
                     </div>
                 )}
-                <Button className="inline-flex items-center gap-2 rounded-lg bg-indigo-500 py-1.5 px-3 text-sm font-medium text-white focus:outline-none data-[hover]:bg-indigo-600 data-[focus]:outline-1 data-[focus]:outline-white data-[disabled]:bg-slate-800"
+                <Button className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
                     disabled={teamWorkflowStatus === 'RUNNING' || errorState.hasError}
                     onClick={() => { handleStartWorkflow() }}>
-                    <PlayCircleIcon className="w-5 h-5" />
-                    Start Workflow
+                    <PlayCircleIcon className="kb-w-5 kb-h-5" />
+                    <span className="kb-hidden md:kb-block">Start Workflow</span>
                 </Button>
             </div>
         </div>
