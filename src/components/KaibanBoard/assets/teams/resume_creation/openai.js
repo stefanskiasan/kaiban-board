@@ -36,7 +36,7 @@ const resumeCreationTask = new Task({
     description: \`Utilize the structured data to create 
     a detailed and attractive resume. 
     Enrich the resume content by inferring additional details from the provided information.
-    Include sections such as a personal summary, detailed work experience, skills, and educational background.\`,
+    Include sections such as a personal summary, detailed work experience, skills, and educational background. Please use markdown format for the output.\`,
     expectedOutput: \`A professionally formatted resume in markdown format, 
     ready for submission to potential employers.\`, 
     agent: resumeWriter 
