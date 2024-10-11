@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { BookmarkIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, GlobeAltIcon, Square3Stack3DIcon } from '@heroicons/react/24/outline';
-import { Textarea } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,6 +8,7 @@ import { Pagination } from 'swiper/modules';
 
 import AgentCard from '../../components/Common/AgentCard';
 import TaskCard from '../../components/Common/TaskCard';
+import ResizableTextarea from '../../components/Common/ResizableTextarea';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import TeamsMenu from '../../components/TeamsMenu';
 import { GitHubIcon } from '../../assets/icons';
@@ -135,10 +135,12 @@ const Preview = () => {
     const {
         teamStore,
         errorState,
+        uiSettings,
     } = useAgentsPlaygroundStore(
         (state) => ({
             teamStore: state.teamStore,
-            errorState: state.errorState
+            errorState: state.errorState,
+            uiSettings: state.uiSettings
         })
     );
 
@@ -165,13 +167,6 @@ const Preview = () => {
         return formattedStr;
     };
 
-    const removeLineBreaksAndExtraSpaces = (text) => {
-        if (typeof text !== 'string') {
-            return text;
-        }
-        return text.replace(/(\r\n|\n|\r)/gm, " ").replace(/\s+/g, " ");
-    };
-
     return (
         <div className="kb-relative">
             <div className="kb-flex kb-flex-row">
@@ -191,14 +186,13 @@ const Preview = () => {
                                 {Object.keys(inputs).map((item, index) => (
                                     <div key={index} className="kb-flex kb-flex-col kb-gap-1">
                                         <span className="kb-text-xs kb-font-semibold kb-text-slate-200">{formatString(item)}</span>
-                                        <Textarea
+                                        <ResizableTextarea
                                             name="input"
-                                            value={removeLineBreaksAndExtraSpaces(inputs[item])}
+                                            value={inputs[item]}
                                             onChange={(event) => {
                                                 setInputs({ ...inputs, [item]: event.target.value });
                                             }}
                                             placeholder="Enter input value"
-                                            className="kb-block kb-resize-none kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25"
                                         />
                                     </div>
                                 ))}
@@ -227,20 +221,20 @@ const Preview = () => {
                         {/* TASK */}
                         <div className="kb-pt-6">
                             <span className="kb-text-slate-400 kb-text-lg kb-font-medium">Tasks</span>
-                            <div className="kb-flex kb-flex-wrap kb-gap-3 kb-mt-2">
+                            <div className={`${uiSettings.isPreviewMode && !uiSettings.showWelcomeInfo ? "kb-grid kb-grid-cols-1 md:kb-grid-cols-2" : "kb-flex kb-flex-wrap"} kb-gap-3 kb-mt-2`}>
                                 {tasks.map((task) => (
                                     <TaskCard key={task.id} task={task} showOptions={false} />
                                 ))}
-                                {tasks.length === 0 && (
-                                    <div className="kb-flex kb-flex-col kb-items-center kb-gap-1 kb-p-4 kb-min-w-full">
-                                        <Squares2X2Icon className="kb-w-8 kb-h-8 kb-text-indigo-300" />
-                                        <div className="kb-flex kb-flex-col kb-items-center">
-                                            <span className="kb-text-sm kb-text-slate-200">Tasks Unavailable</span>
-                                            <span className="kb-max-w-md kb-text-center kb-text-slate-400 kb-text-xs kb-font-normal">No tasks are currently set up or available. Please ensure the appropriate configurations are in place to proceed.</span>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
+                            {tasks.length === 0 && (
+                                <div className="kb-flex kb-flex-col kb-items-center kb-gap-1 kb-p-4 kb-min-w-full kb-mt-2">
+                                    <Squares2X2Icon className="kb-w-8 kb-h-8 kb-text-indigo-300" />
+                                    <div className="kb-flex kb-flex-col kb-items-center">
+                                        <span className="kb-text-sm kb-text-slate-200">Tasks Unavailable</span>
+                                        <span className="kb-max-w-md kb-text-center kb-text-slate-400 kb-text-xs kb-font-normal">No tasks are currently set up or available. Please ensure the appropriate configurations are in place to proceed.</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         {/* TASK */}
                     </>
@@ -290,13 +284,13 @@ const EditPreviewView = ({ editorComponent }) => {
                 {/* --- EDITOR --- */}
                 {/* --- DASHBOARD --- */}
                 {uiSettings.isPreviewMode && (
-                    <div className="kb-col-span-3 kb-h-full kb-overflow-auto">
+                    <div className={`${uiSettings.showWelcomeInfo ? "kb-col-span-3" : "kb-col-span-2"} kb-h-full kb-overflow-auto`}>
                         <Dashboard />
                     </div>
                 )}
                 {/* --- DASHBOARD --- */}
                 {/* --- PREVIEW --- */}
-                <div className="kb-col-span-2 kb-pb-6 kb-h-full kb-overflow-auto">
+                <div className={`${uiSettings.showWelcomeInfo ? "kb-col-span-2" : "kb-col-span-3"} kb-pb-6 kb-h-full kb-overflow-auto`}>
                     <Preview />
                 </div>
                 {/* --- PREVIEW --- */}

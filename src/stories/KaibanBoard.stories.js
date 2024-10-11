@@ -16,6 +16,16 @@ export const basic = {
     },
 };
 
+export const withoutWelcomeInfo = {
+    args: {
+        uiSettings: {
+            showWelcomeInfo: false,
+        },
+        teams: [teamOpenAI, teamProductSpecs],
+        title: "Without Welcome Info", // Title in Storybook
+    },
+};
+
 export const ourOptions = {
     args: {
         uiSettings: {

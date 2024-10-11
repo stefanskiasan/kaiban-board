@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Textarea } from '@headlessui/react';
+import { Button } from '@headlessui/react';
 import MDEditor from '@uiw/react-md-editor';
 import { Bars3BottomLeftIcon, ChartBarIcon, CheckCircleIcon, ClipboardIcon, IdentificationIcon, ListBulletIcon, SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import AgentAvatar from '../Common/AgentAvatar';
@@ -8,6 +8,7 @@ import { copyToClipboard, filterAndFormatAgentLogs, filterAndExtractMetadata, is
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import ActivityDetails from '../Common/ActivityDetails';
 import { UserIcon } from '@heroicons/react/24/solid';
+import ResizableTextarea from '../Common/ResizableTextarea';
 
 const TaskDetailsDialog = () => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -252,11 +253,11 @@ const TaskDetailsDialog = () => {
                                         <div className="kb-flex kb-flex-col kb-gap-2">
                                             {task.externalValidationRequired && isAwaiting ? (
                                                 <div className="kb-flex kb-flex-col kb-gap-2">
-                                                    <Textarea
+                                                    <ResizableTextarea
                                                         value={feedback}
                                                         onChange={(event) => setFeedback(event.target.value)}
                                                         placeholder="Write a feedback..."
-                                                        className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25 kb-resize-none"
+                                                        keepExpandedOnBlur={true}
                                                     />
                                                     <div className="kb-flex kb-gap-2">
                                                         <Button
@@ -264,6 +265,7 @@ const TaskDetailsDialog = () => {
                                                             onClick={() => {
                                                                 provideFeedback(selectedTask.id, feedback);
                                                                 setFeedback('');
+                                                                setTaskDetailsDialogOpenAction(false);
                                                             }}
                                                             disabled={feedback === ''}
                                                         >
@@ -274,6 +276,7 @@ const TaskDetailsDialog = () => {
                                                             onClick={() => {
                                                                 validateTask(selectedTask.id);
                                                                 setFeedback('');
+                                                                setTaskDetailsDialogOpenAction(false);
                                                             }}
                                                         >
                                                             <CheckCircleIcon className="kb-w-5 kb-h-5" />
@@ -283,13 +286,12 @@ const TaskDetailsDialog = () => {
                                                 </div>
                                             ) : (
                                                 <div className="kb-flex kb-flex-col kb-gap-2">
-                                                    <Textarea
-                                                        style={{ height: isCommentTouched ? 'auto' : '36px' }}
-                                                        onFocus={() => setIsCommentTouched(true)}
+                                                    <ResizableTextarea
                                                         value={comment}
                                                         onChange={(event) => setComment(event.target.value)}
+                                                        onFocus={() => setIsCommentTouched(true)}
                                                         placeholder="Write a comment..."
-                                                        className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25 kb-resize-none"
+                                                        keepExpandedOnBlur={true}
                                                     />
                                                     {isCommentTouched && (
                                                         <Button
@@ -298,6 +300,7 @@ const TaskDetailsDialog = () => {
                                                                 provideFeedback(selectedTask.id, comment);
                                                                 setComment('');
                                                                 setIsCommentTouched(false);
+                                                                setTaskDetailsDialogOpenAction(false);
                                                             }}
                                                             disabled={comment === ''}
                                                         >
