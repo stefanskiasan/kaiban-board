@@ -48,6 +48,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     isPreviewMode: true,
                     showSimpleShareOption: true,
                     showWelcomeInfo: true,
+                    selectedTab: 0,
                 },
 
                 keys: [],
@@ -287,11 +288,10 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                         user: { name: "Anonymous" }
                     }
                     set({ project, selectedTab: 0 });
-
                 },
 
                 initAction: () => {
-                    const { code, setCodeAction, initDbAction, checkAndSetProject, teams, setTeamAction } = get();
+                    const { code, setCodeAction, initDbAction, checkAndSetProject, teams, setTeamAction, uiSettings, setTabAction } = get();
 
                     if (teams.length === 0) {
                         let initialCode = code;
@@ -311,6 +311,10 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                         setCodeAction(initialCode);
                         initDbAction();
                         checkAndSetProject();
+
+                        if (uiSettings.selectedTab !== 0) {
+                            setTimeout(() => {setTabAction(uiSettings.selectedTab)});
+                        }
 
                     } else {
                         const team = teams[0];

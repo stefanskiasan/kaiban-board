@@ -269,7 +269,8 @@ const TaskDetailsDialog = () => {
                                                             }}
                                                             disabled={feedback === ''}
                                                         >
-                                                            Submit Feedback
+                                                            <span className="kb-hidden md:kb-block">Submit Feedback</span>
+                                                            <span className="kb-block md:kb-hidden">Submit</span>
                                                         </Button>
                                                         <Button
                                                             className="kb-flex-1 kb-inline-flex kb-items-center kb-justify-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"

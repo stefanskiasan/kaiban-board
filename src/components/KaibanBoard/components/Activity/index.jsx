@@ -64,14 +64,14 @@ const Activity = () => {
     return (
         <Transition show={isActivityOpen && selectedTab === 1 && logsList.length > 0}>
             <div className="kb-absolute kb-top-0 -kb-right-[1px] kb-transition kb-ease-in-out data-[closed]:kb-opacity-0 data-[enter]:kb-duration-300 data-[enter]:data-[closed]:kb-translate-x-full data-[leave]:kb-duration-300 data-[leave]:data-[closed]:kb-translate-x-full">
-                <div ref={containerRef} className="kb-mt-[54px] kb-bg-slate-900 kb-w-[400px] kb-h-full kb-border kb-border-slate-700 kb-divide-y kb-divide-slate-700 kb-shadow-2xl kb-shadow-slate-950 kb-backdrop-blur-2xl">
+                <div ref={containerRef} className="kb-mt-[54px] kb-bg-slate-900 kb-w-[320px] md:kb-w-[400px] kb-h-full kb-border kb-border-slate-700 kb-divide-y kb-divide-slate-700 kb-shadow-2xl kb-shadow-slate-950 kb-backdrop-blur-2xl">
                     <div className="kb-relative kb-py-2 kb-px-4 kb-h-[43px] kb-flex kb-items-center kb-justify-center">
                         <span className="kb-text-sm kb-font-medium kb-text-white">Activity</span>
                         <Button className="kb-ml-auto kb-inline-flex kb-items-center kb-rounded-full kb-p-1 kb-text-slate-400 kb-text-sm focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[open]:kb-bg-gray-700 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white">
                             <XMarkIcon className="kb-w-5 kb-h-5" onClick={() => { setActivityOpenAction(false) }} />
                         </Button>
                     </div>
-                    <div className={`kb-flex kb-flex-col kb-gap-4 kb-p-4 kb-min-w-full kb-overflow-auto ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-h-[calc(100vh-98px)]" : "kb-h-[202px] sm:kb-h-[302px] md:kb-h-[402px] lg:kb-h-[502px] xl:kb-h-[602px] 2xl:kb-h-[702px]"}`}>
+                    <div className={`kb-flex kb-flex-col kb-gap-4 kb-p-4 kb-min-w-full kb-overflow-auto ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-h-[calc(100vh-98px)]" : "kb-h-[402px] lg:kb-h-[502px] xl:kb-h-[602px] 2xl:kb-h-[702px]"}`}>
                         {logsList.map((log, idx) => (
                             <div key={idx} className="kb-grid kb-grid-cols-[28px_1fr] kb-gap-2">
                                 {(log.status === "REVISE" || log.status === "VALIDATED") ? (
@@ -89,7 +89,7 @@ const Activity = () => {
                                         <span className="kb-text-sm kb-font-normal kb-text-slate-400">{log.description}</span>
                                     </p>
                                     {log.details !== "" && (
-                                        <ActivityDetails details={log.details} styles={"kb-max-w-[320px]"} />
+                                        <ActivityDetails details={log.details} styles={"kb-max-w-[240px] md:kb-max-w-[320px]"} />
                                     )}
                                 </div>
                             </div>

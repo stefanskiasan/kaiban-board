@@ -51,7 +51,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
                 <Header examplesMenu={examplesMenu} />
                 <div className="kb-relative kb-isolate kb-flex kb-divide-x kb-divide-slate-700">
                     <SideMenu />
-                    <TabPanels className={`${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-w-[calc(100vw-55px)] kb-h-[calc(100vh-55px)]" : "kb-w-[calc(100%-55px)] sm:kb-w-[590px] md:kb-w-[723px] lg:kb-w-[979px] xl:kb-w-[1235px] 2xl:kb-w-[1493px] kb-h-[255px] sm:kb-h-[355px] md:kb-h-[455px] lg:kb-h-[555px] xl:kb-h-[655px] 2xl:kb-h-[755px]"}`}>
+                    <TabPanels className={`${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-w-[calc(100vw-55px)] kb-h-[calc(100vh-55px)]" : "kb-w-[calc(100%-55px)] sm:kb-w-[590px] md:kb-w-[723px] lg:kb-w-[979px] xl:kb-w-[1235px] 2xl:kb-w-[1493px] kb-h-[455px] lg:kb-h-[555px] xl:kb-h-[655px] 2xl:kb-h-[755px]"}`}>
                         <TabPanel className="kb-h-full">
                             <EditPreviewView editorComponent={editorComponent} />
                         </TabPanel>

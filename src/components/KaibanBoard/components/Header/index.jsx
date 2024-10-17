@@ -127,7 +127,7 @@ const Header = ({ examplesMenu }) => {
                                 </div>
                             )}
                             {uiSettings.showSettingsOption && (
-                                <div className="kb-relative kb-group kb-flex kb-items-center">
+                                <div className="kb-hidden md:kb-flex kb-relative kb-group kb-items-center">
                                     <button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 focus:kb-outline-none hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                                         onClick={() => { setSettingsDialogOpenAction(true) }}
                                     >
@@ -137,10 +137,10 @@ const Header = ({ examplesMenu }) => {
                                 </div>
                             )}
                             {uiSettings.showShareOption && (
-                                <Button className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
+                                <Button className="kb-hidden md:kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
                                     onClick={() => { setShareDialogOpenAction(true) }}>
                                     <ShareIcon className="kb-w-5 kb-h-5" />
-                                    <span className="kb-hidden md:kb-block">Share</span>
+                                    <span>Share</span>
                                 </Button>
                             )}
                             {uiSettings.showSimpleShareOption && (
@@ -164,6 +164,7 @@ const Header = ({ examplesMenu }) => {
                     onClick={() => { handleStartWorkflow() }}>
                     <PlayCircleIcon className="kb-w-5 kb-h-5" />
                     <span className="kb-hidden md:kb-block">Start Workflow</span>
+                    <span className="kb-block md:kb-hidden">Start</span>
                 </Button>
             </div>
         </div>

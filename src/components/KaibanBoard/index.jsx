@@ -17,6 +17,7 @@ const defaultUiSettings = {
     isPreviewMode: true,
     showSimpleShareOption: true,
     showWelcomeInfo: true,
+    selectedTab: 0,
 };
 
 const filterUndefinedProps = (obj) => {

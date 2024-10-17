@@ -35,7 +35,7 @@ const ResultView = () => {
                             <Button className="kb-ml-auto kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900  kb-py-1.5 kb-px-3 kb-text-slate-400 kb-text-sm focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[open]:kb-bg-gray-700 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                                 onClick={()=>{copyToClipboard(typeof workflowResult === 'string' ? workflowResult : JSON.stringify(workflowResult))}}>
                                 <ClipboardIcon className="kb-w-5 kb-h-5" />
-                                Copy
+                                <span className="kb-hidden md:kb-block">Copy</span>
                             </Button>
                         )}
                     </div>

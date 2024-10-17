@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-const ActivityDetails = ({ details, styles="kb-max-w-[428px]" }) => {
+const ActivityDetails = ({ details, styles="kb-max-w-[218px] md:kb-max-w-[428px]" }) => {
 
     const [isExpanded, setIsExpanded] = useState(false);
     const textRef = useRef(null);

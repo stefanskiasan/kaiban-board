@@ -35,6 +35,7 @@ export const ourOptions = {
             showSettingsOption: true,
             isPreviewMode: false,
             showSimpleShareOption: false,
+            selectedTab: 1,
         },
         title: "Our Options",// Title in Storybook
     },
