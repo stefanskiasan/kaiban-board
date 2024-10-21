@@ -16,6 +16,7 @@ import CelebrationDialog from '../../components/CelebrationDialog';
 import ShareDialog from '../../components/ShareDialog';
 import SettingsDialog from '../../components/SettingsDialog';
 import MissingKeysDialog from '../../components/MissingKeysDialog';
+import ChatBot from '../../components/ChatBot';
 
 const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -82,6 +83,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
                     position: 'absolute',
                     top: 20,
                 }} />
+            <ChatBot />
         </div>
     );
 };
