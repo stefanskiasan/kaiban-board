@@ -118,26 +118,26 @@ const Header = ({ examplesMenu }) => {
                         <>
                             {!uiSettings.showFullScreen && (
                                 <div className="kb-relative kb-group kb-flex kb-items-center">
-                                    <button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 focus:kb-outline-none hover:kb-text-indigo-500"
+                                    <Button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 data-[focus]:kb-outline-none data-[hover]:kb-text-indigo-500"
                                         onClick={() => { toggleMaximizeAction() }}
                                     >
                                         {uiSettings.maximizeConfig?.isActive ? <ArrowsPointingInIcon className="kb-w-6 kb-h-6" /> : <ArrowsPointingOutIcon className="kb-w-6 kb-h-6" />}
-                                    </button>
+                                    </Button>
                                     {uiSettings.maximizeConfig?.isActive ? <Tooltip text="Exit Full Screen" styles="kb-left-2" /> : <Tooltip text="Full Screen" styles="kb-left-2" />}
                                 </div>
                             )}
                             {uiSettings.showSettingsOption && (
                                 <div className="kb-hidden md:kb-flex kb-relative kb-group kb-items-center">
-                                    <button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 focus:kb-outline-none hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
+                                    <Button className="kb-w-min kb-inline-flex kb-items-center kb-p-2 kb-text-slate-400 data-[focus]:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                                         onClick={() => { setSettingsDialogOpenAction(true) }}
                                     >
                                         <Cog6ToothIcon className="kb-w-6 kb-h-6" />
-                                    </button>
+                                    </Button>
                                     <Tooltip text="Settings" styles="kb-left-2" />
                                 </div>
                             )}
                             {uiSettings.showShareOption && (
-                                <Button className="kb-hidden md:kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
+                                <Button className="kb-hidden md:kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-slate-900 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-slate-400 data-[focus]:kb-outline-none data-[hover]:kb-bg-indigo-500/15 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"
                                     onClick={() => { setShareDialogOpenAction(true) }}>
                                     <ShareIcon className="kb-w-5 kb-h-5" />
                                     <span>Share</span>
