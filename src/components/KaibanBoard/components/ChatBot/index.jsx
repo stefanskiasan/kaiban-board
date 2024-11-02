@@ -2,19 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon, XMarkIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, StopIcon, UserPlusIcon, ClipboardDocumentCheckIcon, UserGroupIcon } from '@heroicons/react/24/outline';
-import OpenAI from 'openai';
+import { ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon, XMarkIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, StopIcon, UserPlusIcon, ClipboardDocumentCheckIcon, UserGroupIcon, MagnifyingGlassCircleIcon, GlobeAmericasIcon, NewspaperIcon, EllipsisHorizontalCircleIcon, AcademicCapIcon, HomeModernIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { Button, Textarea } from '@headlessui/react';
 import { KaibanJSIcon } from '../../assets/icons';
 import rehypeRaw from 'rehype-raw';
 
-// Nota: La API key debe manejarse de forma segura, preferiblemente en el backend
-const openai = new OpenAI({
-    apiKey: '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',
-    dangerouslyAllowBrowser: true // Esto es para desarrollo, no se recomienda en producción
-});
-
-const ASSISTANT_ID = 'asst_WlH10QG53sJsRVxn82KN92kK';
+const API_URL = 'http://localhost:3000/api/chat';
 
 const ChatBot = () => {
     const [messages, setMessages] = useState([]);
@@ -28,22 +21,41 @@ const ChatBot = () => {
     const [currentRun, setCurrentRun] = useState(null);
     const messagesEndRef = useRef(null);
     const textareaRef = useRef(null);
+    const [showExpandedSuggestions, setShowExpandedSuggestions] = useState(false);
 
-    const suggestions = [
+    const initialSuggestions = [
         {
-            text: "How to create an agent",
-            icon: UserPlusIcon,
+            text: "Create Research & Analysis Team",
+            icon: MagnifyingGlassCircleIcon,
             iconColor: "kb-text-emerald-400"
         },
         {
-            text: "How to create a task",
-            icon: ClipboardDocumentCheckIcon,
+            text: "Create Travel Planning Team",
+            icon: GlobeAmericasIcon,
             iconColor: "kb-text-sky-400"
         },
         {
-            text: "How to create a team",
-            icon: UserGroupIcon,
+            text: "Create Content Creation Team",
+            icon: NewspaperIcon,
             iconColor: "kb-text-violet-400"
+        }
+    ];
+
+    const expandedSuggestions = [
+        {
+            text: "How to create a team?",
+            icon: UserGroupIcon,
+            iconColor: "kb-text-pink-400"
+        },
+        {
+            text: "How to create a task?",
+            icon: ClipboardDocumentCheckIcon,
+            iconColor: "kb-text-orange-400"
+        },
+        {
+            text: "How to create an agent?",
+            icon: UserPlusIcon,
+            iconColor: "kb-text-yellow-400"
         }
     ];
 
@@ -75,11 +87,23 @@ const ChatBot = () => {
         if (isOpen && !threadId) {
             createThread();
         }
+
+        if (isOpen && messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({
+                behavior: 'auto',
+                block: 'end'
+            });
+        }
     }, [isOpen]);
 
     const createThread = async () => {
         try {
-            const thread = await openai.beta.threads.create();
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'createThread' })
+            });
+            const thread = await response.json();
             setThreadId(thread.id);
         } catch (error) {
             console.error('Error al crear el thread:', error);
@@ -90,30 +114,48 @@ const ChatBot = () => {
         if (input.trim() === '' || !threadId) return;
 
         setMessages([...messages, { role: 'user', content: input }]);
-
         setInput('');
         setIsLoading(true);
-        
-        try {
-            await openai.beta.threads.messages.create(threadId, {
-                role: 'user',
-                content: input
-            });
 
-            const run = await openai.beta.threads.runs.create(threadId, {
-                assistant_id: ASSISTANT_ID
+        try {
+            const runResponse = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'sendMessage',
+                    threadId,
+                    message: input
+                })
             });
+            const run = await runResponse.json();
             setCurrentRun(run);
 
             let accumulatedContent = '';
 
             while (true) {
-                const runStatus = await openai.beta.threads.runs.retrieve(threadId, run.id);
+                const statusResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'getRunStatus',
+                        threadId,
+                        runId: run.id
+                    })
+                });
+                const runStatus = await statusResponse.json();
 
                 if (runStatus.status === 'completed') {
                     setIsWriting(true);
-                    const messages = await openai.beta.threads.messages.list(threadId);
-                    const latestMessage = messages.data[0];
+                    const messagesResponse = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'getMessages',
+                            threadId
+                        })
+                    });
+                    const messagesData = await messagesResponse.json();
+                    const latestMessage = messagesData.data[0];
                     if (latestMessage.role === 'assistant') {
                         setMessages(prevMessages => {
                             const newMessages = [...prevMessages, {
@@ -163,9 +205,6 @@ const ChatBot = () => {
 
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
-
-
-
         } catch (error) {
             console.error('Error in handleSendMessage: ', error);
         } finally {
@@ -176,17 +215,19 @@ const ChatBot = () => {
     const handleStopGeneration = async () => {
         if (currentRun && threadId) {
             try {
-                const runStatus = await openai.beta.threads.runs.retrieve(threadId, currentRun.id);
-                if (runStatus.status === 'in_progress') {
-                    await openai.beta.threads.runs.cancel(threadId, currentRun.id);
-                    setIsWriting(false);
-                    setIsLoading(false);
-                    setCurrentRun(null);
-                } else {
-                    setIsWriting(false);
-                    setIsLoading(false);
-                    setCurrentRun(null);
-                }
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'cancelRun',
+                        threadId,
+                        runId: currentRun.id
+                    })
+                });
+
+                setIsWriting(false);
+                setIsLoading(false);
+                setCurrentRun(null);
             } catch (error) {
                 console.error('Error in handleStopGeneration: ', error);
             }
@@ -240,7 +281,7 @@ const ChatBot = () => {
                                     What can I help with?
                                 </h3>
                                 <div className="kb-flex kb-flex-wrap kb-gap-2 kb-justify-center">
-                                    {suggestions.map((suggestion, index) => {
+                                    {initialSuggestions.map((suggestion, index) => {
                                         const IconComponent = suggestion.icon;
                                         return (
                                             <Button
@@ -248,6 +289,25 @@ const ChatBot = () => {
                                                 onClick={() => handleSuggestionClick(suggestion.text)}
                                                 className="kb-bg-slate-700 kb-text-slate-200 kb-px-4 kb-py-2 kb-rounded-full kb-text-sm data-[hover]:kb-bg-slate-600 kb-transition-colors kb-flex kb-items-center kb-gap-2"
                                             >
+                                                <IconComponent className={`kb-h-4 kb-w-4 ${suggestion.iconColor}`} />
+                                                {suggestion.text}
+                                            </Button>
+                                        );
+                                    })}
+                                    {!showExpandedSuggestions && (
+                                        <Button
+                                            className="kb-bg-slate-700 kb-text-slate-200 kb-px-4 kb-py-2 kb-rounded-full kb-text-sm data-[hover]:kb-bg-slate-600 kb-transition-colors kb-flex kb-items-center kb-gap-2"
+                                            onClick={() => setShowExpandedSuggestions(true)}>
+                                            <EllipsisHorizontalCircleIcon className="kb-h-4 kb-w-4 kb-text-slate-200" />
+                                            More
+                                        </Button>
+                                    )}
+                                    {showExpandedSuggestions && expandedSuggestions.map((suggestion, index) => {
+                                        const IconComponent = suggestion.icon;
+                                        return (
+                                            <Button
+                                                className="kb-bg-slate-700 kb-text-slate-200 kb-px-4 kb-py-2 kb-rounded-full kb-text-sm data-[hover]:kb-bg-slate-600 kb-transition-colors kb-flex kb-items-center kb-gap-2"
+                                                key={index} onClick={() => handleSuggestionClick(suggestion.text)}>
                                                 <IconComponent className={`kb-h-4 kb-w-4 ${suggestion.iconColor}`} />
                                                 {suggestion.text}
                                             </Button>

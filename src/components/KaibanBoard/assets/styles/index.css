@@ -44,3 +44,14 @@
 #kaibanjs .swiper-pagination-bullet-active {
     background: #6366f1;
 }
+
+.kb-markdown-content h1,
+.kb-markdown-content h2,
+.kb-markdown-content h3,
+.kb-markdown-content h4,
+.kb-markdown-content h5,
+.kb-markdown-content h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
