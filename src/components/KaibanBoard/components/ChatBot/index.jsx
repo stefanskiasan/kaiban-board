@@ -73,9 +73,9 @@ const ChatBot = () => {
 
     const handleSuggestionClick = (suggestion) => {
         setInput(suggestion);
-        if (textareaRef.current) {
-            textareaRef.current.focus();
-        }
+        setTimeout(() => {
+            handleSendMessage(suggestion);
+        }, 0);
     };
 
     useEffect(() => {
@@ -122,10 +122,11 @@ const ChatBot = () => {
         }
     };
 
-    const handleSendMessage = async () => {
-        if (input.trim() === '' || !threadId) return;
+    const handleSendMessage = async (forcedInput) => {
+        const messageToSend = forcedInput || input;
+        if (messageToSend.trim() === '' || !threadId) return;
 
-        setMessages([...messages, { role: 'user', content: input }]);
+        setMessages([...messages, { role: 'user', content: messageToSend }]);
         setInput('');
         setIsLoading(true);
 
@@ -136,7 +137,7 @@ const ChatBot = () => {
                 body: JSON.stringify({
                     action: 'sendMessage',
                     threadId,
-                    message: input
+                    message: messageToSend
                 })
             });
             const run = await runResponse.json();
