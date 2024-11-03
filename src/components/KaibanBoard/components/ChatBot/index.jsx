@@ -272,8 +272,8 @@ const ChatBot = () => {
                             width: 'calc(100% - 2rem)',
                             height: 'calc(100% - 2rem)',
                         } : {
-                            width: '24rem',
-                            height: '32rem',
+                            width: window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '24rem',
+                            height: window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '32rem',
                         }),
                         transformOrigin: 'bottom right',
                     }}
@@ -284,7 +284,7 @@ const ChatBot = () => {
                             <h3 className="kb-font-bold kb-text-lg kb-text-white kb-cursor-default">Kai</h3>
                         </div>
                         <div className="kb-flex kb-items-center kb-space-x-2">
-                            <Button onClick={toggleMaximize} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
+                            <Button onClick={toggleMaximize} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none kb-hidden md:kb-block">
                                 {isMaximized ? <ArrowsPointingInIcon className="kb-h-5 kb-w-5" /> : <ArrowsPointingOutIcon className="kb-h-5 kb-w-5" />}
                             </Button>
                             <Button onClick={() => setChatBotOpenAction(false)} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
