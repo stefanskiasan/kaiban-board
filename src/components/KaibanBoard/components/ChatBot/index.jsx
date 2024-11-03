@@ -262,7 +262,7 @@ const ChatBot = () => {
             )}
             {isChatBotOpen && (
                 <div
-                    className={`kb-bg-slate-900 kb-ring-1 kb-ring-slate-950 kb-rounded-2xl kb-shadow-2xl kb-sh kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
+                    className={`kb-bg-slate-900 kb-ring-1 kb-ring-slate-950 kb-rounded-xl kb-shadow-2xl kb-sh kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
                     style={{
                         position: uiSettings.isChatbotFloating ? 'fixed' : 'absolute',
                         bottom: '1rem',
