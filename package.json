@@ -1,6 +1,6 @@
 {
   "name": "kaiban-board",
-  "version": "0.1.18",
+  "version": "0.1.21",
   "type": "module",
   "module": "dist/index.js",
   "files": [
@@ -20,7 +20,7 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
-    "kaibanjs": "^0.8.0-rc5",
+    "kaibanjs": "^0.8.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
