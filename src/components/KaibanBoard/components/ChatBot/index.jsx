@@ -7,7 +7,7 @@ import { Button, Textarea } from '@headlessui/react';
 import rehypeRaw from 'rehype-raw';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 
-const API_URL = 'http://localhost:3000/api/chat';
+const API_URL = 'https://www.kaibanjs.com/api/chat';
 
 const ChatBot = () => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
