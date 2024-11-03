@@ -1,6 +1,6 @@
 import React from 'react';
-import { Squares2X2Icon, SparklesIcon, CodeBracketIcon, ViewColumnsIcon } from '@heroicons/react/24/outline';
-import { Tab, TabList } from '@headlessui/react';
+import { Squares2X2Icon, SparklesIcon, CodeBracketIcon, ViewColumnsIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
+import { Button, Tab, TabList } from '@headlessui/react';
 import Tooltip from "../Common/Tooltip";
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 
@@ -9,12 +9,14 @@ const SideMenu = () => {
     const {
         teamStore,
         uiSettings,
-        setTabAction
+        setTabAction,
+        setChatBotOpenAction
     } = useAgentsPlaygroundStore(
         (state) => ({
             teamStore: state.teamStore,
             uiSettings: state.uiSettings,
-            setTabAction: state.setTabAction
+            setTabAction: state.setTabAction,
+            setChatBotOpenAction: state.setChatBotOpenAction
         })
     );
 
@@ -56,6 +58,16 @@ const SideMenu = () => {
                 <SparklesIcon className="kb-w-6 kb-h-6" />
                 <Tooltip text="Results Overview" />
             </Tab>
+            {!uiSettings.isChatbotFloating && (
+                <div className="kb-absolute kb-bottom-0 kb-w-[55px]">
+                    <Button className=" kb-relative kb-z-10 kb-isolate kb-group kb-w-full kb-h-[55px] kb-flex kb-justify-center kb-items-center kb-border-l-2 kb-pr-[2px] kb-border-slate-900 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[selected]:kb-border-indigo-500 data-[selected]:kb-text-indigo-500 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
+                        onClick={() => setChatBotOpenAction(true)}
+                    >
+                        <ChatBubbleLeftEllipsisIcon className="kb-w-6 kb-h-6" />
+                        <Tooltip text="AI Assistant" />
+                    </Button>
+                </div>
+            )}
         </TabList>
     );
 };

@@ -4,15 +4,27 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon, XMarkIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, StopIcon, UserPlusIcon, ClipboardDocumentCheckIcon, UserGroupIcon, MagnifyingGlassCircleIcon, GlobeAmericasIcon, NewspaperIcon, EllipsisHorizontalCircleIcon, AcademicCapIcon, HomeModernIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { Button, Textarea } from '@headlessui/react';
-import { KaibanJSIcon } from '../../assets/icons';
 import rehypeRaw from 'rehype-raw';
+import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 
 const API_URL = 'http://localhost:3000/api/chat';
 
 const ChatBot = () => {
+    const useAgentsPlaygroundStore = usePlaygroundStore();
+    const {
+        uiSettings,
+        isChatBotOpen,
+        setChatBotOpenAction
+    } = useAgentsPlaygroundStore(
+        (state) => ({
+            uiSettings: state.uiSettings,
+            isChatBotOpen: state.isChatBotOpen,
+            setChatBotOpenAction: state.setChatBotOpenAction
+        })
+    );
+
     const [messages, setMessages] = useState([]);
     const [threadId, setThreadId] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
     const [isMaximized, setIsMaximized] = useState(false);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -84,17 +96,17 @@ const ChatBot = () => {
     }, [input]);
 
     useEffect(() => {
-        if (isOpen && !threadId) {
+        if (isChatBotOpen && !threadId) {
             createThread();
         }
 
-        if (isOpen && messagesEndRef.current) {
+        if (isChatBotOpen && messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({
                 behavior: 'auto',
                 block: 'end'
             });
         }
-    }, [isOpen]);
+    }, [isChatBotOpen]);
 
     const createThread = async () => {
         try {
@@ -239,37 +251,42 @@ const ChatBot = () => {
     };
 
     return (
-        <div className="kb-fixed kb-z-50 kb-bottom-4 kb-right-4">
-            {!isOpen && (
-                <button
-                    onClick={() => setIsOpen(true)}
-                    className="kb-bg-indigo-500 kb-text-white kb-rounded-full kb-p-4 kb-shadow-lg kb-transition-all kb-duration-300 focus:kb-outline-none focus:kb-ring-2 focus:kb-ring-offset-2 focus:kb-ring-indigo-400 hover:kb-bg-indigo-600 hover:kb-shadow-xl hover:kb-scale-110"
+        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-50 ${isChatBotOpen ? 'kb-inset-0' : ''}`}>
+            {!isChatBotOpen && uiSettings.isChatbotFloating && (
+                <Button
+                    onClick={() => setChatBotOpenAction(true)}
+                    className="kb-bg-indigo-500 kb-text-white kb-rounded-full kb-p-4 kb-shadow-lg kb-transition-all kb-duration-300 data-[focus]:kb-outline-none data-[focus]:kb-ring-2 data-[focus]:kb-ring-offset-2 data-[focus]:kb-ring-white data-[hover]:kb-bg-indigo-600 data-[hover]:kb-shadow-xl data-[hover]:kb-scale-110"
                 >
                     <ChatBubbleLeftEllipsisIcon className="kb-h-6 kb-w-6" />
-                </button>
+                </Button>
             )}
-            {isOpen && (
+            {isChatBotOpen && (
                 <div
-                    className={`kb-bg-slate-900 kb-ring-1 kb-ring-slate-950 kb-rounded-2xl kb-shadow-2xl kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
+                    className={`kb-bg-slate-900 kb-ring-1 kb-ring-slate-950 kb-rounded-2xl kb-shadow-2xl kb-sh kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
                     style={{
-                        position: 'fixed',
+                        position: uiSettings.isChatbotFloating ? 'fixed' : 'absolute',
                         bottom: '1rem',
                         right: '1rem',
-                        width: isMaximized ? 'calc(100% - 2rem)' : '24rem',
-                        height: isMaximized ? 'calc(100% - 2rem)' : '32rem',
+                        ...(isMaximized ? {
+                            width: 'calc(100% - 2rem)',
+                            height: 'calc(100% - 2rem)',
+                        } : {
+                            width: '24rem',
+                            height: '32rem',
+                        }),
                         transformOrigin: 'bottom right',
                     }}
                 >
                     <div className="kb-bg-indigo-500 kb-p-4 kb-flex kb-justify-between kb-items-center kb-border-b kb-border-slate-900">
-                        <div className="kb-flex kb-items-center kb-gap-1 kb-text-white">
-                            <KaibanJSIcon />
-                            <h3 className="kb-font-bold kb-text-lg kb-text-white">aiban</h3>
+                        <div className="kb-flex kb-items-center kb-gap-2 kb-text-white">
+                            <img className="kb-w-7 kb-h-7 kb-rounded-full kb-ring-2 kb-ring-indigo-400 kb-bg-slate-800" src="https://robohash.org/Assistan" alt="" />
+                            <h3 className="kb-font-bold kb-text-lg kb-text-white">Kai</h3>
                         </div>
                         <div className="kb-flex kb-items-center kb-space-x-2">
                             <Button onClick={toggleMaximize} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
                                 {isMaximized ? <ArrowsPointingInIcon className="kb-h-5 kb-w-5" /> : <ArrowsPointingOutIcon className="kb-h-5 kb-w-5" />}
                             </Button>
-                            <Button onClick={() => setIsOpen(false)} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
+                            <Button onClick={() => setChatBotOpenAction(false)} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
                                 <XMarkIcon className="kb-h-5 kb-w-5" />
                             </Button>
                         </div>
@@ -355,7 +372,7 @@ const ChatBot = () => {
                             ))
                         )}
                         {isLoading && !isWriting && (
-                            <span className="kb-inline-block kb-w-3 kb-h-3 kb-bg-slate-700 kb-rounded-full kb-animate-ping" />
+                            <span className="kb-ml-2 kb-inline-block kb-w-3 kb-h-3 kb-bg-slate-700 kb-rounded-full kb-animate-ping" />
                         )}
                         <div ref={messagesEndRef} />
                     </div>
@@ -367,7 +384,7 @@ const ChatBot = () => {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSendMessage())}
                                 placeholder="Enter your message..."
-                                className="kb-flex-1 kb-bg-white/5 kb-text-white kb-py-1.5 kb-px-3 kb-text-sm/6 kb-border kb-border-slate-800 kb-rounded-lg kb-p-2 focus:kb-outline-none focus:kb-ring-2 focus:kb-ring-white/25 focus:kb-border-transparent kb-resize-none kb-overflow-hidden kb-min-h-[40px] kb-max-h-[120px]"
+                                className="kb-flex-1 kb-bg-white/5 kb-text-white kb-py-1.5 kb-px-3 kb-text-sm/6 kb-border kb-border-slate-800 kb-rounded-lg kb-p-2 data-[focus]:kb-outline-none data-[focus]:kb-ring-2 data-[focus]:kb-ring-white/25 data-[focus]:kb-border-transparent kb-resize-none kb-overflow-hidden kb-min-h-[40px] kb-max-h-[120px]"
                                 style={{ height: '40px' }}
                                 disabled={isLoading}
                             />

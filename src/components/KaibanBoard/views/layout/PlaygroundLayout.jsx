@@ -42,7 +42,6 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
         })
     );
 
-
     return (
         <div className={`kb-bg-slate-900 kb-overflow-hidden ${uiSettings.showFullScreen || uiSettings.maximizeConfig?.isActive ? "kb-full-screen kb-fixed kb-top-0 kb-left-0 kb-w-screen kb-h-screen kb-z-50" : "kb-relative kb-container kb-rounded-xl kb-ring-1 kb-ring-slate-700"}`} id="kaibanjs">
             <canvas id="confetti_canvas" className="kb-absolute kb-w-full kb-h-full kb-inset-0" style={{
@@ -72,6 +71,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
             {isOpenSettingsDialog && <SettingsDialog />}
             {isMissingKeysDialogOpen && <MissingKeysDialog />}
             <Activity />
+            <ChatBot />
             <Toaster
                 toastOptions={{
                     style: {
@@ -83,7 +83,6 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
                     position: 'absolute',
                     top: 20,
                 }} />
-            <ChatBot />
         </div>
     );
 };

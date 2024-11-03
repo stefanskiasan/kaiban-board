@@ -36,6 +36,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
                 isMissingKeysDialogOpen: false,
 
+                isChatBotOpen: false,
+
                 uiSettings: {
                     showFullScreen: true,
                     showExampleMenu: false,
@@ -49,6 +51,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     showSimpleShareOption: true,
                     showWelcomeInfo: true,
                     selectedTab: 0,
+                    isChatbotFloating: false
                 },
 
                 keys: [],
@@ -209,6 +212,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 },
 
                 setMissingKeysDialogOpenAction: (isMissingKeysDialogOpen) => set({ isMissingKeysDialogOpen }),
+
+                setChatBotOpenAction: (isChatBotOpen) => set({ isChatBotOpen }),
 
                 setUiSettingsAction: (newSettings) => set(state => ({
                     uiSettings: { ...state.uiSettings, ...newSettings }

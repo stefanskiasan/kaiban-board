@@ -36,6 +36,7 @@ export const ourOptions = {
             isPreviewMode: false,
             showSimpleShareOption: false,
             selectedTab: 1,
+            isChatbotFloating: true
         },
         title: "Our Options",// Title in Storybook
     },
