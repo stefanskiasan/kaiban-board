@@ -188,7 +188,7 @@ const ChatBot = () => {
                                     const newMessages = [...prevMessages];
                                     newMessages[newMessages.length - 1] = {
                                         role: 'assistant',
-                                        content: accumulatedContent + '<span class="kb-ml-2 kb-inline-block kb-w-2 kb-h-2 kb-bg-slate-400 kb-rounded-full kb-animate-ping"></span>'
+                                        content: accumulatedContent + '<span class="kb-ml-2 kb-inline-block kb-w-2 kb-h-2 kb-bg-slate-400 kb-rounded-full"></span>'
                                     };
                                     return newMessages;
                                 });
@@ -252,7 +252,7 @@ const ChatBot = () => {
     };
 
     return (
-        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-50 ${isChatBotOpen ? 'kb-inset-0' : ''}`}>
+        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-[9999] ${isChatBotOpen ? 'kb-inset-0' : ''}`}>
             {!isChatBotOpen && uiSettings.isChatbotFloating && (
                 <Button
                     onClick={() => setChatBotOpenAction(true)}
@@ -263,7 +263,7 @@ const ChatBot = () => {
             )}
             {isChatBotOpen && (
                 <div
-                    className={`kb-bg-slate-900 kb-ring-1 kb-ring-slate-950 kb-rounded-xl kb-shadow-2xl kb-sh kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
+                    className={`kb-bg-slate-900 kb-rounded-xl kb-shadow-2xl kb-sh kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
                     style={{
                         position: uiSettings.isChatbotFloating ? 'fixed' : 'absolute',
                         bottom: '1rem',
@@ -281,7 +281,7 @@ const ChatBot = () => {
                     <div className="kb-bg-indigo-500 kb-p-4 kb-flex kb-justify-between kb-items-center kb-border-b kb-border-slate-900">
                         <div className="kb-flex kb-items-center kb-gap-2 kb-text-white">
                             <img className="kb-w-7 kb-h-7 kb-rounded-full kb-ring-2 kb-ring-indigo-400 kb-bg-slate-800" src="https://robohash.org/Assistan" alt="" />
-                            <h3 className="kb-font-bold kb-text-lg kb-text-white">Kai</h3>
+                            <h3 className="kb-font-bold kb-text-lg kb-text-white kb-cursor-default">Kai</h3>
                         </div>
                         <div className="kb-flex kb-items-center kb-space-x-2">
                             <Button onClick={toggleMaximize} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
@@ -292,7 +292,7 @@ const ChatBot = () => {
                             </Button>
                         </div>
                     </div>
-                    <div className="kb-flex-1 kb-overflow-y-auto kb-p-4 kb-space-y-4">
+                    <div className="kb-flex-1 kb-overflow-y-auto kb-p-4 kb-space-y-4 kb-border-x kb-border-slate-950">
                         {messages.length === 0 ? (
                             <div className="kb-flex kb-flex-col kb-items-center kb-justify-center kb-h-full kb-space-y-4">
                                 <h3 className="kb-text-slate-200 kb-text-xl kb-font-medium">
