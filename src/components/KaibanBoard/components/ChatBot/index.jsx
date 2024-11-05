@@ -247,12 +247,16 @@ const ChatBot = () => {
         }
     };
 
-    const toggleMaximize = () => {
+    const handleMaximizeToggle = () => {
         setIsMaximized(!isMaximized);
     };
 
     return (
-        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-[9999]`}>
+        <div className={`${
+            uiSettings.isChatbotFloating 
+                ? 'kb-fixed kb-bottom-4 kb-right-4' 
+                : 'kb-absolute kb-bottom-2 kb-right-2'
+            } kb-z-50`}>
             {!isChatBotOpen && uiSettings.isChatbotFloating && (
                 <Button
                     onClick={() => setChatBotOpenAction(true)}
@@ -263,19 +267,20 @@ const ChatBot = () => {
             )}
             {isChatBotOpen && (
                 <div
-                    className={`kb-bg-slate-900 kb-rounded-xl kb-shadow-xl kb-shadow-slate-950/25 kb-flex kb-flex-col kb-overflow-hidden kb-transition-all kb-duration-300 kb-ease-in-out`}
+                    className={`kb-bg-slate-900 kb-rounded-xl kb-shadow-xl kb-shadow-slate-950/25 kb-flex kb-flex-col kb-overflow-hidden`}
                     style={{
-                        position: uiSettings.isChatbotFloating ? 'fixed' : 'absolute',
+                        position: 'fixed',
                         bottom: '1rem',
                         right: '1rem',
-                        ...(isMaximized ? {
-                            width: 'calc(100% - 2rem)',
-                            height: 'calc(100% - 2rem)',
-                        } : {
-                            width: window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '24rem',
-                            height: window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '32rem',
-                        }),
+                        width: isMaximized ? 'calc(100% - 2rem)' : (window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '24rem'),
+                        height: isMaximized ? 'calc(100% - 2rem)' : (window.innerWidth <= 640 ? 'calc(100% - 2rem)' : '32rem'),
                         transformOrigin: 'bottom right',
+                        transform: isMaximized ? 'translate(0, 0)' : 'translate(0, 0)',
+                        transition: `
+                            width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                            height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                            transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+                        `,
                     }}
                 >
                     <div className="kb-bg-indigo-500 kb-p-4 kb-flex kb-justify-between kb-items-center kb-border-b kb-border-slate-900">
@@ -284,7 +289,7 @@ const ChatBot = () => {
                             <h3 className="kb-font-bold kb-text-lg kb-text-white kb-cursor-default">Kai</h3>
                         </div>
                         <div className="kb-flex kb-items-center kb-space-x-2">
-                            <Button onClick={toggleMaximize} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none kb-hidden md:kb-block">
+                            <Button onClick={handleMaximizeToggle} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none kb-hidden md:kb-block">
                                 {isMaximized ? <ArrowsPointingInIcon className="kb-h-5 kb-w-5" /> : <ArrowsPointingOutIcon className="kb-h-5 kb-w-5" />}
                             </Button>
                             <Button onClick={() => setChatBotOpenAction(false)} className="kb-text-white data-[hover]:kb-text-indigo-200 data-[focus]:kb-outline-none">
