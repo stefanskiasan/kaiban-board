@@ -252,7 +252,7 @@ const ChatBot = () => {
     };
 
     return (
-        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-[9999] ${isChatBotOpen ? 'kb-inset-0' : ''}`}>
+        <div className={`${uiSettings.isChatbotFloating ? 'kb-fixed kb-bottom-4 kb-right-4' : 'kb-absolute kb-bottom-2 kb-right-2'} kb-z-[9999]`}>
             {!isChatBotOpen && uiSettings.isChatbotFloating && (
                 <Button
                     onClick={() => setChatBotOpenAction(true)}
