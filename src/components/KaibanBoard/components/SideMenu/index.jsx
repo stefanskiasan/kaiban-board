@@ -59,7 +59,7 @@ const SideMenu = () => {
                 <Tooltip text="Results Overview" />
             </Tab>
             {!uiSettings.isChatbotFloating && (
-                <div className="kb-absolute kb-bottom-0 kb-w-[55px]">
+                <div className="kb-hidden kb-absolute kb-bottom-0 kb-w-[55px]">
                     <Button className=" kb-relative kb-z-10 kb-isolate kb-group kb-w-full kb-h-[55px] kb-flex kb-justify-center kb-items-center kb-border-l-2 kb-pr-[2px] kb-border-slate-900 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[selected]:kb-border-indigo-500 data-[selected]:kb-text-indigo-500 data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
                         onClick={() => setChatBotOpenAction(true)}
                     >

@@ -260,7 +260,7 @@ const ChatBot = () => {
             {!isChatBotOpen && uiSettings.isChatbotFloating && (
                 <Button
                     onClick={() => setChatBotOpenAction(true)}
-                    className="kb-bg-indigo-500 kb-text-white kb-rounded-full kb-p-4 kb-shadow-xl kb-shadow-indigo-500/50 kb-transition-all kb-duration-300 data-[focus]:kb-outline-none data-[focus]:kb-ring-2 data-[focus]:kb-ring-offset-2 data-[focus]:kb-ring-white data-[hover]:kb-bg-indigo-600 data-[hover]:kb-scale-110"
+                    className="kb-hidden kb-bg-indigo-500 kb-text-white kb-rounded-full kb-p-4 kb-shadow-xl kb-shadow-indigo-500/50 kb-transition-all kb-duration-300 data-[focus]:kb-outline-none data-[focus]:kb-ring-2 data-[focus]:kb-ring-offset-2 data-[focus]:kb-ring-white data-[hover]:kb-bg-indigo-600 data-[hover]:kb-scale-110"
                 >
                     <ChatBubbleLeftEllipsisIcon className="kb-h-6 kb-w-6" />
                 </Button>
