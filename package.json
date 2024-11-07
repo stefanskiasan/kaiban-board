@@ -1,6 +1,6 @@
 {
   "name": "kaiban-board",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "type": "module",
   "module": "dist/index.js",
   "files": [
