@@ -1,6 +1,7 @@
 import KaibanBoard from "../components/KaibanBoard";
 import teamOpenAI from "../teams/resume_creation/openai";
 import teamProductSpecs from "../teams/product_specs/openai";
+import teamTripPlanning from "../teams/trip_planning/openai";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
@@ -21,7 +22,7 @@ export const withoutWelcomeInfo = {
         uiSettings: {
             showWelcomeInfo: false,
         },
-        teams: [teamOpenAI, teamProductSpecs],
+        teams: [teamOpenAI, teamProductSpecs, teamTripPlanning],
         title: "Without Welcome Info", // Title in Storybook
     },
 };

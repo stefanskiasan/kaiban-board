@@ -27,7 +27,9 @@ const ActivityDetails = ({ details, styles="kb-max-w-[218px] md:kb-max-w-[428px]
         <div className={`kb-bg-slate-800 kb-rounded-lg kb-px-3 kb-py-2 kb-ring-1 kb-ring-slate-900 kb-relative ${styles}`}>
             <div className={`kb-break-words kb-overflow-hidden ${isOverflowing && !isExpanded ? 'kb-max-h-14' : ''}`}>
                 <span ref={textRef} className="kb-text-xs kb-font-normal kb-text-white kb-block kb-leading-normal">
-                    {details}
+                    {typeof details === 'object'
+                        ? JSON.stringify(details, null, 2)
+                        : details}
                 </span>
             </div>
             {isOverflowing && (
