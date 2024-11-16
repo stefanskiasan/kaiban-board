@@ -263,7 +263,10 @@ const getEnvValue = (cleanedKey, environmentPrefix) => {
             NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
             NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
             NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-            NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+            NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+            NEXT_PUBLIC_SERPER_API_KEY: process.env.NEXT_PUBLIC_SERPER_API_KEY,
+            NEXT_PUBLIC_EXA_API_KEY: process.env.NEXT_PUBLIC_EXA_API_KEY,
+            NEXT_PUBLIC_WOLFRAM_APP_ID: process.env.NEXT_PUBLIC_WOLFRAM_APP_ID
         };
         return envVars[finalKey];
     } else if (environmentPrefix === 'VITE_' && typeof import.meta.env !== 'undefined') {
