@@ -1,0 +1,1 @@
+export { globalNewsOpenai } from './openai';
