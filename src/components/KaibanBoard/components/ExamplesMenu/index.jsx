@@ -8,8 +8,9 @@ import { tripPlanningOpenai } from '../../assets/teams/trip_planning';
 import { resumeCreationOpenai } from '../../assets/teams/resume_creation';
 import { globalNewsOpenai } from '../../assets/teams/global_news';
 import { scientificComputingOpenai } from '../../assets/teams/scientific_computing';
-import { researchWritingOpenai } from '../../assets/teams/research_writing';
+// import { researchWritingOpenai } from '../../assets/teams/research_writing';
 import { githubIssueAnalysisOpenai } from '../../assets/teams/github_issue_analysis';
+import { websiteRoastOpenai } from '../../assets/teams/website_roast';
 
 const ExamplesMenu = () => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -46,11 +47,14 @@ const ExamplesMenu = () => {
             case 'scientificComputingOpenai':
                 setExampleCodeAction(scientificComputingOpenai);
                 break;
-            case 'researchWritingOpenai':
-                setExampleCodeAction(researchWritingOpenai);
-                break;
+            // case 'researchWritingOpenai':
+            //     setExampleCodeAction(researchWritingOpenai);
+            //     break;
             case 'githubIssueAnalysisOpenai':
                 setExampleCodeAction(githubIssueAnalysisOpenai);
+                break;
+            case 'websiteRoastOpenai':
+                setExampleCodeAction(websiteRoastOpenai);
                 break;
             default:
                 setExampleCodeAction(sportsNewsOpenai);
@@ -90,13 +94,17 @@ const ExamplesMenu = () => {
                         onClick={() => { handleSelectExample("scientificComputingOpenai") }}>
                         <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Scientific Computing Team</p>
                     </CloseButton>
-                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+                    {/* <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("researchWritingOpenai") }}>
                         <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Research Writing Team</p>
-                    </CloseButton>
+                    </CloseButton> */}
                     <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("githubIssueAnalysisOpenai") }}>
                         <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">GitHub Issue Analysis Team</p>
+                    </CloseButton>
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+                        onClick={() => { handleSelectExample("websiteRoastOpenai") }}>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Website Roast Team</p>
                     </CloseButton>
                 </div>
             </PopoverPanel>

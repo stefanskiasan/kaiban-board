@@ -8,7 +8,7 @@ import { resumeCreationOpenai } from '../assets/teams/resume_creation';
 
 // INFO: For code evaluation
 import { Agent, Task, Team } from 'kaibanjs';
-import { Serper, WolframAlphaTool, ExaSearch, GithubIssues } from '@kaibanjs/tools';
+import { Serper, WolframAlphaTool, ExaSearch, GithubIssues, Firecrawl } from '@kaibanjs/tools';
 import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 import { SearchApi } from '@langchain/community/tools/searchapi';
 import { DallEAPIWrapper } from '@langchain/openai';
@@ -78,7 +78,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                                 let valueToEvaluate = code;
 
                                 // Define allowed modules
-                                const allowedModules = ['Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper', 'Serper', 'WolframAlphaTool', 'ExaSearch', 'GithubIssues'];
+                                const allowedModules = ['Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper', 'Serper', 'WolframAlphaTool', 'ExaSearch', 'GithubIssues', 'Firecrawl'];
 
                                 // Check if allowed modules are imported
                                 allowedModules.forEach(module => {
@@ -115,8 +115,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                                 }
 
                                 // Create the function and evaluate
-                                const func = new Function('Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper', 'WolframAlphaTool', 'SerperTool', 'Serper', 'ExaSearch', 'GithubIssues', valueToEvaluate);
-                                const team = func(Agent, Task, Team, TavilySearchResults, SearchApi, DallEAPIWrapper, WolframAlphaTool, SerperTool, Serper, ExaSearch, GithubIssues);
+                                const func = new Function('Agent', 'Task', 'Team', 'TavilySearchResults', 'SearchApi', 'DallEAPIWrapper', 'WolframAlphaTool', 'SerperTool', 'Serper', 'ExaSearch', 'GithubIssues', 'Firecrawl', valueToEvaluate);
+                                const team = func(Agent, Task, Team, TavilySearchResults, SearchApi, DallEAPIWrapper, WolframAlphaTool, SerperTool, Serper, ExaSearch, GithubIssues, Firecrawl);
 
                                 return team;
                             } catch (error) {
