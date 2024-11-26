@@ -60,9 +60,9 @@ const KaibanBoardWrapper = () => {
     );
 };
 
-const KaibanBoard = ({ uiSettings, code, keys, project, teams }) => {
+const KaibanBoard = ({ uiSettings, code, keys, project, teams, defaultEnvVars }) => {
     const mergedUiSettings = mergeUiSettings(uiSettings);
-    const initialState = filterUndefinedProps({ uiSettings: mergedUiSettings, code, keys, project, teams });
+    const initialState = filterUndefinedProps({ uiSettings: mergedUiSettings, code, keys, project, teams, defaultEnvVars });
 
     return (
         <PlaygroundProvider initialState={initialState}>

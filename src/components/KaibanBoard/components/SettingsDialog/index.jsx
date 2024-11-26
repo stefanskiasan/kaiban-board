@@ -81,6 +81,10 @@ const SettingsDialog = () => {
             return;
         }
 
+        if (key.length <= 2) {
+            return '*'.repeat(key.length);
+        }
+
         const visibleLength = key.length < 5 ? 2 : 5;
         const visiblePart = key.substring(0, visibleLength);
         const maskedPart = '*'.repeat(key.length - visibleLength);
