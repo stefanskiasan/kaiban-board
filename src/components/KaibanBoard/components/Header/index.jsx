@@ -10,6 +10,7 @@ import ProjectName from '../ProjectName';
 import Tooltip from '../Common/Tooltip';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { checkApiKeys, getLastBlockedWorkflowDescription, isAwaitingValidation } from '../../utils/helper';
+import ExampleTeams from '../ExampleTeams';
 
 const Header = ({ examplesMenu }) => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -110,6 +111,9 @@ const Header = ({ examplesMenu }) => {
                 <ProjectName />
                 {uiSettings.showExampleMenu && (
                     <>{examplesMenu}</>
+                )}
+                {uiSettings.showExampleTeams && (
+                    <ExampleTeams />
                 )}
             </div>
             <div className="kb-flex kb-items-center kb-gap-2 kb-w-max kb-h-max kb-ml-auto kb-pr-3.5">

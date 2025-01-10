@@ -10,6 +10,7 @@ const defaultUiSettings = {
     showExampleMenu: false,
     showShareOption: false,
     showSettingsOption: false,
+    showExampleTeams: false,
     maximizeConfig: {
         isActive: false,
         scrollPosition: 0
@@ -60,9 +61,9 @@ const KaibanBoardWrapper = () => {
     );
 };
 
-const KaibanBoard = ({ uiSettings, code, keys, project, teams, defaultEnvVars }) => {
+const KaibanBoard = ({ uiSettings, code, keys, project, teams, defaultEnvVars, exampleTeams }) => {
     const mergedUiSettings = mergeUiSettings(uiSettings);
-    const initialState = filterUndefinedProps({ uiSettings: mergedUiSettings, code, keys, project, teams, defaultEnvVars });
+    const initialState = filterUndefinedProps({ uiSettings: mergedUiSettings, code, keys, project, teams, defaultEnvVars, exampleTeams });
 
     return (
         <PlaygroundProvider initialState={initialState}>

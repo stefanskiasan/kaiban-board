@@ -56,6 +56,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           showExampleMenu: false,
           showShareOption: false,
           showSettingsOption: false,
+          showExampleTeams: false,
           maximizeConfig: {
             isActive: false,
             scrollPosition: 0,
@@ -78,6 +79,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         },
 
         teams: [],
+
+        exampleTeams: [],
 
         ...initialState, // Merge initial state
 
@@ -424,13 +427,15 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             initDbAction,
             checkAndSetProject,
             teams,
+            exampleTeams,
             setTeamAction,
             uiSettings,
             setTabAction,
             initDefaultEnvVarsAction,
+            setExampleCodeAction
           } = get();
 
-          if (teams.length === 0) {
+          if (teams.length === 0 && !exampleTeams.length) {
             let initialCode = code;
 
             if (!code) {
@@ -454,6 +459,9 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 setTabAction(uiSettings.selectedTab);
               });
             }
+          } else if (exampleTeams.length) {
+            const team = exampleTeams[0];
+            setExampleCodeAction(team);
           } else {
             const team = teams[0];
             setTeamAction(team);
