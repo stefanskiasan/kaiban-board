@@ -5,7 +5,7 @@ import { WikipediaQueryRun } from "@langchain/community/tools/wikipedia_query_ru
 // Define tools
 const searchTool = new TavilySearchResults({
     maxResults: 3,
-    apiKey: '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',
+    apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
 const wikiTool = new WikipediaQueryRun({

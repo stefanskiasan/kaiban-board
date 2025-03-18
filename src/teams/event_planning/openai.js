@@ -4,7 +4,7 @@ import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 // Define tools
 const searchInternet = new TavilySearchResults({
   maxResults: 3,
-  apiKey: import.meta.env.VITE_TAVILY_API_KEY || "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",
+  apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
 // Define agents with exact roles, goals, and backgrounds from Python example
@@ -278,18 +278,10 @@ const team = new Team({
     expectedAttendees: 200,
     
     // Budget information
-    budgetRange: {
-      min: 50000,
-      max: 75000,
-      currency: "USD"
-    },
+    budgetRange: "10000 USD to 20000 USD",
     
     // Venue preferences
-    locationPreferences: {
-      city: "San Francisco",
-      area: "Downtown",
-      maxDistanceFromAirport: "20mi"
-    },
+    locationPreferences: "San Francisco, Downtown, 20mi from airport",
     venueStyle: ["Modern", "Professional", "Tech-friendly"],
     requiredFacilities: [
       "High-speed internet",

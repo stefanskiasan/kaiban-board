@@ -7,7 +7,7 @@ import { ExaSearch } from '@kaibanjs/tools';
 const searchInternet = new TavilySearchResults({
   maxResults: 3,
   // apiKey: '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',
-  apiKey: "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",
+  apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
 const exaTool = new ExaSearch({

@@ -5,8 +5,7 @@ import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 // Define tools
 const searchInternet = new TavilySearchResults({
     maxResults: 3,
-    // apiKey: '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',
-    apiKey: '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',
+    apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
 // Define agents with exact roles, goals, and backgrounds from Python example
