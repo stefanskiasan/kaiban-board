@@ -2,6 +2,7 @@ import KaibanBoard from "../components/KaibanBoard";
 import teamOpenAI from "../teams/resume_creation/openai";
 import teamProductSpecs from "../teams/product_specs/openai";
 import teamTripPlanning from "../teams/trip_planning/openai";
+import teamEventPlanning from "../teams/event_planning/openai";
 // Teams for the select menu
 import globalNewsOpenai from '../teams/examples/global_news/openai';
 import resumeCreationOpenai from '../teams/examples/resume_creation/openai';
@@ -16,7 +17,7 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const basic = {
   args: {
-    teams: [teamOpenAI, teamProductSpecs],
+    teams: [teamOpenAI, teamProductSpecs, teamEventPlanning],
     title: "Basic", // Title in Storybook
   },
 };
@@ -26,7 +27,7 @@ export const withoutWelcomeInfo = {
     uiSettings: {
       showWelcomeInfo: false,
     },
-    teams: [teamOpenAI, teamProductSpecs, teamTripPlanning],
+    teams: [teamOpenAI, teamProductSpecs, teamTripPlanning, teamEventPlanning],
     title: "Without Welcome Info", // Title in Storybook
   },
 };

@@ -1,14 +1,6 @@
 import { Agent, Task, Team } from "kaibanjs";
 
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 import { ExaSearch } from '@kaibanjs/tools';
-
-// Define tools
-const searchInternet = new TavilySearchResults({
-  maxResults: 3,
-  // apiKey: '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',
-  apiKey: "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",
-});
 
 const exaTool = new ExaSearch({
     apiKey: "51b74b88-07b9-4fa9-b317-73d9b8fd7de1",
