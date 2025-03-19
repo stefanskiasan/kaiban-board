@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Popover, PopoverButton, PopoverPanel, CloseButton } from '@headlessui/react';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
@@ -11,6 +10,7 @@ import { scientificComputingOpenai } from '../../assets/teams/scientific_computi
 // import { researchWritingOpenai } from '../../assets/teams/research_writing';
 import { githubIssueAnalysisOpenai } from '../../assets/teams/github_issue_analysis';
 import { websiteRoastOpenai } from '../../assets/teams/website_roast';
+import { eventPlanningOpenai } from '../../assets/teams/event_planning';
 
 const ExamplesMenu = () => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -46,6 +46,9 @@ const ExamplesMenu = () => {
                 break;
             case 'scientificComputingOpenai':
                 setExampleCodeAction(scientificComputingOpenai);
+                break;
+            case 'eventPlanningOpenai':
+                setExampleCodeAction(eventPlanningOpenai);
                 break;
             // case 'researchWritingOpenai':
             //     setExampleCodeAction(researchWritingOpenai);
@@ -93,6 +96,10 @@ const ExamplesMenu = () => {
                     <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("scientificComputingOpenai") }}>
                         <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Scientific Computing Team</p>
+                    </CloseButton>
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+                        onClick={() => { handleSelectExample("eventPlanningOpenai") }}>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Event Planning Team</p>
                     </CloseButton>
                     {/* <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("researchWritingOpenai") }}>
