@@ -340,12 +340,12 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
           if (uiSettings.maximizeConfig.isActive) {
             document.body.classList.add("overflow-hidden");
-            document.getElementsByTagName("head")[0].classList.add("hidden");
             window.scrollTo(0, 0);
+            document.getElementsByTagName("header")[0].classList.add("hidden");
           } else {
             document.body.classList.remove("overflow-hidden");
-            document.getElementsByTagName("header")[0].classList.remove("hidden");
             window.scrollTo(0, uiSettings.maximizeConfig.scrollPosition);
+            document.getElementsByTagName("header")[0].classList.remove("hidden");
           }
         },
 
