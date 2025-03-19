@@ -11,6 +11,7 @@ import { scientificComputingOpenai } from '../../assets/teams/scientific_computi
 import { githubIssueAnalysisOpenai } from '../../assets/teams/github_issue_analysis';
 import { websiteRoastOpenai } from '../../assets/teams/website_roast';
 import { eventPlanningOpenai } from '../../assets/teams/event_planning';
+import { researchAnalysisOpenai } from '../../assets/teams/research_analysis';
 
 const ExamplesMenu = () => {
     const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -49,6 +50,9 @@ const ExamplesMenu = () => {
                 break;
             case 'eventPlanningOpenai':
                 setExampleCodeAction(eventPlanningOpenai);
+                break;
+            case 'researchAnalysisOpenai':
+                setExampleCodeAction(researchAnalysisOpenai);
                 break;
             // case 'researchWritingOpenai':
             //     setExampleCodeAction(researchWritingOpenai);
@@ -100,6 +104,10 @@ const ExamplesMenu = () => {
                     <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("eventPlanningOpenai") }}>
                         <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Event Planning Team</p>
+                    </CloseButton>
+                    <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+                        onClick={() => { handleSelectExample("researchAnalysisOpenai") }}>
+                        <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">Research Analysis Team</p>
                     </CloseButton>
                     {/* <CloseButton className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
                         onClick={() => { handleSelectExample("researchWritingOpenai") }}>
