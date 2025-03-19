@@ -343,7 +343,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             window.scrollTo(0, 0);
             setTimeout(() => {
               document.getElementsByTagName("header")[0].classList.add("hidden");
-            }, 200);
+            }, 100);
           } else {
             document.body.classList.remove("overflow-hidden");
             window.scrollTo(0, uiSettings.maximizeConfig.scrollPosition);
