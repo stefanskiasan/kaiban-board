@@ -342,12 +342,12 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             document.body.classList.add("overflow-hidden");
             window.scrollTo(0, 0);
             setTimeout(() => {
-              document.getElementsByTagName("header")[0].classList.add("hidden");
+              document.querySelector("header").classList.add("hidden");
             }, 100);
           } else {
             document.body.classList.remove("overflow-hidden");
             window.scrollTo(0, uiSettings.maximizeConfig.scrollPosition);
-            document.getElementsByTagName("header")[0].classList.remove("hidden");
+            document.querySelector("header").classList.remove("hidden");
           }
         },
 

@@ -171,12 +171,25 @@ export const extractTeamName = (code) => {
     }
 };
 
+const getEnvVar = (key) => {
+    // Check for Vite environment variables
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+        return import.meta.env[`VITE_${key}`];
+    }
+    // Check for Next.js environment variables
+    if (typeof process !== 'undefined' && process.env) {
+        return process.env[`NEXT_PUBLIC_${key}`];
+    }
+    return undefined;
+};
+
 export const encryptKeys = async (keys) => {
     const baseUrl = `${window.location.protocol}//${window.location.host}`;
+    const encryptServiceUrl = getEnvVar('ENCRYPT_SERVICE_URL') || `${baseUrl}/api/crypto/encrypt`;
 
     try {
         const encryptedItems = await Promise.all(keys.map(async (item) => {
-            const response = await fetch(`${baseUrl}/api/crypto/encrypt`, {
+            const response = await fetch(encryptServiceUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ data: item.value })
@@ -256,7 +269,7 @@ const getEnvValue = (cleanedKey, environmentPrefix) => {
             NEXT_PUBLIC_ANTHROPIC_API_KEY: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
             NEXT_PUBLIC_GOOGLE_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
             NEXT_PUBLIC_MISTRAL_API_KEY: process.env.NEXT_PUBLIC_MISTRAL_API_KEY,
-            NEXT_PUBLIC_TRAVILY_API_KEY: process.env.NEXT_PUBLIC_TRAVILY_API_KEY,
+            NEXT_PUBLIC_TAVILY_API_KEY: process.env.NEXT_PUBLIC_TAVILY_API_KEY,
             NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
             NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
             NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

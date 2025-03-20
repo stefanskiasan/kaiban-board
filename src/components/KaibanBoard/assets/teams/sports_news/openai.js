@@ -7,7 +7,7 @@ import { TavilySearchResults } from '@kaibanjs/tools';
 // Define tools
 const searchTool = new TavilySearchResults({
     maxResults: 1,
-    apiKey: 'ENV_TRAVILY_API_KEY',
+    apiKey: 'ENV_TAVILY_API_KEY',
 });
 
 // Define agents
@@ -54,7 +54,7 @@ const team = new Team({
 team.start();
 `,
         keys: [
-            {key: "ENV_TRAVILY_API_KEY", value: "NEXT_PUBLIC_TRAVILY_API_KEY"},
+            {key: "ENV_TAVILY_API_KEY", value: "NEXT_PUBLIC_TAVILY_API_KEY"},
             {key: "ENV_OPENAI_API_KEY", value: "NEXT_PUBLIC_OPENAI_API_KEY"}
         ],
         user: 'AI Champions Team'

@@ -12,17 +12,15 @@ While KaibanJS provides the framework to build your AI workflows, visualizing th
 
 ### Kaiban Board UI License
 
-We could have easily built a SaaS platform with free and paid tiers, as many others do. But instead, we understand that developers want full control over their AI projects, including how they handle data and where they choose to host their solutions. 
+We believe in the power of open source and community-driven development. That's why Kaiban Board is completely open source under the MIT license. You can use it, modify it, and deploy it however you want, whether locally or on your own infrastructure.
 
-That’s why we’re giving you a **free-to-use and integrate UI** that you can run **locally** or **deploy wherever you choose**. Think of Kaiban Board as being able to run your own Vercel-like infrastructure for AI agents—completely under your own infrastructure. 
+This means you have:
+- Complete freedom to modify and customize the code
+- Full control over your data and where you host it
+- The ability to contribute back to the project
+- No restrictions on commercial or personal use
 
-> The Kaiban Board is not as huge as Vercel by now... But I just couldn't think of a better comparison. :)
-
-As we continue to experiment with Kaiban Board, we’ll keep refining the distribution based on your feedback and needs. 
-
-This experimental approach gives you the freedom to deploy Kaiban Board on your own terms, without locking you into any specific platform. And to us to figure it out the best way to distribute it. 
-
-Over time, we’ll adjust the distribution strategy based on your input and what works best for everyone.
+> We're committed to keeping Kaiban Board open source and free for everyone to use and improve.
 
 ---
 
@@ -67,23 +65,24 @@ export default App;
 
 ## Feedback and Future Development
 
-We’re in the **early stages** of **Kaiban Board’s** development, and your feedback is essential in helping us shape the future of both the UI and how we distribute it. As we experiment with this tool, we’ll continue learning and iterating to make it better for developers like you.
+We're in the **early stages** of **Kaiban Board's** development, and your feedback is essential in helping us shape its future. As an open-source project, we welcome contributions from the community, whether it's bug reports, feature requests, or pull requests.
 
-If you have suggestions or run into issues, please let us know! We're committed to ensuring Kaiban Board evolves based on community feedback.
+If you have suggestions or run into issues, please open an issue on our GitHub repository. We're committed to ensuring Kaiban Board evolves based on community feedback and needs.
 
 ---
 
-
 ## License
 
-### KaibanJS (Framework)
+Both **KaibanJS** (the framework) and **Kaiban Board** (the visualizer) are licensed under the **MIT License**, giving you full freedom to:
 
-**KaibanJS** is licensed under the **MIT License** (One of the most Open Source friendly licenses out there), giving you full freedom to use, modify, and distribute the framework in both personal and commercial projects.
+- Use the software for any purpose
+- Study how the software works and modify it
+- Redistribute the software
+- Make and distribute modifications to the software
 
-### Kaiban Board (Visualizer)
+This applies to both personal and commercial projects. See the [LICENSE](LICENSE.md) file for the complete license text.
 
-**Kaiban Board** is licensed under a **custom license**. You can use it for free, even in commercial projects. However, if you want to modify the existing UI in any way, you will need to obtain a separate license.
-
-For inquiries about licensing modifications or extended features, please [contact us](mailto:hello@kaiban.ai). 
-
-> *We're always open to helping innovative people with great ideas, even if they have limited budgets 😉.*
+For any questions or support, feel free to:
+- Open an issue on GitHub
+- Join our community discussions
+- Contribute to the project
