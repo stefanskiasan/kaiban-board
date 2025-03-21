@@ -1,3 +1,4 @@
+// TODO: This component is not used in the project, we need to improve the chatbot
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
