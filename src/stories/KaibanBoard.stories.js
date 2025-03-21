@@ -19,13 +19,7 @@ export const Basic = {
       isPreviewMode: false,
       showSimpleShareOption: false,
     },
-    defaultEnvVars: [
-      { key: 'ENV_OPENAI_API_KEY', value: 'NEXT_PUBLIC_OPENAI_API_KEY' },
-      { key: 'ENV_SERPER_API_KEY', value: 'NEXT_PUBLIC_SERPER_API_KEY' },
-      { key: 'ENV_TAVILY_API_KEY', value: 'NEXT_PUBLIC_TAVILY_API_KEY' },
-      { key: 'ENV_WOLFRAM_APP_ID', value: 'NEXT_PUBLIC_WOLFRAM_APP_ID' },
-    ],
-    title: 'Our Options', // Title in Storybook
+    title: 'Basic', // Title in Storybook
   },
 };
 

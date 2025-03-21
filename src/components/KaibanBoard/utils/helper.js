@@ -207,14 +207,14 @@ export const extractTeamName = code => {
   }
 };
 
-const getEnvVar = key => {
-  // Check for Vite environment variables
+const getEncryptServiceUrl = () => {
+  // Check for Vite environment variable
   if (typeof import.meta !== 'undefined' && import.meta.env) {
-    return import.meta.env[`VITE_${key}`];
+    return import.meta.env.VITE_ENCRYPT_SERVICE_URL;
   }
-  // Check for Next.js environment variables
+  // Check for Next.js environment variable
   if (typeof process !== 'undefined' && process.env) {
-    return process.env[`NEXT_PUBLIC_${key}`];
+    return process.env.NEXT_PUBLIC_ENCRYPT_SERVICE_URL;
   }
   return undefined;
 };
@@ -222,7 +222,7 @@ const getEnvVar = key => {
 export const encryptKeys = async keys => {
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const encryptServiceUrl =
-    getEnvVar('ENCRYPT_SERVICE_URL') || `${baseUrl}/api/crypto/encrypt`;
+    getEncryptServiceUrl() || `${baseUrl}/api/crypto/encrypt`;
 
   try {
     const encryptedItems = await Promise.all(
