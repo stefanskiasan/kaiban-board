@@ -1,7 +1,7 @@
-# Kaiban Board: Visualize Your AI Agent Teams
+<!-- # Kaiban Board: Visualize Your AI Agent Teams -->
 
 <p align="center">
-  <a href="https://www.kaibanjs.com/board">  
+  <a href="https://www.kaibanjs.com/#playground">  
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/dnno8pxyy/image/upload/v1724533982/icon_htfer2.png">
       <img src="https://res.cloudinary.com/dnno8pxyy/image/upload/v1724533982/icon_htfer2.png" height="128">
@@ -63,7 +63,7 @@ yarn install
 ```bash
 cp .env.example .env.local
 ```
-Edit `.env.local` and add your API keys (see [Supported Integrations](#supported-integrations) for required keys).
+Edit `.env.local` and add your API keys.
 
 4. Start the development server:
 ```bash
@@ -137,7 +137,7 @@ export default App;
 
 ## Community and Support
 
-Join the [Discord community](https://www.kaibanjs.com/discord) to connect with other developers and get support. [Follow us](https://x.com/dariel_noel) on Twitter for the latest updates.
+Join the [Discord community](https://www.kaibanjs.com/discord) to connect with other developers and get support. [Follow us](https://x.com/kaibanjs) on Twitter for the latest updates.
 
 ## Contributing
 
