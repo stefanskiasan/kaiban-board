@@ -1,5 +1,5 @@
 import { Agent, Task, Team } from 'kaibanjs';
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
+import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 
 // Define tools
 const searchInternet = new TavilySearchResults({
@@ -18,8 +18,8 @@ const eventManagerAgent = new Agent({
   tools: [searchInternet],
   maxIterations: 20,
   llmConfig: {
-    provider: "openai",
-    model: "gpt-4o-mini",
+    provider: 'openai',
+    model: 'gpt-4o-mini',
   },
 });
 
@@ -273,39 +273,39 @@ const team = new Team({
   logLevel: 'info',
   inputs: {
     // Event basic information
-    dateRange: "2025-04-10 to 2025-04-22",
-    eventType: "Corporate Conference",
+    dateRange: '2025-04-10 to 2025-04-22',
+    eventType: 'Corporate Conference',
     expectedAttendees: 200,
-    
+
     // Budget information
-    budgetRange: "10000 USD to 20000 USD",
-    
+    budgetRange: '10000 USD to 20000 USD',
+
     // Venue preferences
-    locationPreferences: "San Francisco, Downtown, 20mi from airport",
-    venueStyle: ["Modern", "Professional", "Tech-friendly"],
+    locationPreferences: 'San Francisco, Downtown, 20mi from airport',
+    venueStyle: ['Modern', 'Professional', 'Tech-friendly'],
     requiredFacilities: [
-      "High-speed internet",
-      "AV equipment",
-      "Breakout rooms",
-      "Catering kitchen"
+      'High-speed internet',
+      'AV equipment',
+      'Breakout rooms',
+      'Catering kitchen',
     ],
-    
+
     // Guest information
-    guestCategories: ["Executives", "Clients", "Partners", "Staff"],
+    guestCategories: ['Executives', 'Clients', 'Partners', 'Staff'],
     vipGuests: 15,
-    dietaryRequirements: ["Vegetarian", "Vegan", "Gluten-free"],
-    
+    dietaryRequirements: ['Vegetarian', 'Vegan', 'Gluten-free'],
+
     // Service requirements
     requiredServices: [
-      "Full-service catering",
-      "AV support",
-      "Security",
-      "Registration desk"
-    ]
+      'Full-service catering',
+      'AV support',
+      'Security',
+      'Registration desk',
+    ],
   },
-  env: { 
+  env: {
     OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY
+    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   },
 });
 

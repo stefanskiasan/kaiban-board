@@ -1,6 +1,6 @@
 export const scientificComputingOpenai = () => {
-    return {
-        code: `
+  return {
+    code: `
 import { Agent, Task, Team } from 'kaibanjs';
 import { WolframAlphaTool } from '@kaibanjs/tools';
 
@@ -64,10 +64,10 @@ const team = new Team({
 
 team.start();
 `,
-        keys: [
-            { key: "ENV_OPENAI_API_KEY", value: "NEXT_PUBLIC_OPENAI_API_KEY" },
-            { key: "ENV_WOLFRAM_APP_ID", value: "NEXT_PUBLIC_WOLFRAM_APP_ID" }
-        ],
-        user: 'AI Champions Team'
-    };
+    keys: [
+      { key: 'ENV_OPENAI_API_KEY', value: 'NEXT_PUBLIC_OPENAI_API_KEY' },
+      { key: 'ENV_WOLFRAM_APP_ID', value: 'NEXT_PUBLIC_WOLFRAM_APP_ID' },
+    ],
+    user: 'AI Champions Team',
+  };
 };

@@ -1,1 +1,1 @@
-export { eventPlanningOpenai } from './openai'; 
+export { eventPlanningOpenai } from './openai';

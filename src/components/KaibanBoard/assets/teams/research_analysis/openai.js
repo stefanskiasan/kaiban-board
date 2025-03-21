@@ -1,6 +1,6 @@
 export const researchAnalysisOpenai = () => {
-    return {
-        code: `
+  return {
+    code: `
 import { Agent, Task, Team } from 'kaibanjs';
 import { TavilySearchResults, Serper } from '@kaibanjs/tools';
 
@@ -76,11 +76,11 @@ const team = new Team({
 
 team.start();
 `,
-        keys: [
-            {key: "ENV_TAVILY_API_KEY", value: "NEXT_PUBLIC_TAVILY_API_KEY"},
-            {key: "ENV_OPENAI_API_KEY", value: "NEXT_PUBLIC_OPENAI_API_KEY"},
-            {key: "ENV_SERPER_API_KEY", value: "NEXT_PUBLIC_SERPER_API_KEY"}
-        ],
-        user: 'AI Champions Team'
-    };
-}; 
+    keys: [
+      { key: 'ENV_TAVILY_API_KEY', value: 'NEXT_PUBLIC_TAVILY_API_KEY' },
+      { key: 'ENV_OPENAI_API_KEY', value: 'NEXT_PUBLIC_OPENAI_API_KEY' },
+      { key: 'ENV_SERPER_API_KEY', value: 'NEXT_PUBLIC_SERPER_API_KEY' },
+    ],
+    user: 'AI Champions Team',
+  };
+};

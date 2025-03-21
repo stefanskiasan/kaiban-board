@@ -1,1 +1,1 @@
-export { researchAnalysisOpenai } from './openai'; 
+export { researchAnalysisOpenai } from './openai';

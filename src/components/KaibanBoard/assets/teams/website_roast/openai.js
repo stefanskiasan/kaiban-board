@@ -1,6 +1,6 @@
 export const websiteRoastOpenai = () => {
-    return {
-        code: `
+  return {
+    code: `
 import { Agent, Task, Team } from 'kaibanjs';
 import { Firecrawl } from '@kaibanjs/tools';
 
@@ -71,10 +71,10 @@ const team = new Team({
 
 team.start();
 `,
-        keys: [
-            { key: "ENV_OPENAI_API_KEY", value: "NEXT_PUBLIC_OPENAI_API_KEY" },
-            { key: "ENV_FIRECRAWL_API_KEY", value: "NEXT_PUBLIC_FIRECRAWL_API_KEY" }
-        ],
-        user: 'AI Champions Team'
-    };
+    keys: [
+      { key: 'ENV_OPENAI_API_KEY', value: 'NEXT_PUBLIC_OPENAI_API_KEY' },
+      { key: 'ENV_FIRECRAWL_API_KEY', value: 'NEXT_PUBLIC_FIRECRAWL_API_KEY' },
+    ],
+    user: 'AI Champions Team',
+  };
 };

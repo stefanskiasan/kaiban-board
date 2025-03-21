@@ -1,30 +1,30 @@
-import { create } from "zustand";
-import { devtools, subscribeWithSelector } from "zustand/middleware";
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
-import toast from "react-hot-toast";
+import { create } from 'zustand';
+import { devtools, subscribeWithSelector } from 'zustand/middleware';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 import {
   encryptKeys,
   extractTeamName,
   findEnvValues,
   findSingleEnvValue,
-} from "../utils/helper";
-import { resumeCreationOpenai } from "../assets/teams/resume_creation";
+} from '../utils/helper';
+import { resumeCreationOpenai } from '../assets/teams/resume_creation';
 
 // INFO: For code evaluation
-import { Agent, Task, Team } from "kaibanjs";
+import { Agent, Task, Team } from 'kaibanjs';
 import {
   Serper,
   WolframAlphaTool,
   ExaSearch,
   GithubIssues,
   Firecrawl,
-} from "@kaibanjs/tools";
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
-import { SearchApi } from "@langchain/community/tools/searchapi";
-import { DallEAPIWrapper } from "@langchain/openai";
+} from '@kaibanjs/tools';
+import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+import { SearchApi } from '@langchain/community/tools/searchapi';
+import { DallEAPIWrapper } from '@langchain/openai';
 // TODO: Remove this import and delete the tools folder
-import { SerperTool } from "../tools";
+import { SerperTool } from '../tools';
 
 const createAgentsPlaygroundStore = (initialState = {}) => {
   return create(
@@ -74,8 +74,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         isOpenSettingsDialog: false,
 
         project: {
-          name: "Untitled Project",
-          user: { name: "Anonymous" },
+          name: 'Untitled Project',
+          user: { name: 'Anonymous' },
         },
 
         teams: [],
@@ -85,35 +85,35 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         ...initialState, // Merge initial state
 
         //actions
-        setTeamStoreAction: (teamStore) => set({ teamStore }),
+        setTeamStoreAction: teamStore => set({ teamStore }),
 
-        setCodeAction: (code) => {
+        setCodeAction: code => {
           try {
-            const createTeam = (code) => {
+            const createTeam = code => {
               try {
                 let valueToEvaluate = code;
 
                 // Define allowed modules
                 const allowedModules = [
-                  "Agent",
-                  "Task",
-                  "Team",
-                  "TavilySearchResults",
-                  "SearchApi",
-                  "DallEAPIWrapper",
-                  "Serper",
-                  "WolframAlphaTool",
-                  "ExaSearch",
-                  "GithubIssues",
-                  "Firecrawl",
+                  'Agent',
+                  'Task',
+                  'Team',
+                  'TavilySearchResults',
+                  'SearchApi',
+                  'DallEAPIWrapper',
+                  'Serper',
+                  'WolframAlphaTool',
+                  'ExaSearch',
+                  'GithubIssues',
+                  'Firecrawl',
                 ];
 
                 // Check if allowed modules are imported
-                allowedModules.forEach((module) => {
-                  const usageRegex = new RegExp(`\\b${module}\\b`, "g");
+                allowedModules.forEach(module => {
+                  const usageRegex = new RegExp(`\\b${module}\\b`, 'g');
                   const importRegex = new RegExp(
                     `import\\s+.*\\b${module}\\b.*from\\s+['"].*['"]\\s*;?`,
-                    "g"
+                    'g'
                   );
                   if (
                     usageRegex.test(valueToEvaluate) &&
@@ -128,13 +128,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 // Remove import statements
                 valueToEvaluate = valueToEvaluate.replace(
                   /^import\s+.*;?$/gm,
-                  ""
+                  ''
                 );
 
                 // Replace the team start function
                 valueToEvaluate = valueToEvaluate.replace(
                   /.*?\b(\w+)\s*\.\s*start\(\)(?:\s*\.then\(\s*\(.*?\)\s*=>\s*\{[\s\S]*?\}\s*\))?;?/g,
-                  ""
+                  ''
                 );
 
                 // Add the team return statements
@@ -148,8 +148,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 );
                 valueToEvaluate =
                   valueToEvaluate +
-                  "\n" +
-                  teamNames.map((name) => `return ${name};`).join("\n");
+                  '\n' +
+                  teamNames.map(name => `return ${name};`).join('\n');
 
                 // Get keys
                 const { keys } = get();
@@ -158,8 +158,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 if (keys && keys.length > 0) {
                   keys.forEach(({ key, value }) => {
                     const keyRegex = new RegExp(
-                      key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-                      "g"
+                      key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+                      'g'
                     );
                     valueToEvaluate = valueToEvaluate.replace(keyRegex, value);
                   });
@@ -167,18 +167,18 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
                 // Create the function and evaluate
                 const func = new Function(
-                  "Agent",
-                  "Task",
-                  "Team",
-                  "TavilySearchResults",
-                  "SearchApi",
-                  "DallEAPIWrapper",
-                  "WolframAlphaTool",
-                  "SerperTool",
-                  "Serper",
-                  "ExaSearch",
-                  "GithubIssues",
-                  "Firecrawl",
+                  'Agent',
+                  'Task',
+                  'Team',
+                  'TavilySearchResults',
+                  'SearchApi',
+                  'DallEAPIWrapper',
+                  'WolframAlphaTool',
+                  'SerperTool',
+                  'Serper',
+                  'ExaSearch',
+                  'GithubIssues',
+                  'Firecrawl',
                   valueToEvaluate
                 );
                 const team = func(
@@ -198,13 +198,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
                 return team;
               } catch (error) {
-                console.error("Invalid code:", error);
+                console.error('Invalid code:', error);
                 set({ errorState: { hasError: true, error: error.message } });
               }
             };
 
             const team = createTeam(code);
-            if (team && typeof team.useStore === "function") {
+            if (team && typeof team.useStore === 'function') {
               const store = team.useStore(team);
               if (store) {
                 const { setTeamStoreAction } = get();
@@ -217,36 +217,36 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
               }
             }
           } catch (error) {
-            console.error("Invalid code:", error);
+            console.error('Invalid code:', error);
             set({ errorState: { hasError: true, error: error.message } });
           }
         },
 
-        setTabAction: (selectedTab) => set({ selectedTab }),
+        setTabAction: selectedTab => set({ selectedTab }),
 
-        setActivityOpenAction: (isActivityOpen) => set({ isActivityOpen }),
-        setExecutionDialogOpenAction: (isExecutionDialogOpen) =>
+        setActivityOpenAction: isActivityOpen => set({ isActivityOpen }),
+        setExecutionDialogOpenAction: isExecutionDialogOpen =>
           set({ isExecutionDialogOpen }),
-        setCelebrationDialogOpenAction: (isCelebrationDialogOpen) =>
+        setCelebrationDialogOpenAction: isCelebrationDialogOpen =>
           set({ isCelebrationDialogOpen }),
 
-        setTaskDetailsDialogOpenAction: (isTaskDetailsDialogOpen) =>
+        setTaskDetailsDialogOpenAction: isTaskDetailsDialogOpen =>
           set({ isTaskDetailsDialogOpen }),
-        setSelectedTaskAction: (selectedTask) => {
+        setSelectedTaskAction: selectedTask => {
           set({ selectedTask, isTaskDetailsDialogOpen: true });
         },
 
         initDbAction: () => {
           const firebaseConfig = {
-            apiKey: findSingleEnvValue("FIREBASE_API_KEY"),
-            authDomain: findSingleEnvValue("FIREBASE_AUTH_DOMAIN"),
-            projectId: findSingleEnvValue("FIREBASE_PROJECT_ID"),
-            storageBucket: findSingleEnvValue("FIREBASE_STORAGE_BUCKET"),
+            apiKey: findSingleEnvValue('FIREBASE_API_KEY'),
+            authDomain: findSingleEnvValue('FIREBASE_AUTH_DOMAIN'),
+            projectId: findSingleEnvValue('FIREBASE_PROJECT_ID'),
+            storageBucket: findSingleEnvValue('FIREBASE_STORAGE_BUCKET'),
             messagingSenderId: findSingleEnvValue(
-              "FIREBASE_MESSAGING_SENDER_ID"
+              'FIREBASE_MESSAGING_SENDER_ID'
             ),
-            appId: findSingleEnvValue("FIREBASE_APP_ID"),
-            measurementId: findSingleEnvValue("FIREBASE_MEASUREMENT_ID"),
+            appId: findSingleEnvValue('FIREBASE_APP_ID'),
+            measurementId: findSingleEnvValue('FIREBASE_MEASUREMENT_ID'),
           };
 
           const initFirebase = () => {
@@ -261,9 +261,9 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           const db = getFirestore(app);
           set({ db });
         },
-        setShareDialogOpenAction: (isShareDialogOpen) =>
+        setShareDialogOpenAction: isShareDialogOpen =>
           set({ isShareDialogOpen }),
-        shareTeamAction: async (userName) => {
+        shareTeamAction: async userName => {
           set({ isLoadingShare: true });
 
           const { keys, db, code } = get();
@@ -272,7 +272,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             const encryptedKeys = await encryptKeys(keys);
             // console.log('Encrypted keys:', encryptedKeys);
 
-            const docRef = await addDoc(collection(db, "share"), {
+            const docRef = await addDoc(collection(db, 'share'), {
               code: code,
               keys: encryptedKeys,
               user: { name: userName },
@@ -284,13 +284,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
             set({ isLoadingShare: false, isShareDialogOpen: false });
             toast.success(
-              "Your team has been shared! URL copied to clipboard."
+              'Your team has been shared! URL copied to clipboard.'
             );
           } catch (error) {
             set({ isLoadingShare: false, isShareDialogOpen: false });
-            toast.error("Failed to process encryption or document creation.");
+            toast.error('Failed to process encryption or document creation.');
             console.error(
-              "Failed to process encryption or document creation:",
+              'Failed to process encryption or document creation:',
               error
             );
           }
@@ -304,21 +304,21 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
               `The URL is copied! Just paste it to share your team.`
             );
           } catch (error) {
-            toast.error("Failed to share the team.");
+            toast.error('Failed to share the team.');
           }
         },
 
-        setMissingKeysDialogOpenAction: (isMissingKeysDialogOpen) =>
+        setMissingKeysDialogOpenAction: isMissingKeysDialogOpen =>
           set({ isMissingKeysDialogOpen }),
 
-        setChatBotOpenAction: (isChatBotOpen) => set({ isChatBotOpen }),
+        setChatBotOpenAction: isChatBotOpen => set({ isChatBotOpen }),
 
-        setUiSettingsAction: (newSettings) =>
-          set((state) => ({
+        setUiSettingsAction: newSettings =>
+          set(state => ({
             uiSettings: { ...state.uiSettings, ...newSettings },
           })),
         toggleMaximizeAction: () => {
-          set((state) => {
+          set(state => {
             const isMaximized = !state.uiSettings.maximizeConfig.isActive;
             const scrollPosition = isMaximized
               ? window.scrollY
@@ -339,29 +339,30 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           const { uiSettings } = get();
 
           if (uiSettings.maximizeConfig.isActive) {
-            document.body.classList.add("overflow-hidden");
+            document.body.classList.add('overflow-hidden');
             window.scrollTo(0, 0);
             setTimeout(() => {
-              document.querySelector("header").classList.add("hidden");
+              document.querySelector('header').classList.add('hidden');
             }, 100);
           } else {
-            document.body.classList.remove("overflow-hidden");
+            document.body.classList.remove('overflow-hidden');
             window.scrollTo(0, uiSettings.maximizeConfig.scrollPosition);
-            document.querySelector("header").classList.remove("hidden");
+            document.querySelector('header').classList.remove('hidden');
           }
         },
 
         initDefaultEnvVarsAction: () => {
           const { keys, defaultEnvVars } = get();
-          
+
           if (Array.isArray(defaultEnvVars) && defaultEnvVars.length > 0) {
             // Create a Set of existing keys for O(1) lookup
             const existingKeySet = new Set(keys.map(k => k.key));
-            
+
             // Filter and process new environment variables
-            const envVars = findEnvValues(defaultEnvVars || [])
-              .filter(envVar => !existingKeySet.has(envVar.key));
-            
+            const envVars = findEnvValues(defaultEnvVars || []).filter(
+              envVar => !existingKeySet.has(envVar.key)
+            );
+
             // Only update if we have new keys to add
             if (envVars.length > 0) {
               set({ keys: [...keys, ...envVars] });
@@ -369,29 +370,29 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           }
         },
 
-        setKeysAction: (keys) => set({ keys }),
-        setSettingsDialogOpenAction: (isOpenSettingsDialog) =>
+        setKeysAction: keys => set({ keys }),
+        setSettingsDialogOpenAction: isOpenSettingsDialog =>
           set({ isOpenSettingsDialog }),
 
-        setProjectAction: (project) => set({ project }),
+        setProjectAction: project => set({ project }),
         checkAndSetProject: () => {
           const { project, code, setProjectAction } = get();
 
-          if (project.name === "Untitled Project") {
+          if (project.name === 'Untitled Project') {
             const name = extractTeamName(code);
             if (name) {
               setProjectAction({ ...project, name });
             }
           }
-          if (project.user.name === "Anonymous") {
+          if (project.user.name === 'Anonymous') {
             setProjectAction({
               ...project,
-              user: { name: "AI Champions Team" },
+              user: { name: 'AI Champions Team' },
             });
           }
         },
 
-        setExampleCodeAction: (exampleCode) => {
+        setExampleCodeAction: exampleCode => {
           const { setCodeAction, initDefaultEnvVarsAction } = get();
 
           const team = exampleCode();
@@ -401,8 +402,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           const name = extractTeamName(code);
 
           const project = {
-            name: name || "Untitled Project",
-            user: { name: user || "Anonymous" },
+            name: name || 'Untitled Project',
+            user: { name: user || 'Anonymous' },
           };
           set({ keys, project });
 
@@ -411,13 +412,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           setCodeAction(code);
         },
 
-        setTeamAction: (team) => {
+        setTeamAction: team => {
           const { setTeamStoreAction } = get();
           setTeamStoreAction(team.store);
 
           const project = {
-            name: team.store.getState().name || "Untitled Project",
-            user: { name: "Anonymous" },
+            name: team.store.getState().name || 'Untitled Project',
+            user: { name: 'Anonymous' },
           };
           set({ project, selectedTab: 0 });
         },
@@ -434,7 +435,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             uiSettings,
             setTabAction,
             initDefaultEnvVarsAction,
-            setExampleCodeAction
+            setExampleCodeAction,
           } = get();
 
           if (teams.length === 0 && !exampleTeams.length) {
@@ -445,8 +446,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
               const keys = findEnvValues(team.keys || []);
               const user = team.user;
               const project = {
-                name: "Untitled Project",
-                user: { name: user || "Anonymous" },
+                name: 'Untitled Project',
+                user: { name: user || 'Anonymous' },
               };
               initialCode = team.code;
               set({ keys, project });

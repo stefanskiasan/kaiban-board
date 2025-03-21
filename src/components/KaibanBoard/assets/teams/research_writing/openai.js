@@ -76,9 +76,9 @@ env: { OPENAI_API_KEY: 'ENV_OPENAI_API_KEY' }
 team.start();
 `,
     keys: [
-        { key: "ENV_OPENAI_API_KEY", value: "NEXT_PUBLIC_OPENAI_API_KEY" },
-        { key: "ENV_EXA_API_KEY", value: "NEXT_PUBLIC_EXA_API_KEY" }  
+      { key: 'ENV_OPENAI_API_KEY', value: 'NEXT_PUBLIC_OPENAI_API_KEY' },
+      { key: 'ENV_EXA_API_KEY', value: 'NEXT_PUBLIC_EXA_API_KEY' },
     ],
-    user: 'AI Champions Team'
-};
+    user: 'AI Champions Team',
+  };
 };

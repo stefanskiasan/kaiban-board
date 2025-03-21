@@ -3,46 +3,46 @@
 /* Scrollbar Styling */
 /* width */
 #kaibanjs ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 /* Track */
 #kaibanjs ::-webkit-scrollbar-track {
-    background: #0f172a;
-    border-radius: 5px;
+  background: #0f172a;
+  border-radius: 5px;
 }
 
 /* Handle */
 #kaibanjs ::-webkit-scrollbar-thumb {
-    background: #020617;
-    border-radius: 5px;
+  background: #020617;
+  border-radius: 5px;
 }
 
 /* Handle on hover */
 #kaibanjs ::-webkit-scrollbar-thumb:hover {
-    background: #1e293b;
+  background: #1e293b;
 }
 
 #kaibanjs .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 #kaibanjs .swiper-slide {
-    padding: 0 .25rem;
+  padding: 0 0.25rem;
 }
 
 #kaibanjs.kb-full-screen .swiper-pagination {
-    position: fixed;
-    left: 1.5rem;
+  position: fixed;
+  left: 1.5rem;
 }
 
 #kaibanjs .swiper-pagination-bullet {
-    background: #94a3b8;
+  background: #94a3b8;
 }
 
 #kaibanjs .swiper-pagination-bullet-active {
-    background: #6366f1;
+  background: #6366f1;
 }
 
 .kb-markdown-content h1,
@@ -51,7 +51,7 @@
 .kb-markdown-content h4,
 .kb-markdown-content h5,
 .kb-markdown-content h6 {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-    font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
 }
