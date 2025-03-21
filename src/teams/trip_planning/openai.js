@@ -1,9 +1,8 @@
 import { Agent, Task, Team } from 'kaibanjs';
-
 import { ExaSearch } from '@kaibanjs/tools';
 
 const exaTool = new ExaSearch({
-  apiKey: '51b74b88-07b9-4fa9-b317-73d9b8fd7de1',
+  apiKey: import.meta.env.VITE_EXA_API_KEY,
   type: 'neural',
   contents: {
     text: true,
@@ -20,13 +19,6 @@ const citySelectorAgent = new Agent({
   type: 'ReactChampionAgent',
   tools: [exaTool],
   maxIterations: 20,
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini',
-    // model: "gpt-4o",
-    // model: "gpt-3.5-turbo-0125",
-    // model: "gpt-4-turbo",
-  },
 });
 
 const localExpertAgent = new Agent({
@@ -37,10 +29,6 @@ const localExpertAgent = new Agent({
   type: 'ReactChampionAgent',
   tools: [exaTool],
   maxIterations: 5,
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini',
-  },
 });
 
 const travelConciergeAgent = new Agent({
@@ -51,10 +39,6 @@ const travelConciergeAgent = new Agent({
   type: 'ReactChampionAgent',
   tools: [exaTool],
   maxIterations: 5,
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini',
-  },
 });
 
 // Define tasks with dynamic input placeholders
@@ -74,9 +58,9 @@ const identifyTask = new Task({
 const gatherTask = new Task({
   description: `Compile an in-depth guide for the selected city, 
     considering key attractions, local customs, and special events.
-     ... Trip Date: {range}, Origin: {origin}, Interests: {interests}`,
+    ... Trip Date: {range}, Origin: {origin}, Interests: {interests}`,
   expectedOutput: `A comprehensive city guide,
-     rich in cultural insights and practical tips`,
+    rich in cultural insights and practical tips`,
   agent: localExpertAgent,
 });
 
@@ -103,7 +87,6 @@ const tripPlanningTeam = new Team({
   }, // Actual dynamic inputs
   env: {
     OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   },
 });
 

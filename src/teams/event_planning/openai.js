@@ -1,5 +1,5 @@
 import { Agent, Task, Team } from 'kaibanjs';
-import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
+import { TavilySearchResults } from '@kaibanjs/tools';
 
 // Define tools
 const searchInternet = new TavilySearchResults({
@@ -17,10 +17,6 @@ const eventManagerAgent = new Agent({
   type: 'ReactChampionAgent',
   tools: [searchInternet],
   maxIterations: 20,
-  llmConfig: {
-    provider: 'openai',
-    model: 'gpt-4o-mini',
-  },
 });
 
 const eventManagerAgent1 = new Agent({
@@ -305,7 +301,6 @@ const team = new Team({
   },
   env: {
     OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   },
 });
 

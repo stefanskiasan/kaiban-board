@@ -53,11 +53,10 @@ const team = new Team({
     I was a Junior Front-End Developer at American Airlines, 
     where I worked with Vue and Tailwind. 
     I earned a Bachelor of Science in Computer Science from FIU in 2018, 
-     and I completed a JavaScript bootcamp that same year.`,
+    and I completed a JavaScript bootcamp that same year.`,
   }, // Initial input for the first task
   env: {
     OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   },
 });
 

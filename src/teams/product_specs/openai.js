@@ -56,7 +56,6 @@ const team = new Team({
   }, // Initial input for the first task
   env: {
     OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
-    ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   },
 });
 
