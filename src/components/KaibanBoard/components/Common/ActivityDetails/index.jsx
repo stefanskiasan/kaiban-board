@@ -1,4 +1,4 @@
-
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 const ActivityDetails = ({ details, styles="kb-max-w-[218px] md:kb-max-w-[428px]" }) => {

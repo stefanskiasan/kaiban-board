@@ -299,7 +299,7 @@ const findEnvValueByPrefixes = (cleanedKey) => {
     };
 
     let envValue = undefined;
-    for (const [type, prefix] of Object.entries(envPrefixes)) {
+    for (const [, prefix] of Object.entries(envPrefixes)) {
         envValue = getEnvValue(cleanedKey, prefix);
         if (envValue !== undefined) {
             break;

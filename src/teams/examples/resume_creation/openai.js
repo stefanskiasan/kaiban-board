@@ -28,7 +28,7 @@ const processingTask = new Task({
     description: \`Extract relevant details such as name, 
     experience, skills, and job history from the user's 'aboutMe' input. 
     aboutMe: {aboutMe}\`,
-    expectedOutput: \'Structured data ready to be used for a resume creation.\', 
+    expectedOutput: 'Structured data ready to be used for a resume creation.', 
     agent: profileAnalyst
 });
 

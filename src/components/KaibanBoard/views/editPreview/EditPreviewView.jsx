@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useRef } from 'react';
 import { Squares2X2Icon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { BookmarkIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, GlobeAltIcon, Square3Stack3DIcon } from '@heroicons/react/24/outline';
@@ -56,7 +57,7 @@ const Dashboard = ({ onChange = () => { } }) => {
                                                 <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                             </svg>
                                             <span className="kb-flex-auto">
-                                                Click 'Start Workflow' to see your agents in action.
+                                                {`Click 'Start Workflow' to see your agents in action.`}
                                             </span>
                                         </span>
                                     </code>

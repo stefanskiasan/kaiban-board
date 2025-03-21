@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {Anthropic, Google, Mistral, OpenAI} from "../../../assets/models";
 

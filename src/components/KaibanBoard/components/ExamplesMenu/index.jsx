@@ -65,7 +65,7 @@ const ExamplesMenu = () => {
                 break;
             default:
                 setExampleCodeAction(sportsNewsOpenai);
-        };
+        }
     };
 
     return (

@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+
 const Anthropic = ({ size = 18 }) => {
   return (
     <svg

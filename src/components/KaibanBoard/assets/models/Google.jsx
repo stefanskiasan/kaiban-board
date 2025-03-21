@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+
 const Google = ({ size = 18 }) => {
   return (
     <svg

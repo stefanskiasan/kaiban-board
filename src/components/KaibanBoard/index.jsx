@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import AgentsEditor from './components/AgentsEditor';
 import PlaygroundLayout from './views/layout/PlaygroundLayout';

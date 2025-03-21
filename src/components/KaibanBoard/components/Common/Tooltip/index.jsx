@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+
 const Tooltip = ({ text, styles="kb-left-4" }) => {
     return (
         <div className={`kb-absolute ${styles} kb-z-20 kb-w-max kb-items-center kb-hidden kb-ml-6 group-hover:kb-flex`}>

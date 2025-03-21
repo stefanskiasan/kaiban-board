@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext } from 'react';
 import { createAgentsPlaygroundStore } from './store';
 
@@ -11,5 +13,5 @@ export const PlaygroundProvider = ({ children, initialState }) => {
         </PlaygroundContext.Provider>
     );
 };
-
 export const usePlaygroundStore = () => useContext(PlaygroundContext);
+

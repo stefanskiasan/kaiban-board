@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon, XMarkIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, StopIcon, UserPlusIcon, ClipboardDocumentCheckIcon, UserGroupIcon, MagnifyingGlassCircleIcon, GlobeAmericasIcon, NewspaperIcon, EllipsisHorizontalCircleIcon, AcademicCapIcon, HomeModernIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon, XMarkIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, StopIcon, UserPlusIcon, ClipboardDocumentCheckIcon, UserGroupIcon, MagnifyingGlassCircleIcon, GlobeAmericasIcon, NewspaperIcon, EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
 import { Button, Textarea } from '@headlessui/react';
 import rehypeRaw from 'rehype-raw';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
@@ -106,7 +106,7 @@ const ChatBot = () => {
                 block: 'end'
             });
         }
-    }, [isChatBotOpen]);
+    }, [isChatBotOpen, threadId]);
 
     const createThread = async () => {
         try {
@@ -144,8 +144,8 @@ const ChatBot = () => {
             setCurrentRun(run);
 
             let accumulatedContent = '';
-
-            while (true) {
+            let isProcessing = true;
+            while (isProcessing) {
                 const statusResponse = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -158,6 +158,7 @@ const ChatBot = () => {
                 const runStatus = await statusResponse.json();
 
                 if (runStatus.status === 'completed') {
+                    isProcessing = false;
                     setIsWriting(true);
                     const messagesResponse = await fetch(API_URL, {
                         method: 'POST',
@@ -213,6 +214,7 @@ const ChatBot = () => {
                 }
 
                 if (runStatus.status === 'cancelled') {
+                    isProcessing = false;
                     break;
                 }
 
@@ -228,7 +230,7 @@ const ChatBot = () => {
     const handleStopGeneration = async () => {
         if (currentRun && threadId) {
             try {
-                const response = await fetch(API_URL, {
+                await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -354,7 +356,7 @@ const ChatBot = () => {
                                             className="kb-text-sm kb-markdown-content"
                                             rehypePlugins={[rehypeRaw]}
                                             components={{
-                                                code({ node, inline, className, children, ...props }) {
+                                                code({ inline, className, children, ...props }) {
                                                     const match = /language-(\w+)/.exec(className || '')
                                                     return !inline && match ? (
                                                         <SyntaxHighlighter

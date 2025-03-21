@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 const AgentAvatar = ({ agent, size, showBorder = true }) => {

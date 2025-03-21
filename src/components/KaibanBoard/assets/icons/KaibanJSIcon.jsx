@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+
 const KaibanJSIcon = ({ size = 24 }) => {
   return (
     <svg

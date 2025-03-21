@@ -77,6 +77,7 @@ const TaskDetailsDialog = () => {
         });
 
         return unsubscribeFromTeamStore;
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, []);
 
     // INFO: Update task lists when workflow logs change
@@ -97,6 +98,7 @@ const TaskDetailsDialog = () => {
         });
 
         return unsubscribeFromTeamStore;
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, []);
 
     // INFO: Update logs
@@ -113,6 +115,7 @@ const TaskDetailsDialog = () => {
                 setIsAwaiting(awaiting);
             }
         }
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, []);
 
     const getTaskTitle = (task) => {

@@ -9,7 +9,7 @@ export default {
   component: KaibanBoard,
 };
 
-export const basic = {
+export const Basic = {
   args: {
     uiSettings: {
       showFullScreen: false,
@@ -29,7 +29,7 @@ export const basic = {
   },
 };
 
-export const withTeamsSelect = {
+export const WithTeamsSelect = {
   args: {
     uiSettings: {
       showFullScreen: false,

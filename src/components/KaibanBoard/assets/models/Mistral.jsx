@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+
 const Mistral = ({ size = 16 }) => {
   return (
     <svg

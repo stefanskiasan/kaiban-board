@@ -37,6 +37,7 @@ const MissingKeysDialog = () => {
     useEffect(() => {
         const missingKeys = checkApiKeys(teamStore);
         setKeys(missingKeys);
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, []);
 
 

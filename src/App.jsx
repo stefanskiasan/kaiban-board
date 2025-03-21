@@ -1,22 +1,15 @@
-import KaibanDebugger from "./components/KaibanDebugger";
-import KaibanBoard from './components/KaibanBoard';
-import team from "./teams/product_specs/openai";
+import KaibanBoard from "./components/KaibanBoard";
 
 const uiSettings = {
-    showFullScreen: true,
     showExampleMenu: true,
     showShareOption: true,
-    showSettingsOption: true
+    showSettingsOption: true,
+    isPreviewMode: false,
+    showSimpleShareOption: false,
 };
 
 function App() {
-    return (
-        <div className="mainContent">
-            <h1>KaibanJS Playground</h1>
-            <KaibanBoard uiSettings={uiSettings} />
-            <KaibanDebugger team={team} />
-        </div>
-    );
+    return <KaibanBoard uiSettings={uiSettings} />;
 }
 
 export default App;

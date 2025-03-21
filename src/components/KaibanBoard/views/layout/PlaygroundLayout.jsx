@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { TabGroup, TabPanel, TabPanels } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';

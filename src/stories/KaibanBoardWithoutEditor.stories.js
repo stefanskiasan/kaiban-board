@@ -10,14 +10,14 @@ export default {
   component: KaibanBoard,
 };
 
-export const basic = {
+export const Basic = {
   args: {
     teams: [teamOpenAI, teamProductSpecs, teamEventPlanning],
     title: "Basic", // Title in Storybook
   },
 };
 
-export const withoutWelcomeInfo = {
+export const WithoutWelcomeInfo = {
   args: {
     uiSettings: {
       showWelcomeInfo: false,

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button } from "@headlessui/react";
 import { Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
@@ -28,6 +29,7 @@ const TaskCard = ({ task, showOptions = true }) => {
         if (awaiting !== isAwaiting) {
             setIsAwaiting(awaiting);
         }
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [workflowLogs]);
 
     return (
