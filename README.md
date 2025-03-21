@@ -1,67 +1,44 @@
-# KaibanJS: The JavaScript Framework for AI
+# Kaiban Board: Visualize Your AI Agent Teams
 
-AI workflows are the future of software development, but building robust, multi-agent systems in JavaScript can be challenging. That's why we created [KaibanJS](https://github.com/kaiban-ai/KaibanJS), an open-source framework designed to make integrating AI agents into JavaScript applications straightforward, flexible, and powerful.
+<p align="center">
+  <a href="https://www.kaibanjs.com/board">  
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/dnno8pxyy/image/upload/v1724533982/icon_htfer2.png">
+      <img src="https://res.cloudinary.com/dnno8pxyy/image/upload/v1724533982/icon_htfer2.png" height="128">
+    </picture>
+    <h1 align="center">Kaiban Board</h1>
+    <h3 align="center">The Visual Interface for Managing AI Agent Teams</h3>
+  </a>
+</p>
 
-With [KaibanJS](https://github.com/kaiban-ai/KaibanJS), you have the freedom to build AI-powered systems without being tied down by specific platforms or ecosystems. It's built from the ground up for JavaScript developers, with the MIT License, allowing you to freely use, modify, and deploy it wherever you need.
+<p align="center">
+  <a href="https://github.com/kaiban-ai/kaiban-board">
+    <img src="https://img.shields.io/github/stars/kaiban-ai/kaiban-board.svg?style=social" alt="Star on GitHub">
+  </a>
+  <a href="https://github.com/kaiban-ai/kaiban-board/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license">
+  </a>
+  <a href="https://www.npmjs.com/package/kaiban-board">
+    <img src="https://img.shields.io/npm/v/kaiban-board.svg?style=flat" alt="npm version">
+  </a>
+  <a href="https://github.com/kaiban-ai/kaiban-board/pulls">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+  </a>
+</p>
 
 ---
 
-## Kaiban Board: An Experimental Visualizer for Your AI Agents
+## Kanban for AI Agents? 🤖📋
 
-While KaibanJS provides the framework to build your AI workflows, visualizing those workflows can be time-consuming and complex. To address this, we developed **Kaiban Board**—an experimental UI designed to help you **visualize, manage, and share** your AI agent teams in a Kanban-style interface.
+**Kaiban Board** is an experimental UI designed to help you **visualize, manage, and share** your AI agent teams in a Kanban-style interface. Built on top of [KaibanJS](https://github.com/kaiban-ai/KaibanJS), it provides a powerful way to:
 
-### Kaiban Board UI License
+- 🔨 Create and manage AI agent teams visually
+- 📊 Track tasks and workflows in real-time
+- 🤝 Collaborate with your AI agents
+- 🎯 Monitor progress and performance
+- 🔍 Debug and optimize your AI workflows
 
-We believe in the power of open source and community-driven development. That's why Kaiban Board is completely open source under the MIT license. You can use it, modify it, and deploy it however you want, whether locally or on your own infrastructure.
-
-This means you have:
-- Complete freedom to modify and customize the code
-- Full control over your data and where you host it
-- The ability to contribute back to the project
-- No restrictions on commercial or personal use
-
-> We're committed to keeping Kaiban Board open source and free for everyone to use and improve.
-
----
-
-## How to Use it
-
-To get started with the **Kaiban Board**, follow these steps:
-
-### Install Kaiban Board
-
-```bash
-npm install kaiban-board
-```
-
-### Usage Example
-
-Here's a basic example of how to use **Kaiban Board** in your project:
-
-```jsx
-import 'kaiban-board/dist/index.css';  // Import the minified CSS
-import KaibanBoard from 'kaiban-board';  // Import the minified JS
-
-const teams = [
-  // Define your teams and tasks here
-];
-
-const uiSettings = {
-  //showWelcomeInfo: false,
-};
-
-function App() {
-  return (
-    <div>
-      <KaibanBoard teams={teams} uiSettings={uiSettings} />
-    </div>
-  );
-}
-
-export default App;
-```
-
-## Development Setup
+## Setup
 
 ### Prerequisites
 - Node.js (v18 or higher)
@@ -71,7 +48,7 @@ export default App;
 ### Local Development
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/kaiban-board.git
+git clone https://github.com/kaiban-ai/kaiban-board.git
 cd kaiban-board
 ```
 
@@ -95,29 +72,76 @@ npm run dev
 yarn dev
 ```
 
-5. Open Storybook (optional):
+### Testing with Storybook
+
+Storybook provides an isolated environment to develop and test the Kaiban Board component:
+
+1. Start Storybook:
 ```bash
 npm run storybook
 # or
 yarn storybook
 ```
 
-### Building for Production
+2. Open your browser and navigate to `http://localhost:6006`
+
+
+## Manual Installation and Usage
+
+If you prefer to set up Kaiban Board manually follow these steps:
+
+<details style="margin-bottom:10px;">
+  <summary><b style="color:black;">1. Install Kaiban Board via npm:</b></summary>
+
 ```bash
-npm run build
-# or
-yarn build
+npm install kaiban-board
 ```
+
+</details>
+
+<details style="margin-bottom:10px;">
+  <summary><b style="color:black;">2. Import Kaiban Board in your JavaScript file:</b></summary>
+
+```jsx
+// Using ES6 import syntax for NextJS, React, etc.
+import KaibanBoard from 'kaiban-board';
+import 'kaiban-board/dist/index.css';
+```
+
+</details>
+
+<details style="margin-bottom:10px;">
+  <summary><b style="color:black;">3. Basic Usage Example</b></summary>
+
+```jsx
+const teams = [
+  // Define your teams and tasks here
+];
+
+const uiSettings = {
+  //showWelcomeInfo: false
+};
+
+function App() {
+  return (
+    <div>
+      <KaibanBoard teams={teams} uiSettings={uiSettings} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+</details>
+
+## Community and Support
+
+Join the [Discord community](https://www.kaibanjs.com/discord) to connect with other developers and get support. [Follow us](https://x.com/dariel_noel) on Twitter for the latest updates.
 
 ## Contributing
 
-We love your input! We want to make contributing to Kaiban Board as easy and transparent as possible, whether it's:
-
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+We welcome contributions from the community. Please read the [contributing guidelines](https://github.com/kaiban-ai/kaiban-board/blob/main/CONTRIBUTING.md) before submitting pull requests.
 
 ### Development Process
 1. Fork the repo and create your branch from `main`
@@ -136,76 +160,9 @@ We love your input! We want to make contributing to Kaiban Board as easy and tra
 - Write meaningful commit messages
 - Add comments for complex logic
 
-## Supported Integrations
-
-Kaiban Board integrates with various AI and development tools. Here's a list of supported integrations and how to obtain their API keys:
-
-### AI Services
-- **OpenAI** 
-  - Used for: Core AI capabilities and text generation
-  - Get key from: [OpenAI Platform](https://platform.openai.com/account/api-keys)
-  - Environment variable: `VITE_OPENAI_API_KEY` or `NEXT_PUBLIC_OPENAI_API_KEY`
-
-- **Tavily**
-  - Used for: Advanced web search capabilities
-  - Get key from: [Tavily](https://tavily.com)
-  - Environment variable: `VITE_TAVILY_API_KEY` or `NEXT_PUBLIC_TAVILY_API_KEY`
-
-- **Serper**
-  - Used for: Real-time search results
-  - Get key from: [Serper.dev](https://serper.dev)
-  - Environment variable: `VITE_SERPER_API_KEY` or `NEXT_PUBLIC_SERPER_API_KEY`
-
-- **Exa**
-  - Used for: Enhanced search capabilities
-  - Get key from: [Exa.ai](https://exa.ai)
-  - Environment variable: `VITE_EXA_API_KEY` or `NEXT_PUBLIC_EXA_API_KEY`
-
-- **Wolfram Alpha**
-  - Used for: Mathematical and scientific computations
-  - Get key from: [Wolfram Developer Portal](https://developer.wolframalpha.com)
-  - Environment variable: `VITE_WOLFRAM_APP_ID` or `NEXT_PUBLIC_WOLFRAM_APP_ID`
-
-### Infrastructure
-- **Firebase**
-  - Used for: Data storage and sharing capabilities
-  - Setup: Create a project at [Firebase Console](https://console.firebase.google.com)
-  - Required variables:
-    ```
-    VITE_FIREBASE_API_KEY
-    VITE_FIREBASE_AUTH_DOMAIN
-    VITE_FIREBASE_PROJECT_ID
-    VITE_FIREBASE_STORAGE_BUCKET
-    VITE_FIREBASE_MESSAGING_SENDER_ID
-    VITE_FIREBASE_APP_ID
-    VITE_FIREBASE_MEASUREMENT_ID
-    ```
-
-### Optional Services
-- **Firecrawl**
-  - Used for: Enhanced web crawling capabilities
-  - Environment variable: `VITE_FIRECRAWL_API_KEY` or `NEXT_PUBLIC_FIRECRAWL_API_KEY`
-
----
-
-## Feedback and Future Development
-
-We're in the **early stages** of **Kaiban Board's** development, and your feedback is essential in helping us shape its future. As an open-source project, we welcome contributions from the community, whether it's bug reports, feature requests, or pull requests.
-
-If you have suggestions or run into issues, please open an issue on our GitHub repository. We're committed to ensuring Kaiban Board evolves based on community feedback and needs.
-
----
-
 ## License
 
-Both **KaibanJS** (the framework) and **Kaiban Board** (the visualizer) are licensed under the **MIT License**, giving you full freedom to:
-
-- Use the software for any purpose
-- Study how the software works and modify it
-- Redistribute the software
-- Make and distribute modifications to the software
-
-This applies to both personal and commercial projects. See the [LICENSE](LICENSE.md) file for the complete license text.
+Kaiban Board is MIT licensed. See the [LICENSE](LICENSE.md) file for the complete license text.
 
 For any questions or support, feel free to:
 - Open an issue on GitHub
