@@ -38,7 +38,7 @@
 - 🎯 Monitor progress and performance
 - 🔍 Debug and optimize your AI workflows
 
-![hippo](https://www.kaibanjs.com/kaiban-board.gif)
+[![Quick Start Video](https://github.com/user-attachments/assets/5dd06a39-5e51-4e9c-a5ef-552c3003bfbb)](https://youtu.be/NFpqFEl-URY?si=_JCkJuprRxqD0Uo 'Quick Start Video')
 
 ## Setup
 
