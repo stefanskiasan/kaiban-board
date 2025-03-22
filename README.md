@@ -38,6 +38,8 @@
 - 🎯 Monitor progress and performance
 - 🔍 Debug and optimize your AI workflows
 
+![hippo](https://www.kaibanjs.com/kaiban-board.gif)
+
 ## Setup
 
 ### Prerequisites
