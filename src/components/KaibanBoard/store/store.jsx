@@ -53,6 +53,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         db: null,
         isShareDialogOpen: false,
         isLoadingShare: false,
+        isShareUrlDialogOpen: false,
+        shareUrl: '',
 
         isMissingKeysDialogOpen: false,
 
@@ -291,6 +293,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         },
         setShareDialogOpenAction: isShareDialogOpen =>
           set({ isShareDialogOpen }),
+        setShareUrlDialogOpenAction: isShareUrlDialogOpen =>
+          set({ isShareUrlDialogOpen }),
         shareTeamAction: async userName => {
           set({ isLoadingShare: true });
 
@@ -310,7 +314,20 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             const url = `${window.location.origin}/share/${docRef.id}`;
             await navigator.clipboard.writeText(url);
 
-            set({ isLoadingShare: false, isShareDialogOpen: false });
+            // Primero cerramos el diálogo de compartir
+            set({
+              isLoadingShare: false,
+              isShareDialogOpen: false,
+            });
+
+            // Luego, después de un breve retraso, abrimos el diálogo de URL
+            setTimeout(() => {
+              set({
+                shareUrl: url,
+                isShareUrlDialogOpen: true,
+              });
+            }, 300); // Pequeño retraso para asegurar que el primer diálogo se cierre completamente
+
             toast.success(
               'Your team has been shared! URL copied to clipboard.'
             );

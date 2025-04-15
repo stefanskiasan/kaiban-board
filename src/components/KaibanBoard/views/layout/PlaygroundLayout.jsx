@@ -15,6 +15,7 @@ import TaskDetailsDialog from '../../components/TaskDetailsDialog';
 import ExecutionDialog from '../../components/ExecutionDialog';
 import CelebrationDialog from '../../components/CelebrationDialog';
 import ShareDialog from '../../components/ShareDialog';
+import ShareUrlDialog from '../../components/ShareDialog/ShareUrlDialog';
 import SettingsDialog from '../../components/SettingsDialog';
 import MissingKeysDialog from '../../components/MissingKeysDialog';
 import ChatBot from '../../components/ChatBot';
@@ -28,6 +29,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     isCelebrationDialogOpen,
     isTaskDetailsDialogOpen,
     isShareDialogOpen,
+    isShareUrlDialogOpen,
     isOpenSettingsDialog,
     isMissingKeysDialogOpen,
   } = useAgentsPlaygroundStore(state => ({
@@ -37,6 +39,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
     isCelebrationDialogOpen: state.isCelebrationDialogOpen,
     isTaskDetailsDialogOpen: state.isTaskDetailsDialogOpen,
     isShareDialogOpen: state.isShareDialogOpen,
+    isShareUrlDialogOpen: state.isShareUrlDialogOpen,
     isOpenSettingsDialog: state.isOpenSettingsDialog,
     isMissingKeysDialogOpen: state.isMissingKeysDialogOpen,
   }));
@@ -76,6 +79,7 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
       {isExecutionDialogOpen && <ExecutionDialog />}
       {isCelebrationDialogOpen && <CelebrationDialog />}
       {isShareDialogOpen && <ShareDialog />}
+      {isShareUrlDialogOpen && <ShareUrlDialog />}
       {isOpenSettingsDialog && <SettingsDialog />}
       {isMissingKeysDialogOpen && <MissingKeysDialog />}
       <Activity />
