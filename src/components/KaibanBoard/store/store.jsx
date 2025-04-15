@@ -19,6 +19,13 @@ import {
   ExaSearch,
   GithubIssues,
   Firecrawl,
+  JinaUrlToMarkdown,
+  SimpleRAG,
+  WebsiteSearch,
+  PdfSearch,
+  TextFileSearch,
+  ZapierWebhook,
+  MakeWebhook,
 } from '@kaibanjs/tools';
 import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 import { SearchApi } from '@langchain/community/tools/searchapi';
@@ -106,6 +113,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   'ExaSearch',
                   'GithubIssues',
                   'Firecrawl',
+                  'JinaUrlToMarkdown',
+                  'SimpleRAG',
+                  'WebsiteSearch',
+                  'PdfSearch',
+                  'TextFileSearch',
+                  'ZapierWebhook',
+                  'MakeWebhook',
                 ];
 
                 // Check if allowed modules are imported
@@ -125,9 +139,9 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   }
                 });
 
-                // Remove import statements
+                // Remove import statements - handles indented imports
                 valueToEvaluate = valueToEvaluate.replace(
-                  /^import\s+.*;?$/gm,
+                  /^\s*import\s+.*;?$/gm,
                   ''
                 );
 
@@ -179,6 +193,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   'ExaSearch',
                   'GithubIssues',
                   'Firecrawl',
+                  'JinaUrlToMarkdown',
+                  'SimpleRAG',
+                  'WebsiteSearch',
+                  'PdfSearch',
+                  'TextFileSearch',
+                  'ZapierWebhook',
+                  'MakeWebhook',
                   valueToEvaluate
                 );
                 const team = func(
@@ -193,7 +214,14 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   Serper,
                   ExaSearch,
                   GithubIssues,
-                  Firecrawl
+                  Firecrawl,
+                  JinaUrlToMarkdown,
+                  SimpleRAG,
+                  WebsiteSearch,
+                  PdfSearch,
+                  TextFileSearch,
+                  ZapierWebhook,
+                  MakeWebhook
                 );
 
                 return team;
