@@ -6,30 +6,36 @@ import babel from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import image from '@rollup/plugin-image';
 import json from '@rollup/plugin-json';
-import tailwindcss from 'tailwindcss';  // Import Tailwind
+import tailwindcss from 'tailwindcss'; // Import Tailwind
 import autoprefixer from 'autoprefixer'; // Import Autoprefixer
-import terser from '@rollup/plugin-terser';  // Use the new Terser plugin
+import terser from '@rollup/plugin-terser'; // Use the new Terser plugin
+import { readFileSync } from 'fs';
 
-
-// Import package.json as a module
-import packageJson from './package.json' assert { type: 'json' };
+// Import package.json
+const packageJson = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url))
+);
 
 export default {
-  input: 'src/components/KaibanBoard/index.jsx', // Entry point for your component
+  input: 'src/components/KaibanBoard/index.jsx',
   output: [
     {
-      file: packageJson.module, // ES Module build output
+      file: packageJson.module,
       format: 'es',
       sourcemap: false,
-      plugins: [terser()],  // Minify JS using Terser
+      plugins: [terser()],
+      inlineDynamicImports: true, // Inline dynamic imports to avoid chunking
     },
   ],
   plugins: [
-    peerDepsExternal(), // Exclude peer dependencies like React from the bundle
+    peerDepsExternal(),
     resolve({
-      extensions: ['.js', '.jsx'], // Resolve JS and JSX files
+      extensions: ['.js', '.jsx'],
+      preferBuiltins: true, // Prefer Node.js built-in modules
     }),
-    commonjs(), // Convert CommonJS to ES Modules
+    commonjs({
+      transformMixedEsModules: true, // Handle mixed require/import modules
+    }),
     babel({
       exclude: 'node_modules/**',
       presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -37,7 +43,7 @@ export default {
     }),
     postcss({
       extract: 'index.css', // Extracts CSS into separate files
-      minimize: true,        // Minify the extracted CSS      
+      minimize: true, // Minify the extracted CSS
       plugins: [
         tailwindcss(), // Add Tailwind CSS as a plugin
         autoprefixer(), // Add Autoprefixer for browser compatibility
