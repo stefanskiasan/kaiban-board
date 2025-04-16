@@ -34,7 +34,9 @@ const BoardView = () => {
 
   const updateTaskLists = tasks => {
     const newTasksToDo = tasks.filter(task => task.status === 'TODO');
-    const newTasksDoing = tasks.filter(task => task.status === 'DOING');
+    const newTasksDoing = tasks.filter(
+      task => task.status === 'DOING' || task.status === 'PAUSED'
+    );
     const newTasksBlocked = tasks.filter(
       task => task.status === 'BLOCKED' || task.status === 'AWAITING_VALIDATION'
     );

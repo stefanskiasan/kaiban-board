@@ -17,7 +17,7 @@ import { githubIssueAnalysisOpenai } from '../../assets/teams/github_issue_analy
 import { websiteRoastOpenai } from '../../assets/teams/website_roast';
 import { eventPlanningOpenai } from '../../assets/teams/event_planning';
 import { researchAnalysisOpenai } from '../../assets/teams/research_analysis';
-
+import { kaibanScraperOpenai } from '../../assets/teams/kaiban_scraper/openai';
 const ExamplesMenu = () => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
   const { teamStore, setExampleCodeAction } = useAgentsPlaygroundStore(
@@ -62,6 +62,9 @@ const ExamplesMenu = () => {
         break;
       case 'websiteRoastOpenai':
         setExampleCodeAction(websiteRoastOpenai);
+        break;
+      case 'kaibanScraperOpenai':
+        setExampleCodeAction(kaibanScraperOpenai);
         break;
       default:
         setExampleCodeAction(sportsNewsOpenai);
@@ -176,6 +179,16 @@ const ExamplesMenu = () => {
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">
               Website Roast Team
+            </p>
+          </CloseButton>
+          <CloseButton
+            className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+            onClick={() => {
+              handleSelectExample('kaibanScraperOpenai');
+            }}
+          >
+            <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">
+              Kaiban Scraper Team
             </p>
           </CloseButton>
         </div>
