@@ -132,9 +132,8 @@ const SettingsDialog = () => {
                 <Input
                   type="text"
                   name="value"
-                  value={item.isNew ? item.value : maskKey(item.value)}
+                  value={item.value}
                   onChange={event => handleInputChange(index, event)}
-                  disabled={!item.isNew}
                   placeholder="Value"
                   className="kb-block kb-w-full kb-rounded-lg kb-border-none kb-bg-white/5 kb-py-1.5 kb-px-3 kb-text-sm/6 kb-text-white focus:kb-outline-none data-[focus]:kb-outline-2 data-[focus]:-kb-outline-offset-2 data-[focus]:kb-outline-white/25"
                 />

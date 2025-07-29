@@ -8,7 +8,7 @@ import { usePlaygroundStore } from '../../../store/PlaygroundProvider';
 import { useEffect, useState } from 'react';
 import { isAwaitingValidation } from '../../../utils/helper';
 
-const TaskCard = ({ task, showOptions = true }) => {
+const TaskCard = ({ task, showOptions = true, animationStyles = '' }) => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
   const [isAwaiting, setIsAwaiting] = useState(false);
 
@@ -32,9 +32,20 @@ const TaskCard = ({ task, showOptions = true }) => {
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [workflowLogs]);
 
+  const getCardStyles = () => {
+    let baseStyles = `kb-flex kb-flex-col kb-gap-3 kb-p-4 kb-ring-1 kb-ring-slate-950 kb-rounded-lg kb-bg-slate-800 kb-w-full kb-transition-all kb-duration-300 ${showOptions ? 'hover:kb-ring-indigo-500 kb-cursor-pointer' : ''}`;
+    
+    // Add animation styles if present
+    if (animationStyles) {
+      return `${baseStyles} ${animationStyles}`;
+    }
+    
+    return baseStyles;
+  };
+
   return (
     <div
-      className={`kb-flex kb-flex-col kb-gap-3 kb-p-4 kb-ring-1 kb-ring-slate-950 kb-rounded-lg kb-bg-slate-800 kb-w-full ${showOptions ? 'hover:kb-ring-indigo-500 kb-cursor-pointer' : ''}`}
+      className={getCardStyles()}
       onClick={() => {
         if (showOptions) setSelectedTaskAction(task);
       }}

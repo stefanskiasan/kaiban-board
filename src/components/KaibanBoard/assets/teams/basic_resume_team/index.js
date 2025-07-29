@@ -1,0 +1,1 @@
+export { basicResumeTeamOpenai } from './openai';

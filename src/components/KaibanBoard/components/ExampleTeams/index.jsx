@@ -26,10 +26,9 @@ const ExampleTeams = () => {
     <Popover>
       <PopoverButton
         disabled={teamWorkflowStatus === 'RUNNING' || !exampleTeams.length}
-        className="kb-relative kb-group kb-w-min kb-flex kb-items-center kb-p-2 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-indigo-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-text-slate-600"
+        className="kb-relative kb-group kb-w-[90px] kb-flex kb-items-center kb-justify-center kb-p-2 kb-text-sm kb-font-medium kb-text-slate-400 focus:kb-outline-none data-[hover]:kb-text-blue-500 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-text-slate-600"
       >
-        <div className="kb-border-r kb-border-slate-700 kb-h-[32px] kb-mr-5"></div>
-        Teams
+        👥 Teams
         <ChevronDownIcon className="kb-w-4 kb-h-4 kb-ml-1" />
       </PopoverButton>
       <PopoverPanel
@@ -41,12 +40,12 @@ const ExampleTeams = () => {
           {exampleTeams.map((team, idx) => (
             <CloseButton
               key={idx}
-              className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-indigo-500/15"
+              className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-blue-500/15"
               onClick={() => {
                 setExampleCodeAction(team);
               }}
             >
-              <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-indigo-500">
+              <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-blue-500">
                 {extractTeamName(team().code)}
               </p>
             </CloseButton>

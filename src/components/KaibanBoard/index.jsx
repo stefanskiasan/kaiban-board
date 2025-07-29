@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import AgentsEditor from './components/AgentsEditor';
 import PlaygroundLayout from './views/layout/PlaygroundLayout';
-import ExamplesMenu from './components/ExamplesMenu';
 import {
   PlaygroundProvider,
   usePlaygroundStore,
@@ -55,7 +54,6 @@ const KaibanBoardWrapper = () => {
       {teamStore && (
         <PlaygroundLayout
           editorComponent={<AgentsEditor />}
-          examplesMenu={<ExamplesMenu />}
         />
       )}
     </>

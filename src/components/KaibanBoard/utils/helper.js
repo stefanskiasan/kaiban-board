@@ -120,7 +120,7 @@ export const filterAndFormatAgentLogs = (logs, taskId) => {
         }
 
         acc.push({
-          agent: log.agentName ? log.agentName : log.agent.agentInstance.name,
+          agent: log.agentName || (log.agent?.agentInstance?.name) || (log.agent?.name) || 'Unknown Agent',
           description,
           details,
           status: statusKey,
