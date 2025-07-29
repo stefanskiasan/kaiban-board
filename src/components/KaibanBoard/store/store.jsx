@@ -174,14 +174,15 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 
                 // Only add return statement if we found teams
                 if (teamNames.length > 0) {
-                  valueToEvaluate =
-                    valueToEvaluate +
-                    '\n' +
-                    teamNames.map(name => `return ${name};`).join('\n');
+                  // Return the first team found (there should only be one)
+                  valueToEvaluate = valueToEvaluate + '\nreturn ' + teamNames[0] + ';';
                 } else {
                   // If no explicit team variable found, try to find the last team assignment
                   valueToEvaluate += '\nreturn team;';
                 }
+
+                // Debug: Log the code that's about to be evaluated
+                console.log('🔍 DEBUG: Code to be evaluated:', valueToEvaluate);
 
                 // Get keys
                 const { keys } = get();
@@ -196,13 +197,6 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                     valueToEvaluate = valueToEvaluate.replace(keyRegex, value);
                   });
                 }
-
-                // Wrap the code in an IIFE to create proper scope
-                const wrappedCode = `
-                  (function() {
-                    ${valueToEvaluate}
-                  })();
-                `;
 
                 // Create the function and evaluate
                 const func = new Function(
@@ -225,7 +219,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   'TextFileSearch',
                   'ZapierWebhook',
                   'MakeWebhook',
-                  `return (${wrappedCode})`
+                  valueToEvaluate
                 );
                 const team = func(
                   Agent,
