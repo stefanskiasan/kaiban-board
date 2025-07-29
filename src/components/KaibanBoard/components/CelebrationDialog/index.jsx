@@ -26,10 +26,10 @@ const CelebrationDialog = () => {
               className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
               onClick={() => {
                 setCelebrationDialogOpenAction(false);
-                setTabAction(2);
+                // Removed automatic navigation to Results - stay on current tab (Kanban Board)
               }}
             >
-              See Results
+              Continue
             </Button>
           </div>
         </div>
