@@ -147,7 +147,7 @@ const TaskDetailsDialog = () => {
   };
 
   return (
-    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50 kb-overflow-auto">
+    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-900/50 kb-overflow-auto">
       <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
         <div
           ref={containerRef}
@@ -322,7 +322,7 @@ const TaskDetailsDialog = () => {
               {teamWorkflowStatus !== 'RUNNING' && (
                 <div className="kb-mt-2 kb-mb-4 kb-flex kb-flex-col kb-gap-4 kb-min-w-full">
                   <div className="kb-grid kb-grid-cols-[28px_1fr] kb-gap-2">
-                    <div className="kb-bg-slate-950/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
+                    <div className="kb-bg-slate-900/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
                       <UserIcon className="kb-w-5 kb-h-5 kb-absolute kb-bottom-0" />
                     </div>
                     <div className="kb-flex kb-flex-col kb-gap-2">
@@ -402,7 +402,7 @@ const TaskDetailsDialog = () => {
                     className="kb-grid kb-grid-cols-[28px_1fr] kb-gap-2"
                   >
                     {log.status === 'REVISE' || log.status === 'VALIDATED' ? (
-                      <div className="kb-bg-slate-950/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
+                      <div className="kb-bg-slate-900/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
                         <UserIcon className="kb-w-5 kb-h-5 kb-absolute kb-bottom-0" />
                       </div>
                     ) : (

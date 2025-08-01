@@ -425,18 +425,18 @@ export const analyzeErrorPatterns = (workflowLogs) => {
     log.logType === 'WorkflowStatusUpdate' && log.workflowStatus === 'ERRORED'
   );
 
-  // Categorize errors by type
+  // Categorize errors by type - return arrays of error objects instead of counts
   const errorsByCategory = {
-    orchestration: errorLogs.filter(log => log.logType === 'OrchestrationStatusUpdate').length,
-    agent: errorLogs.filter(log => log.logType === 'AgentStatusUpdate').length,
-    task: errorLogs.filter(log => log.logType === 'TaskStatusUpdate').length,
-    workflow: errorLogs.filter(log => log.logType === 'WorkflowStatusUpdate').length,
+    orchestration: errorLogs.filter(log => log.logType === 'OrchestrationStatusUpdate'),
+    agent: errorLogs.filter(log => log.logType === 'AgentStatusUpdate'),
+    task: errorLogs.filter(log => log.logType === 'TaskStatusUpdate'),
+    workflow: errorLogs.filter(log => log.logType === 'WorkflowStatusUpdate'),
     llm: errorLogs.filter(log => 
       log.agentStatus === 'THINKING_ERROR' || 
       log.agentStatus === 'ISSUES_PARSING_LLM_OUTPUT' ||
       log.orchestrationEvent?.includes('LLM_RECOVERY_FAILED')
-    ).length,
-    tool: errorLogs.filter(log => log.agentStatus?.includes('TOOL_ERROR')).length
+    ),
+    tool: errorLogs.filter(log => log.agentStatus?.includes('TOOL_ERROR'))
   };
 
   // Build error timeline

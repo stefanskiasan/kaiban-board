@@ -215,3 +215,67 @@
 .kb-pulse-low {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Badge Animations */
+@keyframes badge-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* AI Orchestrator Task Status Styling */
+.kb-task-newly-created {
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 4px 12px rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.5) !important;
+}
+
+.kb-task-newly-created:hover {
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4), 0 6px 16px rgba(139, 92, 246, 0.15);
+}
+
+.kb-task-edited {
+  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), 0 4px 12px rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.5) !important;
+}
+
+.kb-task-edited:hover {
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.4), 0 6px 16px rgba(6, 182, 212, 0.15);
+}
+
+/* AI Orchestrator Badge Styling */
+.kb-badge-new {
+  background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.kb-badge-edited {
+  background: linear-gradient(135deg, #06B6D4, #0891B2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Badge Animation Classes */
+.kb-animate-badge-fade-in {
+  animation: badge-fade-in 0.4s ease-out;
+}
+
+.kb-animate-badge-pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
+}

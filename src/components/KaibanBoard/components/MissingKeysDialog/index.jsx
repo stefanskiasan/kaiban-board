@@ -34,13 +34,15 @@ const MissingKeysDialog = () => {
 
   const [keys, setKeys] = useState([]);
   useEffect(() => {
+    console.log('🔍 DEBUG: MissingKeysDialog useEffect - Checking API keys for dialog content');
     const missingKeys = checkApiKeys(teamStore);
     setKeys(missingKeys);
+    console.log('📋 DEBUG: MissingKeysDialog keys set', { keyCount: missingKeys.length });
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return (
-    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-900/50">
       <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
         <div
           ref={containerRef}

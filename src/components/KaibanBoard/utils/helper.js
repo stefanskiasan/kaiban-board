@@ -350,7 +350,26 @@ export const getRandomUsername = () => {
 export const checkApiKeys = team => {
   const missingKeys = [];
 
-  const env = team?.getState().env;
+  // DEBUG: Track all checkApiKeys calls to identify unexpected triggers
+  console.log('🔍 DEBUG: checkApiKeys called', {
+    timestamp: new Date().toISOString(),
+    teamExists: !!team,
+    hasGetState: team && typeof team.getState === 'function',
+    stack: new Error().stack.split('\n').slice(1, 4).join('\n') // Show call stack
+  });
+
+  // Defensive check: ensure team exists and has a properly initialized env
+  if (!team || !team.getState || typeof team.getState !== 'function') {
+    console.log('⚠️ DEBUG: checkApiKeys - team not ready, returning empty array');
+    return missingKeys; // Return empty array if team is not ready
+  }
+
+  const env = team.getState().env;
+  if (!env || typeof env !== 'object') {
+    console.log('⚠️ DEBUG: checkApiKeys - env not ready, returning empty array');
+    return missingKeys; // Return empty array if env is not ready
+  }
+
   for (const [key, value] of Object.entries(env)) {
     if (
       value === undefined ||
@@ -366,6 +385,12 @@ export const checkApiKeys = team => {
       });
     }
   }
+
+  console.log('🔑 DEBUG: checkApiKeys result', {
+    totalEnvKeys: Object.keys(env).length,
+    missingKeysCount: missingKeys.length,
+    missingKeyNames: missingKeys.map(k => k.key)
+  });
 
   return missingKeys;
 };

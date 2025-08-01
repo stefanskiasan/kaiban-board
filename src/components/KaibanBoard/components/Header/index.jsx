@@ -24,6 +24,9 @@ import {
   isAwaitingValidation,
 } from '../../utils/helper';
 import ExampleTeams from '../ExampleTeams';
+import OrchestrationExamplesMenu from '../OrchestrationExamplesMenu';
+import BasicExamplesMenu from '../BasicExamplesMenu';
+import AIPoweredExamplesMenu from '../AIPoweredExamplesMenu';
 
 const Header = ({ examplesMenu }) => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -120,11 +123,14 @@ const Header = ({ examplesMenu }) => {
   }, [teamWorkflowStatus]);
 
   const handleStartWorkflow = () => {
+    console.log('🚀 DEBUG: handleStartWorkflow called - User explicitly started workflow');
     const missingKeys = checkApiKeys(teamStore);
 
     if (missingKeys.length > 0) {
+      console.log('🔑 DEBUG: Missing API keys detected, opening dialog', { missingKeys });
       setMissingKeysDialogOpenAction(true);
     } else {
+      console.log('✅ DEBUG: All API keys present, starting workflow');
       setExecutionDialogOpenAction(true);
       setTimeout(() => {
         setExecutionDialogOpenAction(false);
@@ -149,6 +155,11 @@ const Header = ({ examplesMenu }) => {
   };
 
   const renderWorkflowButton = () => {
+    // Don't render workflow controls if disabled
+    if (uiSettings.disableWorkflowControls) {
+      return null;
+    }
+    
     switch (teamWorkflowStatus) {
       case 'RUNNING':
         return (
@@ -205,8 +216,10 @@ const Header = ({ examplesMenu }) => {
     <div className="kb-flex kb-h-[55px] kb-items-center kb-gap-4 kb-border-b kb-border-slate-700">
       <div className="kb-flex md:kb-gap-4 kb-w-max kb-pl-3">
         <ProjectName />
-        {uiSettings.showExampleMenu && <>{examplesMenu}</>}
+        {uiSettings.showBasicExamplesMenu !== false && <BasicExamplesMenu />}
+        {uiSettings.showAIPoweredExamplesMenu !== false && <AIPoweredExamplesMenu />}
         {uiSettings.showExampleTeams && <ExampleTeams />}
+        {uiSettings.showOrchestrationExamplesMenu !== false && <OrchestrationExamplesMenu />}
       </div>
       <div className="kb-flex kb-items-center kb-gap-2 kb-w-max kb-h-max kb-ml-auto kb-pr-3.5">
         <>
@@ -297,7 +310,7 @@ const Header = ({ examplesMenu }) => {
         )}
         {renderWorkflowButton()}
         {(teamWorkflowStatus === 'RUNNING' ||
-          teamWorkflowStatus === 'PAUSED') && (
+          teamWorkflowStatus === 'PAUSED') && !uiSettings.disableWorkflowControls && (
           <div className="kb-relative kb-group">
             <Button
               className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-lg kb-bg-red-500/20 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-red-400 focus:kb-outline-none data-[hover]:kb-bg-red-500/30 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white data-[disabled]:kb-bg-slate-800"

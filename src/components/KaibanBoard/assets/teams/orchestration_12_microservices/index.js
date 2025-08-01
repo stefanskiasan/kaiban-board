@@ -1,1 +1,0 @@
-export { orchestration12MicroservicesOpenai } from './openai';

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { usePerformanceLogging } from '../../utils/performanceIntegration';
 
 const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
+  // Access real-time performance data
+  const performanceLogging = usePerformanceLogging();
+  const liveStats = performanceLogging.getPerformanceStats();
+  const tokenStats = liveStats?.tokenStats || {};
+  const hasLiveData = liveStats?.logs && liveStats.logs.length > 0;
   const [selectedMetric, setSelectedMetric] = useState('overview');
 
-  // If no performance data, show empty state
-  if (!performanceMetrics) {
+  // If no performance data (neither analyzed metrics nor live data), show empty state
+  if (!performanceMetrics && !hasLiveData) {
     return (
-      <div className="kb-p-6 kb-h-full kb-flex kb-items-center kb-justify-center kb-bg-slate-950">
+      <div className="kb-p-6 kb-h-full kb-flex kb-items-center kb-justify-center">
         <div className="kb-text-center">
           <div className="kb-w-16 kb-h-16 kb-bg-slate-800 kb-rounded-full kb-flex kb-items-center kb-justify-center kb-mx-auto kb-mb-4">
             <span className="kb-text-2xl">⚡</span>
@@ -19,6 +25,17 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
       </div>
     );
   }
+
+  // Merge analyzed metrics with live data
+  const mergedMetrics = {
+    ...performanceMetrics,
+    // Override with live data if available
+    totalCost: liveStats?.totalCost || performanceMetrics?.totalCost || 0,
+    totalTokensUsed: Object.values(tokenStats).reduce((sum, stats) => 
+      sum + (stats.inputTokens || 0) + (stats.outputTokens || 0), 0) || performanceMetrics?.totalTokensUsed || 0,
+    totalWorkflowDuration: liveStats?.sessionDuration || performanceMetrics?.totalWorkflowDuration || 0,
+    orchestrationEfficiency: performanceMetrics?.orchestrationEfficiency || 0.75 // Default efficiency
+  };
 
   const formatDuration = (ms) => {
     if (!ms || ms < 1000) return '<1s';
@@ -51,7 +68,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
   };
 
   return (
-    <div className="kb-h-full kb-flex kb-flex-col kb-bg-slate-950">
+    <div className="kb-h-full kb-flex kb-flex-col">
       
       {/* Header */}
       <div className="kb-p-6 kb-border-b kb-border-slate-700">
@@ -64,13 +81,15 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
           </div>
 
           {/* Performance Score */}
-          {performanceMetrics.orchestrationEfficiency !== undefined && (
-            <div className={`kb-px-6 kb-py-4 kb-rounded-lg kb-border ${getEfficiencyBgColor(performanceMetrics.orchestrationEfficiency)}`}>
+          {mergedMetrics.orchestrationEfficiency !== undefined && (
+            <div className={`kb-px-6 kb-py-4 kb-rounded-lg kb-border ${getEfficiencyBgColor(mergedMetrics.orchestrationEfficiency)}`}>
               <div className="kb-text-center">
-                <div className={`kb-text-2xl kb-font-bold ${getEfficiencyColor(performanceMetrics.orchestrationEfficiency)}`}>
-                  {Math.round(performanceMetrics.orchestrationEfficiency * 100)}%
+                <div className={`kb-text-2xl kb-font-bold ${getEfficiencyColor(mergedMetrics.orchestrationEfficiency)}`}>
+                  {Math.round(mergedMetrics.orchestrationEfficiency * 100)}%
                 </div>
-                <div className="kb-text-xs kb-text-slate-400">Efficiency Score</div>
+                <div className="kb-text-xs kb-text-slate-400">
+                  {hasLiveData ? 'Live Efficiency Score' : 'Efficiency Score'}
+                </div>
               </div>
             </div>
           )}
@@ -78,13 +97,13 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
       </div>
 
       {/* Content */}
-      <div className="kb-flex-1 kb-overflow-y-auto kb-p-6 kb-bg-slate-950">
+      <div className="kb-flex-1 kb-overflow-y-auto kb-p-6">
         
         {/* Key Metrics Grid */}
         <div className="kb-grid kb-grid-cols-1 md:kb-grid-cols-2 lg:kb-grid-cols-4 kb-gap-6 kb-mb-8">
           
           {/* Total Duration */}
-          {performanceMetrics.totalWorkflowDuration && (
+          {mergedMetrics.totalWorkflowDuration && (
             <div className="kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-lg kb-p-6">
               <div className="kb-flex kb-items-center">
                 <div className="kb-flex-shrink-0">
@@ -95,7 +114,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                 <div className="kb-ml-4">
                   <div className="kb-text-sm kb-font-medium kb-text-slate-400">Total Duration</div>
                   <div className="kb-text-2xl kb-font-semibold kb-text-slate-200">
-                    {formatDuration(performanceMetrics.totalWorkflowDuration)}
+                    {formatDuration(mergedMetrics.totalWorkflowDuration)}
                   </div>
                 </div>
               </div>
@@ -103,7 +122,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
           )}
 
           {/* Token Usage */}
-          {performanceMetrics.totalTokensUsed && (
+          {mergedMetrics.totalTokensUsed && (
             <div className="kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-lg kb-p-6">
               <div className="kb-flex kb-items-center">
                 <div className="kb-flex-shrink-0">
@@ -114,7 +133,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                 <div className="kb-ml-4">
                   <div className="kb-text-sm kb-font-medium kb-text-slate-400">Tokens Used</div>
                   <div className="kb-text-2xl kb-font-semibold kb-text-slate-200">
-                    {formatTokens(performanceMetrics.totalTokensUsed)}
+                    {formatTokens(mergedMetrics.totalTokensUsed)}
                   </div>
                 </div>
               </div>
@@ -122,7 +141,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
           )}
 
           {/* Total Cost */}
-          {performanceMetrics.totalCost && (
+          {mergedMetrics.totalCost && (
             <div className="kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-lg kb-p-6">
               <div className="kb-flex kb-items-center">
                 <div className="kb-flex-shrink-0">
@@ -133,7 +152,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                 <div className="kb-ml-4">
                   <div className="kb-text-sm kb-font-medium kb-text-slate-400">Total Cost</div>
                   <div className="kb-text-2xl kb-font-semibold kb-text-slate-200">
-                    ${performanceMetrics.totalCost.toFixed(4)}
+                    ${mergedMetrics.totalCost.toFixed(4)}
                   </div>
                 </div>
               </div>
@@ -141,7 +160,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
           )}
 
           {/* Orchestration Overhead */}
-          {performanceMetrics.orchestrationOverhead !== undefined && (
+          {mergedMetrics.orchestrationOverhead !== undefined && (
             <div className="kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-lg kb-p-6">
               <div className="kb-flex kb-items-center">
                 <div className="kb-flex-shrink-0">
@@ -152,7 +171,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                 <div className="kb-ml-4">
                   <div className="kb-text-sm kb-font-medium kb-text-slate-400">AI Overhead</div>
                   <div className="kb-text-2xl kb-font-semibold kb-text-slate-200">
-                    {(performanceMetrics.orchestrationOverhead * 100).toFixed(1)}%
+                    {(mergedMetrics.orchestrationOverhead * 100).toFixed(1)}%
                   </div>
                 </div>
               </div>
@@ -170,7 +189,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
             <div className="kb-space-y-4">
               {performanceMetrics.averageTaskDuration && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Average Task Duration</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Average Task Duration</span>
                   <span className="kb-text-sm kb-text-slate-200 kb-font-semibold">
                     {formatDuration(performanceMetrics.averageTaskDuration)}
                   </span>
@@ -179,7 +198,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
               
               {performanceMetrics.taskThroughput && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Task Throughput</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Task Throughput</span>
                   <span className="kb-text-sm kb-text-slate-200 kb-font-semibold">
                     {performanceMetrics.taskThroughput.toFixed(2)} tasks/min
                   </span>
@@ -188,7 +207,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
               
               {performanceMetrics.completionRate && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Completion Rate</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Completion Rate</span>
                   <span className="kb-text-sm kb-text-slate-200 kb-font-semibold">
                     {(performanceMetrics.completionRate * 100).toFixed(1)}%
                   </span>
@@ -227,7 +246,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
             <div className="kb-space-y-4">
               {performanceMetrics.averageTokensPerTask && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Avg Tokens/Task</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Avg Tokens/Task</span>
                   <span className="kb-text-sm kb-text-slate-200 kb-font-semibold">
                     {formatTokens(performanceMetrics.averageTokensPerTask)}
                   </span>
@@ -236,7 +255,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
               
               {performanceMetrics.averageCostPerTask && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Avg Cost/Task</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Avg Cost/Task</span>
                   <span className="kb-text-sm kb-text-slate-200 kb-font-semibold">
                     ${performanceMetrics.averageCostPerTask.toFixed(4)}
                   </span>
@@ -245,7 +264,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
               
               {performanceMetrics.tokenEfficiency && (
                 <div className="kb-flex kb-justify-between kb-items-center">
-                  <span className="kb-text-sm kb-font-medium kb-text-slate-300">Token Efficiency</span>
+                  <span className="kb-text-sm kb-font-medium kb-text-slate-400">Token Efficiency</span>
                   <span className={`kb-text-sm kb-font-semibold ${getEfficiencyColor(performanceMetrics.tokenEfficiency)}`}>
                     {(performanceMetrics.tokenEfficiency * 100).toFixed(1)}%
                   </span>
@@ -263,7 +282,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                       <span className="kb-text-xs kb-text-slate-400 kb-capitalize">
                         {category.replace(/([A-Z])/g, ' $1').trim()}
                       </span>
-                      <span className="kb-text-xs kb-text-slate-200 kb-font-medium">
+                      <span className="kb-text-xs kb-text-slate-300 kb-font-medium">
                         ${cost.toFixed(4)}
                       </span>
                     </div>
@@ -325,7 +344,7 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
                       
                       {bottleneck.impact && (
                         <div className="kb-mt-2">
-                          <div className="kb-flex kb-items-center kb-space-x-4 kb-text-xs kb-text-slate-500">
+                          <div className="kb-flex kb-items-center kb-space-x-4 kb-text-xs kb-text-slate-400">
                             {bottleneck.impact.duration && (
                               <span>Impact: {formatDuration(bottleneck.impact.duration)}</span>
                             )}
@@ -361,13 +380,13 @@ const PerformanceTab = ({ performanceMetrics, workflowLogs = [] }) => {
             
             <div className="kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-lg kb-p-6">
               <div className="kb-flex kb-items-center kb-justify-between kb-mb-4">
-                <span className="kb-text-sm kb-font-medium kb-text-slate-300">Overall Trend</span>
+                <span className="kb-text-sm kb-font-medium kb-text-slate-400">Overall Trend</span>
                 <span className={`kb-inline-flex kb-items-center kb-px-3 kb-py-1 kb-rounded-full kb-text-sm kb-font-medium ${
                   performanceMetrics.performanceTrend === 'improving' 
                     ? 'kb-bg-green-600/20 kb-text-green-400'
                     : performanceMetrics.performanceTrend === 'declining'
                     ? 'kb-bg-red-600/20 kb-text-red-400'
-                    : 'kb-bg-slate-600/50 kb-text-slate-400'
+                    : 'kb-bg-slate-700 kb-text-slate-400'
                 }`}>
                   {performanceMetrics.performanceTrend === 'improving' && '📈 Improving'}
                   {performanceMetrics.performanceTrend === 'declining' && '📉 Declining'}

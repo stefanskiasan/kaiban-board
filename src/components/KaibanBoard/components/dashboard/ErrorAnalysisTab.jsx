@@ -8,9 +8,9 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
   // If no error analysis data, show empty state
   if (!errorAnalysis || !errorAnalysis.errorsByCategory || Object.keys(errorAnalysis.errorsByCategory).length === 0) {
     return (
-      <div className="kb-p-6 kb-h-full kb-flex kb-items-center kb-justify-center kb-bg-slate-950">
+      <div className="kb-p-6 kb-h-full kb-flex kb-items-center kb-justify-center kb-bg-slate-900">
         <div className="kb-text-center">
-          <div className="kb-w-16 kb-h-16 kb-bg-green-900/20 kb-border kb-border-green-500/30 kb-rounded-full kb-flex kb-items-center kb-justify-center kb-mx-auto kb-mb-4">
+          <div className="kb-w-16 kb-h-16 kb-bg-green-900 kb-border kb-border-green-700 kb-rounded-full kb-flex kb-items-center kb-justify-center kb-mx-auto kb-mb-4">
             <span className="kb-text-2xl">✅</span>
           </div>
           <h3 className="kb-text-lg kb-font-medium kb-text-slate-200 kb-mb-2">No Errors Found</h3>
@@ -32,15 +32,15 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'critical':
-        return 'kb-bg-red-900/20 kb-text-red-400 kb-border-red-500/30';
+        return 'kb-bg-red-900/20 kb-text-red-400 kb-border-red-700';
       case 'high':
-        return 'kb-bg-orange-900/20 kb-text-orange-400 kb-border-orange-500/30';
+        return 'kb-bg-orange-900/20 kb-text-orange-400 kb-border-orange-700';
       case 'medium':
-        return 'kb-bg-yellow-900/20 kb-text-yellow-400 kb-border-yellow-500/30';
+        return 'kb-bg-yellow-900/20 kb-text-yellow-400 kb-border-yellow-700';
       case 'low':
-        return 'kb-bg-blue-900/20 kb-text-blue-400 kb-border-blue-500/30';
+        return 'kb-bg-blue-900/20 kb-text-blue-400 kb-border-blue-700';
       default:
-        return 'kb-bg-slate-800 kb-text-slate-300 kb-border-slate-600';
+        return 'kb-bg-slate-800 kb-text-slate-300 kb-border-slate-700';
     }
   };
 
@@ -60,10 +60,10 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
   };
 
   return (
-    <div className="kb-h-full kb-flex kb-bg-slate-950">
+    <div className="kb-h-full kb-flex kb-bg-slate-900">
       
       {/* Left Panel: Error Categories and List */}
-      <div className="kb-w-1/2 kb-border-r kb-border-slate-700 kb-overflow-y-auto kb-bg-slate-950">
+      <div className="kb-w-1/2 kb-border-r kb-border-slate-700 kb-overflow-y-auto kb-bg-slate-900">
         <div className="kb-p-6">
           
           {/* Error Summary */}
@@ -72,7 +72,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
             
             {/* Error Timeline */}
             {errorAnalysis.errorTimeline && errorAnalysis.errorTimeline.length > 0 && (
-              <div className="kb-bg-red-900/20 kb-border kb-border-red-500/30 kb-rounded-lg kb-p-4 kb-mb-4">
+              <div className="kb-bg-red-900/20 kb-border kb-border-red-700 kb-rounded-lg kb-p-4 kb-mb-4">
                 <h3 className="kb-text-sm kb-font-medium kb-text-red-400 kb-mb-2">Error Timeline</h3>
                 <div className="kb-text-xs kb-text-red-300">
                   First error: {(() => {
@@ -106,7 +106,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
 
             {/* Recurrent Errors Alert */}
             {errorAnalysis.recurrentErrors && errorAnalysis.recurrentErrors.length > 0 && (
-              <div className="kb-bg-orange-900/20 kb-border kb-border-orange-500/30 kb-rounded-lg kb-p-4 kb-mb-4">
+              <div className="kb-bg-orange-900/20 kb-border kb-border-orange-700 kb-rounded-lg kb-p-4 kb-mb-4">
                 <h3 className="kb-text-sm kb-font-medium kb-text-orange-400 kb-mb-2">
                   🔄 Recurrent Errors ({errorAnalysis.recurrentErrors.length})
                 </h3>
@@ -124,12 +124,12 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
           {/* Error Categories */}
           <div className="kb-space-y-4">
             {Object.entries(errorAnalysis.errorsByCategory).map(([category, errors]) => (
-              <div key={category} className="kb-border kb-border-slate-700 kb-rounded-lg kb-bg-slate-900/50">
+              <div key={category} className="kb-border kb-border-slate-700 kb-rounded-lg kb-bg-slate-800">
                 
                 {/* Category Header */}
                 <button
                   onClick={() => toggleCategory(category)}
-                  className="kb-w-full kb-px-4 kb-py-3 kb-flex kb-items-center kb-justify-between kb-text-left hover:kb-bg-slate-800/50 kb-rounded-lg"
+                  className="kb-w-full kb-px-4 kb-py-3 kb-flex kb-items-center kb-justify-between kb-text-left hover:kb-bg-slate-700 kb-rounded-lg"
                 >
                   <div className="kb-flex kb-items-center kb-space-x-3">
                     <span className="kb-text-lg">
@@ -149,7 +149,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                     </div>
                   </div>
                   <div className="kb-flex kb-items-center kb-space-x-2">
-                    <span className="kb-inline-flex kb-items-center kb-px-2.5 kb-py-0.5 kb-rounded-full kb-text-xs kb-font-medium kb-bg-red-900/30 kb-text-red-400 kb-border kb-border-red-500/30">
+                    <span className="kb-inline-flex kb-items-center kb-px-2.5 kb-py-0.5 kb-rounded-full kb-text-xs kb-font-medium kb-bg-red-900/30 kb-text-red-400">
                       {errors.length}
                     </span>
                     <svg
@@ -185,8 +185,8 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                               console.error('Error selecting error:', clickError);
                             }
                           }}
-                          className={`kb-w-full kb-px-4 kb-py-3 kb-text-left hover:kb-bg-slate-800/30 kb-border-b kb-border-slate-700/50 last:kb-border-b-0 ${
-                            selectedError === error ? 'kb-bg-blue-900/30 kb-border-blue-500/30' : ''
+                          className={`kb-w-full kb-px-4 kb-py-3 kb-text-left hover:kb-bg-slate-800 kb-border-b kb-border-slate-700 last:kb-border-b-0 ${
+                            selectedError === error ? 'kb-bg-blue-900/20 kb-border-blue-700' : ''
                           }`}
                         >
                           <div className="kb-flex kb-items-start kb-space-x-3">
@@ -231,7 +231,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
 
           {/* Suggested Fixes */}
           {errorAnalysis.suggestedFixes && errorAnalysis.suggestedFixes.length > 0 && (
-            <div className="kb-mt-6 kb-bg-green-900/20 kb-border kb-border-green-500/30 kb-rounded-lg kb-p-4">
+            <div className="kb-mt-6 kb-bg-green-900/20 kb-border kb-border-green-700 kb-rounded-lg kb-p-4">
               <h3 className="kb-text-sm kb-font-medium kb-text-green-400 kb-mb-3">💡 Suggested Fixes</h3>
               <div className="kb-space-y-2">
                 {errorAnalysis.suggestedFixes.map((fix, index) => (
@@ -247,7 +247,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
       </div>
 
       {/* Right Panel: Error Details */}
-      <div className="kb-w-1/2 kb-overflow-y-auto kb-bg-slate-950">
+      <div className="kb-w-1/2 kb-overflow-y-auto kb-bg-slate-900">
         {selectedError ? (
           <div className="kb-p-6">
             <div className="kb-mb-6">
@@ -295,8 +295,8 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
               {selectedError.metadata?.error && (
                 <div>
                   <h3 className="kb-text-sm kb-font-medium kb-text-slate-200 kb-mb-2">Error Message</h3>
-                  <div className="kb-bg-red-900/20 kb-border kb-border-red-500/30 kb-rounded-lg kb-p-4">
-                    <p className="kb-text-sm kb-text-red-300 kb-font-mono">
+                  <div className="kb-bg-red-900/20 kb-border kb-border-red-700 kb-rounded-lg kb-p-4">
+                    <p className="kb-text-sm kb-text-red-400 kb-font-mono">
                       {typeof selectedError.metadata.error === 'string' 
                         ? selectedError.metadata.error 
                         : selectedError.metadata.error.message || 'Unknown error'
@@ -325,8 +325,8 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                 {selectedError.task && (
                   <div>
                     <h3 className="kb-text-sm kb-font-medium kb-text-slate-200 kb-mb-2">Task Context</h3>
-                    <div className="kb-bg-blue-900/20 kb-border kb-border-blue-500/30 kb-rounded-lg kb-p-3">
-                      <p className="kb-text-sm kb-font-medium kb-text-blue-300">
+                    <div className="kb-bg-blue-900/20 kb-border kb-border-blue-700 kb-rounded-lg kb-p-3">
+                      <p className="kb-text-sm kb-font-medium kb-text-blue-400">
                         {(() => {
                           try {
                             const task = selectedError.task;
@@ -337,7 +337,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                         })()} 
                       </p>
                       {selectedError.task.description && (
-                        <p className="kb-text-xs kb-text-blue-400 kb-mt-1">
+                        <p className="kb-text-xs kb-text-blue-300 kb-mt-1">
                           {(() => {
                             try {
                               const desc = selectedError.task.description;
@@ -359,8 +359,8 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                 {selectedError.agent && (
                   <div>
                     <h3 className="kb-text-sm kb-font-medium kb-text-slate-200 kb-mb-2">Agent Context</h3>
-                    <div className="kb-bg-purple-900/20 kb-border kb-border-purple-500/30 kb-rounded-lg kb-p-3">
-                      <p className="kb-text-sm kb-font-medium kb-text-purple-300">
+                    <div className="kb-bg-purple-900/20 kb-border kb-border-purple-700 kb-rounded-lg kb-p-3">
+                      <p className="kb-text-sm kb-font-medium kb-text-purple-400">
                         {(() => {
                           try {
                             const agent = selectedError.agent;
@@ -371,7 +371,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
                         })()} 
                       </p>
                       {selectedError.agent.role && (
-                        <p className="kb-text-xs kb-text-purple-400 kb-mt-1">
+                        <p className="kb-text-xs kb-text-purple-300 kb-mt-1">
                           Role: {(() => {
                             try {
                               return selectedError.agent.role || 'No role specified';
@@ -390,10 +390,10 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
               {selectedError.metadata?.costDetails && (
                 <div>
                   <h3 className="kb-text-sm kb-font-medium kb-text-slate-200 kb-mb-2">Cost Impact</h3>
-                  <div className="kb-bg-yellow-900/20 kb-border kb-border-yellow-500/30 kb-rounded-lg kb-p-4">
+                  <div className="kb-bg-yellow-900/20 kb-border kb-border-yellow-700 kb-rounded-lg kb-p-4">
                     <div className="kb-flex kb-justify-between kb-text-sm">
-                      <span className="kb-text-yellow-300">Total Cost:</span>
-                      <span className="kb-font-medium kb-text-yellow-200">
+                      <span className="kb-text-yellow-400">Total Cost:</span>
+                      <span className="kb-font-medium kb-text-yellow-300">
                         ${selectedError.metadata.costDetails.totalCost?.toFixed(4) || '0.0000'}
                       </span>
                     </div>
@@ -405,7 +405,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
               {getSuggestedErrorSolution && (
                 <div>
                   <h3 className="kb-text-sm kb-font-medium kb-text-slate-200 kb-mb-2">💡 Suggested Solution</h3>
-                  <div className="kb-bg-green-900/20 kb-border kb-border-green-500/30 kb-rounded-lg kb-p-4">
+                  <div className="kb-bg-green-900/20 kb-border kb-border-green-700 kb-rounded-lg kb-p-4">
                     <p className="kb-text-sm kb-text-green-300">
                       {getSuggestedErrorSolution(selectedError)}
                     </p>
@@ -429,7 +429,7 @@ const ErrorAnalysisTab = ({ errorAnalysis, workflowLogs = [] }) => {
         ) : (
           <div className="kb-p-6 kb-h-full kb-flex kb-items-center kb-justify-center">
             <div className="kb-text-center kb-text-slate-400">
-              <div className="kb-w-16 kb-h-16 kb-bg-slate-800 kb-border kb-border-slate-600 kb-rounded-full kb-flex kb-items-center kb-justify-center kb-mx-auto kb-mb-4">
+              <div className="kb-w-16 kb-h-16 kb-bg-slate-800 kb-border kb-border-slate-700 kb-rounded-full kb-flex kb-items-center kb-justify-center kb-mx-auto kb-mb-4">
                 <span className="kb-text-2xl">👈</span>
               </div>
               <p>Select an error from the list to see detailed information</p>

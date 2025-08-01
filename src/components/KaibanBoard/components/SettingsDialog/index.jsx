@@ -79,23 +79,9 @@ const SettingsDialog = () => {
     }
   };
 
-  const maskKey = key => {
-    if (typeof key !== 'string' || key.length === 0) {
-      return;
-    }
-
-    if (key.length <= 2) {
-      return '*'.repeat(key.length);
-    }
-
-    const visibleLength = key.length < 5 ? 2 : 5;
-    const visiblePart = key.substring(0, visibleLength);
-    const maskedPart = '*'.repeat(key.length - visibleLength);
-    return `${visiblePart}${maskedPart}`;
-  };
 
   return (
-    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-900/50">
       <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
         <div
           ref={containerRef}

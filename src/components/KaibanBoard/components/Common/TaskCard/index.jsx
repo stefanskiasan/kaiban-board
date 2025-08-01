@@ -8,7 +8,7 @@ import { usePlaygroundStore } from '../../../store/PlaygroundProvider';
 import { useEffect, useState } from 'react';
 import { isAwaitingValidation } from '../../../utils/helper';
 
-const TaskCard = ({ task, showOptions = true, animationStyles = '' }) => {
+const TaskCard = ({ task, showOptions = true, animationStyles = '', isNewlyCreated = false, isEdited = false }) => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
   const [isAwaiting, setIsAwaiting] = useState(false);
 
@@ -35,6 +35,16 @@ const TaskCard = ({ task, showOptions = true, animationStyles = '' }) => {
   const getCardStyles = () => {
     let baseStyles = `kb-flex kb-flex-col kb-gap-3 kb-p-4 kb-ring-1 kb-ring-slate-950 kb-rounded-lg kb-bg-slate-800 kb-w-full kb-transition-all kb-duration-300 ${showOptions ? 'hover:kb-ring-indigo-500 kb-cursor-pointer' : ''}`;
     
+    // Add special styling for newly created tasks
+    if (isNewlyCreated) {
+      baseStyles += ' kb-task-newly-created';
+    }
+    
+    // Add special styling for edited tasks
+    if (isEdited) {
+      baseStyles += ' kb-task-edited';
+    }
+    
     // Add animation styles if present
     if (animationStyles) {
       return `${baseStyles} ${animationStyles}`;
@@ -43,13 +53,44 @@ const TaskCard = ({ task, showOptions = true, animationStyles = '' }) => {
     return baseStyles;
   };
 
+  // Render status badges
+  const renderStatusBadges = () => {
+    if (!isNewlyCreated && !isEdited) return null;
+
+    return (
+      <div className="kb-absolute kb-top-2 kb-right-2 kb-flex kb-gap-1 kb-z-10">
+        {isNewlyCreated && (
+          <div 
+            className="kb-badge-new kb-px-2 kb-py-1 kb-rounded-full kb-text-xs kb-font-medium kb-text-white kb-bg-violet-500 kb-shadow-sm kb-animate-badge-fade-in"
+            role="status"
+            aria-label="New task created during workflow"
+            title="This task appeared after the workflow started"
+          >
+            NEW
+          </div>
+        )}
+        {isEdited && (
+          <div 
+            className="kb-badge-edited kb-px-2 kb-py-1 kb-rounded-full kb-text-xs kb-font-medium kb-text-white kb-bg-cyan-500 kb-shadow-sm kb-animate-badge-pulse"
+            role="status"
+            aria-label="Task adapted during workflow"
+            title="This task was modified/adopted during the workflow"
+          >
+            EDIT
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div
-      className={getCardStyles()}
+      className={`${getCardStyles()} kb-relative`}
       onClick={() => {
         if (showOptions) setSelectedTaskAction(task);
       }}
     >
+      {renderStatusBadges()}
       <p className="kb-text-sm kb-text-white kb-line-clamp-2">
         {task.description}
       </p>

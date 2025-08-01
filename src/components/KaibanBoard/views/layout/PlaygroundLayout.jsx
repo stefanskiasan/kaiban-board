@@ -18,7 +18,6 @@ import ShareDialog from '../../components/ShareDialog';
 import ShareUrlDialog from '../../components/ShareDialog/ShareUrlDialog';
 import SettingsDialog from '../../components/SettingsDialog';
 import MissingKeysDialog from '../../components/MissingKeysDialog';
-import ChatBot from '../../components/ChatBot';
 
 const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -83,7 +82,6 @@ const PlaygroundLayout = ({ editorComponent, examplesMenu }) => {
       {isOpenSettingsDialog && <SettingsDialog />}
       {isMissingKeysDialogOpen && <MissingKeysDialog />}
       <Activity />
-      <ChatBot />
       <Toaster
         toastOptions={{
           style: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { ListBulletIcon, ViewColumnsIcon, CogIcon } from '@heroicons/react/24/outline';
 import { Button } from '@headlessui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -32,7 +32,10 @@ const BoardView = () => {
     setOrchestrationProgressOpenAction,
     persistedWorkflowLogs,
     updatePersistedLogsAction,
-    clearPersistedLogsAction
+    clearPersistedLogsAction,
+    initializeWorkflowSessionAction,
+    savePersistentAnalyticsAction,
+    currentWorkflowSessionId
   } = useAgentsPlaygroundStore(
     state => ({
       teamStore: state.teamStore,
@@ -43,14 +46,18 @@ const BoardView = () => {
       persistedWorkflowLogs: state.persistedWorkflowLogs,
       updatePersistedLogsAction: state.updatePersistedLogsAction,
       clearPersistedLogsAction: state.clearPersistedLogsAction,
+      initializeWorkflowSessionAction: state.initializeWorkflowSessionAction,
+      savePersistentAnalyticsAction: state.savePersistentAnalyticsAction,
+      currentWorkflowSessionId: state.currentWorkflowSessionId,
     })
   );
 
-  const { tasks, agents, workflowLogs, backlogTasks } = teamStore(state => ({
+  const { tasks, agents, workflowLogs, backlogTasks, teamWorkflowStatus } = teamStore(state => ({
     tasks: state.tasks,
     agents: state.agents,
     workflowLogs: state.workflowLogs,
     backlogTasks: state.backlogTasks || [],
+    teamWorkflowStatus: state.teamWorkflowStatus,
   }));
 
   const [tasksBacklog, setTasksBacklog] = useState([]);
@@ -66,41 +73,77 @@ const BoardView = () => {
     generatedTasks: new Set()
   });
   const [previousOrchestrationStatus, setPreviousOrchestrationStatus] = useState('IDLE');
-  const [newlyCreatedTasks, setNewlyCreatedTasks] = useState(new Set());
-  const [previousTaskIds, setPreviousTaskIds] = useState(new Set());
+  
+  // Workflow baseline and permanent badge tracking
+  const [workflowBaselineTasks, setWorkflowBaselineTasks] = useState(new Set());
+  const [permanentNewTasks, setPermanentNewTasks] = useState(new Set());
+  const [permanentEditedTasks, setPermanentEditedTasks] = useState(new Set());
+  const [workflowStarted, setWorkflowStarted] = useState(false);
   
   // Real-time animations state
   const [taskTransitions, setTaskTransitions] = useState(new Map());
   const [previousTaskStatuses, setPreviousTaskStatuses] = useState(new Map());
 
-  // Track newly created tasks and highlight them for 5 seconds
+  // Track workflow start and establish baseline
   useEffect(() => {
+    // Detect workflow start
+    if (teamWorkflowStatus === 'RUNNING' && !workflowStarted) {
+      console.log('🚀 Workflow started - establishing task baseline');
+      const allCurrentTasks = [...tasks, ...backlogTasks];
+      const baselineTaskIds = new Set(allCurrentTasks.map(task => task.id));
+      
+      setWorkflowBaselineTasks(baselineTaskIds);
+      setWorkflowStarted(true);
+      
+      console.log(`📊 Baseline established with ${baselineTaskIds.size} tasks:`, Array.from(baselineTaskIds));
+    }
+    
+    // Reset on workflow completion/stop
+    if (['FINISHED', 'STOPPED', 'ERRORED'].includes(teamWorkflowStatus) && workflowStarted) {
+      console.log('🏁 Workflow ended - resetting baseline');
+      setWorkflowStarted(false);
+      setWorkflowBaselineTasks(new Set());
+      setPermanentNewTasks(new Set());
+      setPermanentEditedTasks(new Set());
+    }
+  }, [teamWorkflowStatus, tasks, backlogTasks, workflowStarted]);
+
+  // Track new tasks after workflow start and task adaptations
+  useEffect(() => {
+    if (!workflowStarted) return;
+    
     const allCurrentTasks = [...tasks, ...backlogTasks];
     const currentTaskIds = new Set(allCurrentTasks.map(task => task.id));
     
-    // Find newly added tasks
+    // Find NEW tasks (appeared after workflow start)
     const newTaskIds = new Set();
     currentTaskIds.forEach(taskId => {
-      if (!previousTaskIds.has(taskId)) {
+      if (!workflowBaselineTasks.has(taskId)) {
         newTaskIds.add(taskId);
       }
     });
-
+    
+    // Add newly found tasks to permanent NEW list
     if (newTaskIds.size > 0) {
-      setNewlyCreatedTasks(prev => new Set([...prev, ...newTaskIds]));
-      
-      // Remove highlighting after 5 seconds
-      setTimeout(() => {
-        setNewlyCreatedTasks(prev => {
-          const updated = new Set(prev);
-          newTaskIds.forEach(taskId => updated.delete(taskId));
-          return updated;
-        });
-      }, 5000);
+      console.log(`✨ Found ${newTaskIds.size} new tasks:`, Array.from(newTaskIds));
+      setPermanentNewTasks(prev => new Set([...prev, ...newTaskIds]));
     }
-
-    setPreviousTaskIds(currentTaskIds);
-  }, [tasks, backlogTasks]); // Removed previousTaskIds from dependencies
+    
+    // Track EDITED tasks from orchestration adaptations
+    const adaptedTaskIds = new Set();
+    orchestrationData.taskAdaptations.forEach((adaptation, taskId) => {
+      if (workflowBaselineTasks.has(taskId)) { // Only baseline tasks can be adapted
+        adaptedTaskIds.add(taskId);
+      }
+    });
+    
+    // Add adapted tasks to permanent EDITED list
+    if (adaptedTaskIds.size > 0) {
+      console.log(`🔄 Found ${adaptedTaskIds.size} adapted tasks:`, Array.from(adaptedTaskIds));
+      setPermanentEditedTasks(prev => new Set([...prev, ...adaptedTaskIds]));
+    }
+    
+  }, [tasks, backlogTasks, workflowStarted, workflowBaselineTasks, orchestrationData.taskAdaptations]);
 
   // Track task status changes for animations
   useEffect(() => {
@@ -182,7 +225,7 @@ const BoardView = () => {
     return animations[transitionKey] || `kb-animate-task-transition kb-task-transition ${isAIDriven ? 'kb-animate-ai-highlight' : ''}`;
   };
 
-  const updateTaskLists = tasks => {
+  const updateTaskLists = useCallback((tasks) => {
     // Filter regular tasks by status
     const tasksWithBacklogStatus = tasks.filter(task => task.status === 'BACKLOG');
     
@@ -208,14 +251,13 @@ const BoardView = () => {
     setTasksDoing(newTasksDoing);
     setTasksBlocked(newTasksBlocked);
     setTasksDone(newTasksDone);
-  };
+  }, [backlogTasks]);
 
   useEffect(() => {
     if (tasks.length > 0 || backlogTasks.length > 0) {
       updateTaskLists(tasks);
     }
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [backlogTasks]);
+  }, [tasks, backlogTasks]);
 
   useEffect(() => {
     const unsubscribeFromTeamStore = teamStore.subscribe((state, prev) => {
@@ -228,35 +270,67 @@ const BoardView = () => {
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
-  useEffect(() => {
-    const logs = filterAndFormatAgentLogs(workflowLogs);
-    setLogs(logs);
-    
-    // Process orchestration data
-    const orchestrationEvents = getOrchestrationEvents(workflowLogs);
-    const allTasks = [...tasks, ...backlogTasks];
+  // Memoize expensive calculations
+  const formattedLogs = useMemo(() => filterAndFormatAgentLogs(workflowLogs), [workflowLogs]);
+  
+  const orchestrationEvents = useMemo(() => getOrchestrationEvents(workflowLogs), [workflowLogs]);
+  
+  const allTasks = useMemo(() => [...tasks, ...backlogTasks], [tasks, backlogTasks]);
+  
+  const orchestrationMetrics = useMemo(() => {
     const aiSelectedTasks = getAISelectedTasks(orchestrationEvents, allTasks);
     const taskAdaptations = getTaskAdaptations(orchestrationEvents);
     const generatedTasks = getGeneratedTasks(orchestrationEvents, allTasks);
     
-    setOrchestrationData({
+    return {
       events: orchestrationEvents,
       aiSelectedTasks: new Set(aiSelectedTasks.filter(t => t.isAISelected).map(t => t.id)),
       taskAdaptations,
       generatedTasks: new Set(generatedTasks.filter(t => t.isGenerated).map(t => t.id))
-    });
+    };
+  }, [orchestrationEvents, allTasks]);
 
-    // Auto-open orchestration progress dialog when orchestration starts
+  const workflowActivityChecks = useMemo(() => {
+    const hasWorkflowActivity = workflowLogs && workflowLogs.length > 0 && 
+      workflowLogs.some(log => 
+        log.logType === 'WorkflowStatusUpdate' || 
+        log.logType === 'AgentStatusUpdate' || 
+        log.logType === 'TaskStatusUpdate'
+      );
+    
+    const hasActiveTasks = allTasks.some(task => 
+      task.status === 'IN_PROGRESS' || task.status === 'DOING' || task.status === 'DONE'
+    );
+
+    return { hasWorkflowActivity, hasActiveTasks };
+  }, [workflowLogs, allTasks]);
+
+  // Update logs state
+  useEffect(() => {
+    setLogs(formattedLogs);
+  }, [formattedLogs]);
+
+  // Update orchestration data state
+  useEffect(() => {
+    setOrchestrationData(orchestrationMetrics);
+  }, [orchestrationMetrics]);
+
+  // Handle orchestration dialog auto-open logic
+  useEffect(() => {
     const currentStatus = getOrchestrationStatus(orchestrationEvents);
     const isCurrentlyActive = isOrchestrationActive(orchestrationEvents);
+    const { hasWorkflowActivity, hasActiveTasks } = workflowActivityChecks;
     
-    // Open dialog when orchestration becomes active (transitions from IDLE to active state)
-    if (isCurrentlyActive && previousOrchestrationStatus === 'IDLE' && !isOrchestrationProgressOpen) {
+    // Open dialog only when orchestration becomes active AND there is real workflow activity
+    if (isCurrentlyActive && 
+        previousOrchestrationStatus === 'IDLE' && 
+        !isOrchestrationProgressOpen &&
+        (hasWorkflowActivity || hasActiveTasks)) {
       setOrchestrationProgressOpenAction(true);
     }
     
     setPreviousOrchestrationStatus(currentStatus);
-  }, [workflowLogs, tasks, backlogTasks, previousOrchestrationStatus, isOrchestrationProgressOpen, setOrchestrationProgressOpenAction]);
+  }, [orchestrationEvents, workflowActivityChecks, isOrchestrationProgressOpen, setOrchestrationProgressOpenAction]);
 
   // Separate useEffect for auto-close logic to prevent infinite loops
   useEffect(() => {
@@ -306,23 +380,66 @@ const BoardView = () => {
     }
   }, [workflowLogs, updatePersistedLogsAction]);
 
-  // Clear persisted logs when a completely new workflow starts (all tasks reset to TODO)
+  // Manage workflow sessions and analytics persistence
   const [hasWorkflowStarted, setHasWorkflowStarted] = useState(false);
   useEffect(() => {
     const allTasks = [...tasks, ...backlogTasks];
     const hasActiveTasks = allTasks.some(task => task.status === 'IN_PROGRESS' || task.status === 'DONE');
     
-    // If we had an active workflow but now all tasks are back to TODO/BACKLOG, clear persisted logs
+    // If we had an active workflow but now all tasks are back to TODO/BACKLOG, save analytics and clear persisted logs
     if (hasWorkflowStarted && !hasActiveTasks && allTasks.length > 0 && allTasks.every(task => task.status === 'TODO' || task.status === 'BACKLOG')) {
-      clearPersistedLogsAction();
+      console.log('🎯 Workflow completed - saving analytics before clearing logs');
+      
+      // Save analytics before clearing logs
+      if (currentWorkflowSessionId && (workflowLogs?.length > 0 || persistedWorkflowLogs?.length > 0)) {
+        // Get team name from team store if available
+        const teamName = teamStore?.getState?.()?.name || 'Unknown Team';
+        
+        savePersistentAnalyticsAction(workflowLogs, teamName).then((saved) => {
+          if (saved) {
+            console.log('✅ Analytics saved successfully, now clearing temporary logs');
+          } else {
+            console.warn('⚠️ Failed to save analytics, but clearing logs anyway');
+          }
+          
+          // Clear temporary logs after saving analytics
+          clearPersistedLogsAction();
+        }).catch((error) => {
+          console.error('❌ Error saving analytics:', error);
+          // Still clear logs even if analytics saving failed
+          clearPersistedLogsAction();
+        });
+      } else {
+        // No session or logs to save, just clear
+        clearPersistedLogsAction();
+      }
+      
       setHasWorkflowStarted(false);
     }
     
-    // Mark that a workflow has started
+    // Mark that a workflow has started and initialize analytics session
     if (hasActiveTasks && !hasWorkflowStarted) {
+      console.log('🚀 Workflow starting - initializing analytics session');
+      
+      // Initialize new analytics session if one doesn't exist
+      if (!currentWorkflowSessionId) {
+        initializeWorkflowSessionAction();
+      }
+      
       setHasWorkflowStarted(true);
     }
-  }, [tasks, backlogTasks, hasWorkflowStarted, clearPersistedLogsAction]);
+  }, [
+    tasks, 
+    backlogTasks, 
+    hasWorkflowStarted, 
+    clearPersistedLogsAction, 
+    savePersistentAnalyticsAction, 
+    initializeWorkflowSessionAction, 
+    currentWorkflowSessionId, 
+    workflowLogs, 
+    persistedWorkflowLogs,
+    teamStore
+  ]);
 
   return (
     <>
@@ -333,7 +450,7 @@ const BoardView = () => {
             {'Kaiban Board'}
           </span>
         </div>
-        <div className="kb-flex-grow border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-950">
+        <div className="kb-flex-grow border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-900">
           <div className="kb-flex kb-items-center kb-gap-4 kb-h-full kb-pr-3.5">
             <div className="kb-ml-auto kb-hidden md:kb-flex -kb-space-x-2">
               {agents?.map(agent => (
@@ -422,7 +539,7 @@ const BoardView = () => {
               isGenerated={orchestrationData.generatedTasks.has(task.id)}
               adaptationLevel={orchestrationData.taskAdaptations.get(task.id)?.level || 'none'}
               isSelected={selectedTask && selectedTask.id === task.id}
-              isNewlyCreated={newlyCreatedTasks.has(task.id)}
+              isNewlyCreated={permanentNewTasks.has(task.id)}
               animationStyles={getTaskAnimationStyles(task.id)}
             />
           ))}
@@ -446,6 +563,8 @@ const BoardView = () => {
               key={task.id} 
               task={task} 
               animationStyles={getTaskAnimationStyles(task.id)}
+              isNewlyCreated={permanentNewTasks.has(task.id)}
+              isEdited={permanentEditedTasks.has(task.id)}
             />
           ))}
         </div>
@@ -468,6 +587,8 @@ const BoardView = () => {
               key={task.id} 
               task={task} 
               animationStyles={getTaskAnimationStyles(task.id)}
+              isNewlyCreated={permanentNewTasks.has(task.id)}
+              isEdited={permanentEditedTasks.has(task.id)}
             />
           ))}
         </div>
@@ -490,6 +611,8 @@ const BoardView = () => {
               key={task.id} 
               task={task} 
               animationStyles={getTaskAnimationStyles(task.id)}
+              isNewlyCreated={permanentNewTasks.has(task.id)}
+              isEdited={permanentEditedTasks.has(task.id)}
             />
           ))}
         </div>
@@ -512,6 +635,8 @@ const BoardView = () => {
               key={task.id} 
               task={task} 
               animationStyles={getTaskAnimationStyles(task.id)}
+              isNewlyCreated={permanentNewTasks.has(task.id)}
+              isEdited={permanentEditedTasks.has(task.id)}
             />
           ))}
         </div>
@@ -545,7 +670,7 @@ const BoardView = () => {
                   isGenerated={orchestrationData.generatedTasks.has(task.id)}
                   adaptationLevel={orchestrationData.taskAdaptations.get(task.id)?.level || 'none'}
                   isSelected={selectedTask && selectedTask.id === task.id}
-                  isNewlyCreated={newlyCreatedTasks.has(task.id)}
+                  isNewlyCreated={permanentNewTasks.has(task.id)}
                   animationStyles={getTaskAnimationStyles(task.id)}
                 />
               ))}
@@ -568,6 +693,8 @@ const BoardView = () => {
                   key={task.id} 
                   task={task} 
                   animationStyles={getTaskAnimationStyles(task.id)}
+                  isNewlyCreated={permanentNewTasks.has(task.id)}
+                  isEdited={permanentEditedTasks.has(task.id)}
                 />
               ))}
             </div>
@@ -589,6 +716,8 @@ const BoardView = () => {
                   key={task.id} 
                   task={task} 
                   animationStyles={getTaskAnimationStyles(task.id)}
+                  isNewlyCreated={permanentNewTasks.has(task.id)}
+                  isEdited={permanentEditedTasks.has(task.id)}
                 />
               ))}
             </div>
@@ -610,6 +739,8 @@ const BoardView = () => {
                   key={task.id} 
                   task={task} 
                   animationStyles={getTaskAnimationStyles(task.id)}
+                  isNewlyCreated={permanentNewTasks.has(task.id)}
+                  isEdited={permanentEditedTasks.has(task.id)}
                 />
               ))}
             </div>
@@ -631,6 +762,8 @@ const BoardView = () => {
                   key={task.id} 
                   task={task} 
                   animationStyles={getTaskAnimationStyles(task.id)}
+                  isNewlyCreated={permanentNewTasks.has(task.id)}
+                  isEdited={permanentEditedTasks.has(task.id)}
                 />
               ))}
             </div>

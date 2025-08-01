@@ -49,7 +49,7 @@ const Dashboard = ({ onChange = () => {} }) => {
                 Steps
               </span>
             </div>
-            <div className="kb-relative kb-bg-slate-950 kb-rounded-xl kb-ring-1 kb-ring-slate-800">
+            <div className="kb-relative kb-bg-slate-900 kb-rounded-xl kb-ring-1 kb-ring-slate-800">
               <div className="kb-relative kb-px-5 kb-py-4">
                 <pre className="kb-text-xs kb-leading-6 kb-text-slate-300 kb-flex kb-flex-col kb-gap-1 kb-overflow-auto">
                   <code className="kb-flex-none kb-min-w-full">
@@ -278,7 +278,7 @@ const Preview = () => {
             Preview
           </span>
         </div>
-        <div className="kb-flex-grow kb-border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-950"></div>
+        <div className="kb-flex-grow kb-border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-900"></div>
       </div>
       <div className="kb-mt-4 kb-px-6 kb-divide-y kb-divide-slate-950">
         {!errorState.hasError ? (

@@ -1,7 +1,7 @@
 import React from 'react';
 const ExecutionDialog = () => {
   return (
-    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-900/50">
       <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
         <div className="kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
           <h3 className="kb-text-base/7 kb-font-medium kb-text-white">

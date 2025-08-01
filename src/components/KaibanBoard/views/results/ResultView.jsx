@@ -6,13 +6,11 @@ import {
   ClipboardIcon,
   SparklesIcon as SparklesOutlineIcon,
   ChartBarIcon,
-  CpuChipIcon,
   DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 import { copyToClipboard } from '../../utils/helper';
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import OrchestrationDashboard from '../../components/dashboard/OrchestrationDashboard';
-import OrchestrationProgressContent from '../../components/shared/OrchestrationProgressContent';
 
 const ResultView = () => {
   const [activeTab, setActiveTab] = useState('results');
@@ -34,7 +32,6 @@ const ResultView = () => {
   const tabs = [
     { id: 'results', label: 'Results', icon: DocumentTextIcon },
     { id: 'analytics', label: 'Analytics', icon: ChartBarIcon },
-    { id: 'orchestration', label: 'Orchestration', icon: CpuChipIcon },
   ];
 
   return (
@@ -47,7 +44,7 @@ const ResultView = () => {
             Results Overview
           </span>
         </div>
-        <div className="kb-flex-grow kb-border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-950">
+        <div className="kb-flex-grow kb-border kb-border-slate-700 kb-border-r-0 kb-border-t-0 kb-bg-slate-900">
           <div className="kb-flex kb-items-center kb-gap-4 kb-h-full kb-pr-3.5">
             {/* Copy Button */}
             {workflowResult && activeTab === 'results' && (
@@ -96,7 +93,7 @@ const ResultView = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="kb-flex-1 kb-flex kb-flex-col kb-overflow-hidden">
+      <div className="kb-flex-1 kb-flex kb-flex-col kb-overflow-y-auto">
         {activeTab === 'results' && (
           /* Results View */
           <div className="kb-mt-4 kb-px-6 kb-flex-1 kb-overflow-hidden">
@@ -132,17 +129,11 @@ const ResultView = () => {
 
         {activeTab === 'analytics' && (
           /* Analytics View */
-          <div className="kb-flex-1 kb-px-6 kb-pb-6">
+          <div className="kb-flex-1 kb-px-6 kb-pb-6 kb-overflow-y-auto">
             <OrchestrationDashboard workflowLogs={displayLogs} />
           </div>
         )}
 
-        {activeTab === 'orchestration' && (
-          /* Orchestration View */
-          <div className="kb-flex-1 kb-p-6">
-            <OrchestrationProgressContent workflowLogs={displayLogs} compact={true} />
-          </div>
-        )}
       </div>
     </div>
   );

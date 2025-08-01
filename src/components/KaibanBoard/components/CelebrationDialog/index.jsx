@@ -11,7 +11,7 @@ const CelebrationDialog = () => {
     }));
 
   return (
-    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-950/50">
+    <div className="kb-absolute kb-w-full kb-h-full kb-inset-0 kb-bg-slate-900/50">
       <div className="kb-flex kb-min-h-full kb-items-center kb-justify-center kb-p-4">
         <div className="kb-z-40 kb-w-full kb-max-w-md kb-rounded-xl kb-bg-white/5 kb-p-6 kb-backdrop-blur-2xl">
           <h3 className="kb-text-base/7 kb-font-medium kb-text-white">
@@ -26,7 +26,8 @@ const CelebrationDialog = () => {
               className="kb-inline-flex kb-items-center kb-gap-2 kb-rounded-md kb-bg-indigo-500 kb-py-1.5 kb-px-3 kb-text-sm kb-font-medium kb-text-white focus:kb-outline-none data-[hover]:kb-bg-indigo-600 data-[focus]:kb-outline-1 data-[focus]:kb-outline-white"
               onClick={() => {
                 setCelebrationDialogOpenAction(false);
-                // Removed automatic navigation to Results - stay on current tab (Kanban Board)
+                // Navigate to Results view after workflow completion
+                setTabAction(2);
               }}
             >
               Continue

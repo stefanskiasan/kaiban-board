@@ -11,6 +11,21 @@ import {
 } from '../utils/helper';
 import { resumeCreationOpenai } from '../assets/teams/resume_creation';
 import { saveKeysToLocalStorage, loadKeysFromLocalStorage } from '../utils/localStorageKeys';
+import { 
+  saveAnalyticsToLocalStorage, 
+  loadAnalyticsFromLocalStorage, 
+  generateAnalyticsSessionId,
+  getAnalyticsStorageStats 
+} from '../utils/localStorageKeys';
+import performanceLogger, {
+  logWorkflowStart,
+  logWorkflowEnd,
+  logTaskChange,
+  logAgentStart,
+  logAgentComplete,
+  logAISelection,
+  logAIAdaptation
+} from '../utils/performanceLogger';
 
 // INFO: For code evaluation
 import { Agent, Task, Team } from 'kaibanjs';
@@ -49,6 +64,11 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         isCelebrationDialogOpen: false,
         isOrchestrationProgressOpen: false,
         persistedWorkflowLogs: [], // Store logs locally to persist across dialog sessions
+        
+        // Persistent Orchestration Analytics
+        persistentOrchestrationAnalytics: [], // Historical analytics sessions
+        currentWorkflowSessionId: null, // Current workflow session ID for analytics
+        workflowStartTime: null, // Track when current workflow started
 
         selectedTask: null,
         isTaskDetailsDialogOpen: false,
@@ -60,8 +80,6 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         shareUrl: '',
 
         isMissingKeysDialogOpen: false,
-
-        isChatBotOpen: false,
         
         // Use Case Dialog states
         isUseCaseDialogOpen: false,
@@ -82,14 +100,12 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           showSimpleShareOption: true,
           showWelcomeInfo: true,
           selectedTab: 0,
-          isChatbotFloating: false,
         },
 
         defaultEnvVars: [],
 
         keys: [],
         isOpenSettingsDialog: false,
-        isChatBotSettingsDialogOpen: false,
 
         project: {
           name: 'Untitled Project',
@@ -339,6 +355,158 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           })),
         clearPersistedLogsAction: () => set({ persistedWorkflowLogs: [] }),
 
+        // Actions for managing persistent orchestration analytics
+        initializeWorkflowSessionAction: () => {
+          const sessionId = generateAnalyticsSessionId();
+          console.log('🎯 Starting new workflow session:', sessionId);
+          
+          // Initialize performance logger for new session
+          logWorkflowStart(sessionId);
+          
+          set({ 
+            currentWorkflowSessionId: sessionId,
+            workflowStartTime: Date.now()
+          });
+          return sessionId;
+        },
+
+        savePersistentAnalyticsAction: async (workflowLogs = [], teamName = 'Unknown Team') => {
+          const { currentWorkflowSessionId, workflowStartTime, persistedWorkflowLogs } = get();
+          
+          if (!currentWorkflowSessionId) {
+            console.warn('No active workflow session to save analytics for');
+            return false;
+          }
+
+          try {
+            // End performance logger session and get real-time logs
+            logWorkflowEnd(currentWorkflowSessionId);
+            const performanceLogs = performanceLogger.getLogs();
+            
+            // Import orchestration helper functions dynamically
+            const { 
+              analyzeErrorPatterns, 
+              analyzePerformanceMetrics, 
+              analyzeTaskFlows 
+            } = await import('../utils/orchestrationHelper');
+
+            // Combine all log sources for complete analytics
+            const allLogs = [
+              ...(workflowLogs || []),
+              ...(persistedWorkflowLogs || []),
+              ...performanceLogs // Include real performance data
+            ];
+            
+            // Filter orchestration-specific logs
+            const orchestrationLogs = allLogs.filter(log => 
+              log.logType === 'OrchestrationStatusUpdate' || 
+              log.orchestrationEvent || 
+              log.metadata?.isOrchestrationEvent
+            );
+
+            // Generate comprehensive analytics with real performance data
+            const analyticsData = {
+              sessionId: currentWorkflowSessionId,
+              teamName,
+              startTime: workflowStartTime,
+              endTime: Date.now(),
+              duration: Date.now() - (workflowStartTime || Date.now()),
+              orchestrationLogs,
+              performanceLogs, // Store raw performance logs
+              totalLogs: allLogs.length,
+              performanceStats: {
+                totalCost: performanceLogger.getTotalCost(),
+                sessionDuration: performanceLogger.getSessionDuration(),
+                tokenStats: performanceLogger.getTokenStats()
+              },
+              performanceMetrics: analyzePerformanceMetrics(allLogs),
+              taskFlows: analyzeTaskFlows(allLogs),
+              errorAnalysis: analyzeErrorPatterns(allLogs),
+              summary: {
+                totalOrchestrationEvents: orchestrationLogs.length,
+                taskSelections: orchestrationLogs.filter(log => log.orchestrationEvent === 'TASK_SELECTION').length,
+                adaptations: orchestrationLogs.filter(log => log.orchestrationEvent === 'TASK_ADAPTATION').length,
+                generations: orchestrationLogs.filter(log => log.orchestrationEvent === 'TASK_GENERATION').length,
+                strategyChanges: orchestrationLogs.filter(log => log.orchestrationEvent === 'STRATEGY_CHANGE').length
+              }
+            };
+
+            // Save to localStorage
+            const saved = saveAnalyticsToLocalStorage(analyticsData);
+            
+            if (saved) {
+              // Update state with latest analytics
+              const allAnalytics = loadAnalyticsFromLocalStorage();
+              set({ 
+                persistentOrchestrationAnalytics: allAnalytics,
+                currentWorkflowSessionId: null, // Reset session
+                workflowStartTime: null
+              });
+              
+              // Clear performance logger for next session
+              performanceLogger.clear();
+              
+              console.log('✅ Successfully saved orchestration analytics with performance data for session:', currentWorkflowSessionId);
+              return true;
+            }
+            
+            return false;
+          } catch (error) {
+            console.error('Failed to save persistent analytics:', error);
+            return false;
+          }
+        },
+
+        loadPersistentAnalyticsAction: () => {
+          try {
+            const analytics = loadAnalyticsFromLocalStorage();
+            set({ persistentOrchestrationAnalytics: analytics });
+            console.log(`📊 Loaded ${analytics.length} analytics sessions from storage`);
+            return analytics;
+          } catch (error) {
+            console.error('Failed to load persistent analytics:', error);
+            return [];
+          }
+        },
+
+        getAnalyticsStatsAction: () => {
+          return getAnalyticsStorageStats();
+        },
+
+        // Performance Logger Integration Actions
+        logTaskStatusChangeAction: (taskId, newStatus, oldStatus, taskTitle, agentName) => {
+          logTaskChange(taskId, newStatus, oldStatus, taskTitle, agentName);
+        },
+
+        logAgentThinkingStartAction: (agentName, taskId, agentId) => {
+          return logAgentStart(agentName, taskId, agentId);
+        },
+
+        logAgentThinkingEndAction: (operationId, llmStats) => {
+          return logAgentComplete(operationId, llmStats);
+        },
+
+        logOrchestrationSelectionAction: (selectedTasks, aiReasoning, confidence) => {
+          logAISelection(selectedTasks, aiReasoning, confidence);
+        },
+
+        logOrchestrationAdaptationAction: (taskId, originalTask, adaptedTask, reason) => {
+          logAIAdaptation(taskId, originalTask, adaptedTask, reason);
+        },
+
+        logOrchestrationEventAction: (eventType, metadata = {}) => {
+          performanceLogger.logOrchestrationEvent(eventType, metadata);
+        },
+
+        getPerformanceStatsAction: () => {
+          return {
+            logs: performanceLogger.getLogs(),
+            tokenStats: performanceLogger.getTokenStats(),
+            totalCost: performanceLogger.getTotalCost(),
+            sessionDuration: performanceLogger.getSessionDuration()
+          };
+        },
+
         setTaskDetailsDialogOpenAction: isTaskDetailsDialogOpen =>
           set({ isTaskDetailsDialogOpen }),
         setSelectedTaskAction: selectedTask => {
@@ -452,13 +620,11 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           }
         },
 
-        setChatBotOpenAction: isChatBotOpen => set({ isChatBotOpen }),
         
         // Use Case Dialog actions
         openUseCaseDialogAction: (mode) => set({ 
           isUseCaseDialogOpen: true, 
-          useCaseDialogMode: mode,
-          isChatBotOpen: false // Close regular chatbot when opening dialog
+          useCaseDialogMode: mode
         }),
         closeUseCaseDialogAction: () => set({ 
           isUseCaseDialogOpen: false,
@@ -579,8 +745,6 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
         },
         setSettingsDialogOpenAction: isOpenSettingsDialog =>
           set({ isOpenSettingsDialog }),
-        setChatBotSettingsDialogOpenAction: isChatBotSettingsDialogOpen =>
-          set({ isChatBotSettingsDialogOpen }),
 
         setProjectAction: project => set({ project }),
         checkAndSetProject: () => {
@@ -634,13 +798,126 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
         setTeamAction: team => {
           const { setTeamStoreAction } = get();
-          setTeamStoreAction(team.store);
-
-          const project = {
-            name: team.store.getState().name || 'Untitled Project',
-            user: { name: 'Anonymous' },
-          };
-          set({ project, selectedTab: 0 });
+          
+          // Handle both KaibanJS team objects and plain data objects
+          if (team && team.store && team.store.getState) {
+            // This is a KaibanJS team with a store
+            setTeamStoreAction(team.store);
+            const project = {
+              name: team.store.getState().name || 'Untitled Project',
+              user: { name: 'Anonymous' },
+            };
+            set({ project, selectedTab: 0 });
+          } else if (team && team.isExternal) {
+            // This is an external data object from Web Component
+            console.log('🎯 Setting external team data:', team);
+            // Create a reactive store that references the external data
+            const createReactiveStore = () => {
+              const store = (selector) => {
+                if (typeof selector === 'function') {
+                  return selector(team);
+                }
+                return team;
+              };
+              
+              // Add store methods for compatibility
+              store.getState = () => team;
+              store.subscribe = (callback) => {
+                // Subscribe to external data changes if available
+                if (team.subscribe) {
+                  return team.subscribe(callback);
+                }
+                return () => {};
+              };
+              store.setState = (updates) => {
+                // Update external data if method available
+                if (team.updateData) {
+                  team.updateData(updates);
+                }
+              };
+              
+              return store;
+            };
+            
+            const reactiveStore = createReactiveStore();
+            setTeamStoreAction(reactiveStore);
+            
+            const project = {
+              name: team.name || 'Untitled Project',
+              user: { name: 'Anonymous' },
+            };
+            set({ project, selectedTab: 0 });
+            console.log('✅ External team store set successfully');
+          } else if (team && team.name) {
+            // This is a plain team data object (e.g., from Web Component)
+            // Create a mock store that works like a Zustand store
+            const mockState = {
+              name: team.name,
+              agents: (team.agents || []).map(agent => {
+                const llmConfig = agent.llmConfig || {
+                  provider: 'openai',
+                  model: 'gpt-4'
+                };
+                return {
+                  ...agent,
+                  id: agent.id || Math.random().toString(36).substr(2, 9),
+                  name: agent.name || 'Unnamed Agent',
+                  role: agent.role || 'Agent',
+                  goal: agent.goal || '',
+                  backstory: agent.backstory || '',
+                  llmConfig: llmConfig,
+                  tools: agent.tools || [],
+                  maxIterations: agent.maxIterations || 5,
+                  allowDelegation: agent.allowDelegation !== undefined ? agent.allowDelegation : true,
+                  // Add agentInstance for UI compatibility
+                  agentInstance: {
+                    llmConfig: llmConfig,
+                    provider: llmConfig.provider,
+                    model: llmConfig.model
+                  }
+                };
+              }),
+              tasks: (team.tasks || []).map(task => ({
+                ...task,
+                id: task.id || Math.random().toString(36).substr(2, 9),
+                name: task.name || task.description || 'Unnamed Task',
+                status: task.status || 'todo',
+                agent: task.agent || null
+              })),
+              teamWorkflowStatus: team.teamWorkflowStatus || 'INITIAL',
+              workflowLogs: team.workflowLogs || [],
+              inputs: team.inputs || {},  // Add inputs object
+              setInputs: (newInputs) => {
+                mockState.inputs = newInputs;
+                console.log('Mock: Inputs updated', newInputs);
+              },
+              backlogTasks: team.backlogTasks || [],  // Add backlogTasks
+              startWorkflow: () => console.log('Mock: Start workflow'),
+              pauseWorkflow: () => console.log('Mock: Pause workflow'),
+              resumeWorkflow: () => console.log('Mock: Resume workflow'),
+              stopWorkflow: () => console.log('Mock: Stop workflow'),
+            };
+            
+            // Create a Zustand-like store function
+            const mockStore = (selector) => {
+              if (typeof selector === 'function') {
+                return selector(mockState);
+              }
+              return mockState;
+            };
+            
+            // Add store methods for compatibility
+            mockStore.getState = () => mockState;
+            mockStore.subscribe = () => () => {}; // Return unsubscribe function
+            mockStore.setState = () => {};
+            
+            setTeamStoreAction(mockStore);
+            const project = {
+              name: team.name || 'Untitled Project',
+              user: { name: 'Anonymous' },
+            };
+            set({ project, selectedTab: 0 });
+          }
         },
 
         initAction: () => {
@@ -657,6 +934,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             initDefaultEnvVarsAction,
             setExampleCodeAction,
             keys: existingKeys,
+            loadPersistentAnalyticsAction,
           } = get();
 
           // CRITICAL: Force reset all dialog states IMMEDIATELY on initialization
@@ -671,9 +949,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             isShareDialogOpen: false,
             isShareUrlDialogOpen: false,
             isOpenSettingsDialog: false,
-            isChatBotSettingsDialogOpen: false,
             isUseCaseDialogOpen: false,
-            isChatBotOpen: false,
           });
 
           // Load API keys from LocalStorage
@@ -693,6 +969,9 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             });
             set({ keys: mergedKeys });
           }
+
+          // Load persistent orchestration analytics
+          loadPersistentAnalyticsAction();
 
           if (teams.length === 0 && !exampleTeams.length) {
             let initialCode = code;
@@ -725,7 +1004,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
             initDbAction();
             checkAndSetProject();
 
-            if (uiSettings.selectedTab !== 0) {
+            if (uiSettings.selectedTab !== undefined && uiSettings.selectedTab !== null) {
               setTimeout(() => {
                 setTabAction(uiSettings.selectedTab);
               });
@@ -736,6 +1015,19 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           } else {
             const team = teams[0];
             setTeamAction(team);
+          }
+          
+          // Check if we're in web component mode with external data
+          const { externalDataStore, isWebComponent } = initialState || {};
+          if (isWebComponent && externalDataStore) {
+            console.log('🚀 Web Component mode detected, setting external data store:', externalDataStore);
+            setTeamAction(externalDataStore);
+            
+            // Set the selected tab from UI settings for viewer mode
+            if (uiSettings.selectedTab !== undefined && uiSettings.selectedTab !== null) {
+              console.log('📑 Setting selected tab for viewer mode:', uiSettings.selectedTab);
+              setTabAction(uiSettings.selectedTab);
+            }
           }
 
           initDefaultEnvVarsAction();

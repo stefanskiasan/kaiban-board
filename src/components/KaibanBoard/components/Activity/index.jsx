@@ -158,7 +158,7 @@ const Activity = () => {
                 className={`kb-grid kb-grid-cols-[28px_1fr] kb-gap-2 ${log.type === 'orchestration' ? 'kb-bg-purple-500/5 kb-rounded-lg kb-p-2 kb-border kb-border-purple-500/20' : ''}`}
               >
                 {log.status === 'REVISE' || log.status === 'VALIDATED' ? (
-                  <div className="kb-bg-slate-950/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
+                  <div className="kb-bg-slate-900/50 kb-text-slate-500 kb-rounded-full kb-w-7 kb-h-7 kb-flex kb-justify-center kb-relative">
                     <UserIcon className="kb-w-5 kb-h-5 kb-absolute kb-bottom-0" />
                   </div>
                 ) : log.type === 'orchestration' ? (

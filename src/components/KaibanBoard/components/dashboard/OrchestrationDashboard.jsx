@@ -7,6 +7,7 @@ import {
   getLogSeverityLevel,
   identifyBottlenecks
 } from '../../utils/orchestrationHelper';
+import { usePerformanceLogging } from '../../utils/performanceIntegration';
 
 // Dashboard Tab Components
 import DashboardHeader from './DashboardHeader';
@@ -20,10 +21,21 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedTimeRange, setSelectedTimeRange] = useState('all');
   const [searchFilter, setSearchFilter] = useState('');
+  
+  // Access real-time performance data
+  const performanceLogging = usePerformanceLogging();
+  const livePerformanceStats = performanceLogging.getPerformanceStats();
+  const liveLogs = performanceLogging.getLiveLogs();
 
   // Pre-process all log data for dashboard
   const dashboardData = useMemo(() => {
-    if (!Array.isArray(workflowLogs) || workflowLogs.length === 0) {
+    // Combine workflow logs with real-time performance logs
+    const allLogs = [
+      ...(Array.isArray(workflowLogs) ? workflowLogs : []),
+      ...(Array.isArray(liveLogs) ? liveLogs : [])
+    ];
+    
+    if (allLogs.length === 0) {
       return {
         totalLogs: 0,
         errorAnalysis: null,
@@ -31,56 +43,72 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
         taskFlows: null,
         categorizedLogs: { critical: [], high: [], medium: [], low: [], info: [] },
         orchestrationLogs: [],
-        summary: { errors: 0, warnings: 0, tasks: 0, agents: 0 }
+        summary: { 
+          errors: 0, 
+          warnings: 0, 
+          tasks: 0, 
+          agents: 0,
+          totalCost: livePerformanceStats?.totalCost || 0,
+          totalTokens: Object.values(livePerformanceStats?.tokenStats || {})
+            .reduce((sum, stats) => sum + (stats.inputTokens || 0) + (stats.outputTokens || 0), 0),
+          sessionDuration: livePerformanceStats?.sessionDuration || 0
+        }
       };
     }
 
-    // Analyze all aspects of the logs
-    const errorAnalysis = analyzeErrorPatterns(workflowLogs);
-    const performanceMetrics = analyzePerformanceMetrics(workflowLogs);
-    const taskFlows = analyzeTaskFlows(workflowLogs);
-    const categorizedLogs = categorizeLogs(workflowLogs);
+    // Analyze all aspects of the logs (including real performance data)
+    const errorAnalysis = analyzeErrorPatterns(allLogs);
+    const performanceMetrics = analyzePerformanceMetrics(allLogs);
+    const taskFlows = analyzeTaskFlows(allLogs);
+    const categorizedLogs = categorizeLogs(allLogs);
     
     // Filter orchestration-specific logs
-    const orchestrationLogs = workflowLogs.filter(log => 
+    const orchestrationLogs = allLogs.filter(log => 
       log.logType === 'OrchestrationStatusUpdate'
     );
 
-    // Generate summary statistics
+    // Generate summary statistics with real performance data
     const summary = {
-      errors: workflowLogs.filter(log => getLogSeverityLevel(log) === 'critical').length,
-      warnings: workflowLogs.filter(log => getLogSeverityLevel(log) === 'high').length,
-      tasks: new Set(workflowLogs
+      errors: allLogs.filter(log => getLogSeverityLevel(log) === 'critical').length,
+      warnings: allLogs.filter(log => getLogSeverityLevel(log) === 'high').length,
+      tasks: new Set(allLogs
         .filter(log => log.task?.id)
         .map(log => log.task.id)
       ).size,
-      agents: new Set(workflowLogs
+      agents: new Set(allLogs
         .filter(log => log.agent?.id || log.agentId)
         .map(log => log.agent?.id || log.agentId)
       ).size,
       orchestrationEvents: orchestrationLogs.length,
-      totalDuration: performanceMetrics?.totalWorkflowDuration || 0,
-      totalCost: performanceMetrics?.totalCost || 0,
-      totalTokens: performanceMetrics?.totalTokensUsed || 0
+      totalDuration: performanceMetrics?.totalWorkflowDuration || livePerformanceStats?.sessionDuration || 0,
+      totalCost: performanceMetrics?.totalCost || livePerformanceStats?.totalCost || 0,
+      totalTokens: performanceMetrics?.totalTokensUsed || 
+        Object.values(livePerformanceStats?.tokenStats || {})
+          .reduce((sum, stats) => sum + (stats.inputTokens || 0) + (stats.outputTokens || 0), 0)
     };
 
     return {
-      totalLogs: workflowLogs.length,
+      totalLogs: allLogs.length,
       errorAnalysis,
       performanceMetrics,
       taskFlows,
       categorizedLogs,
       orchestrationLogs,
-      summary
+      summary,
+      livePerformanceStats // Include real-time stats
     };
-  }, [workflowLogs]);
+  }, [workflowLogs, liveLogs, livePerformanceStats]);
 
   // Filter logs based on time range and search
   const filteredLogs = useMemo(() => {
-    let filtered = workflowLogs;
+    // Use combined logs for filtering
+    let filtered = [
+      ...(Array.isArray(workflowLogs) ? workflowLogs : []),
+      ...(Array.isArray(liveLogs) ? liveLogs : [])
+    ];
 
     // Apply time range filter
-    if (selectedTimeRange !== 'all' && workflowLogs.length > 0) {
+    if (selectedTimeRange !== 'all' && filtered.length > 0) {
       const now = Date.now();
       const timeRanges = {
         '1h': 60 * 60 * 1000,
@@ -106,7 +134,7 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
     }
 
     return filtered;
-  }, [workflowLogs, selectedTimeRange, searchFilter]);
+  }, [workflowLogs, liveLogs, selectedTimeRange, searchFilter]);
 
   // Tab configuration with dark theme design
   const tabs = [
@@ -150,10 +178,10 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
   ];
 
   return (
-    <div className="kb-flex kb-flex-col kb-h-full kb-bg-slate-950">
+    <div className="kb-flex kb-flex-col kb-h-full kb-bg-slate-900">
       
       {/* Dashboard Header - Integrated Design */}
-      <div className="kb-border-b kb-border-slate-700 kb-bg-slate-950">
+      <div className="kb-border-b kb-border-slate-700 kb-bg-slate-900">
         <div className="kb-flex kb-items-center kb-justify-between kb-px-6 kb-py-4">
           <div className="kb-flex kb-items-center kb-gap-3">
             <div className="kb-flex kb-items-center kb-justify-center kb-w-8 kb-h-8 kb-bg-blue-600 kb-rounded-lg">
@@ -227,7 +255,7 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
       </div>
 
       {/* Tab Navigation - Dark Theme */}
-      <div className="kb-border-b kb-border-slate-700 kb-bg-slate-950">
+      <div className="kb-border-b kb-border-slate-700 kb-bg-slate-900">
         <nav className="kb-flex kb-px-6">
           {tabs.map((tab) => (
             <button
@@ -254,7 +282,7 @@ const OrchestrationDashboard = ({ workflowLogs = [] }) => {
       </div>
 
       {/* Tab Content - Full Height */}
-      <div className="kb-flex-1 kb-overflow-hidden kb-bg-slate-950">
+      <div className="kb-flex-1 kb-overflow-hidden kb-bg-slate-900">
         {activeTab === 'overview' && (
           <OverviewTab 
             dashboardData={dashboardData}
@@ -307,7 +335,7 @@ const OverviewTab = ({ dashboardData, filteredLogs }) => {
   const { summary, errorAnalysis, performanceMetrics, taskFlows } = dashboardData;
 
   return (
-    <div className="kb-p-6 kb-overflow-y-auto kb-h-full kb-bg-slate-950">
+    <div className="kb-p-6 kb-overflow-y-auto kb-h-full kb-bg-slate-900">
       
       {/* Summary Cards - Dark Theme */}
       <div className="kb-grid kb-grid-cols-1 md:kb-grid-cols-2 lg:kb-grid-cols-4 kb-gap-6 kb-mb-8">

@@ -8,22 +8,21 @@ import {
 import { usePlaygroundStore } from '../../store/PlaygroundProvider';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
-// Orchestration Examples - All 15 examples
-import { orchestration01BasicOpenai } from '../../assets/teams/orchestration_01_basic';
-import { orchestration02ConservativeOpenai } from '../../assets/teams/orchestration_02_conservative';
-import { orchestration03InnovativeOpenai } from '../../assets/teams/orchestration_03_innovative';
-import { orchestration04LearningOpenai } from '../../assets/teams/orchestration_04_learning';
-import { orchestration05SkillsOpenai } from '../../assets/teams/orchestration_05_skills';
-import { orchestration06AiDrivenOpenai } from '../../assets/teams/orchestration_06_ai_driven';
-import { orchestration07AdaptationOpenai } from '../../assets/teams/orchestration_07_adaptation';
-import { orchestration08OptimizationOpenai } from '../../assets/teams/orchestration_08_optimization';
-import { orchestration09GenerationOpenai } from '../../assets/teams/orchestration_09_generation';
-import { orchestration10EnterpriseOpenai } from '../../assets/teams/orchestration_10_enterprise';
-import { orchestration11EcommerceOpenai } from '../../assets/teams/orchestration_11_ecommerce';
-import { orchestration12MicroservicesOpenai } from '../../assets/teams/orchestration_12_microservices';
-import { orchestration13ContinuousOpenai } from '../../assets/teams/orchestration_13_continuous';
-import { orchestration14ComparisonOpenai } from '../../assets/teams/orchestration_14_comparison';
-import { orchestration15RuntimeOpenai } from '../../assets/teams/orchestration_15_runtime';
+// Industry-Specific Orchestration Examples
+import { orchestrationHealthcareOpenai } from '../../assets/teams/orchestration_healthcare.js';
+import { orchestrationFinanceOpenai } from '../../assets/teams/orchestration_finance.js';
+import { orchestrationEducationOpenai } from '../../assets/teams/orchestration_education.js';
+import { orchestrationRetailOpenai } from '../../assets/teams/orchestration_retail.js';
+import { orchestrationManufacturingOpenai } from '../../assets/teams/orchestration_manufacturing.js';
+import { orchestrationLegalOpenai } from '../../assets/teams/orchestration_legal.js';
+import { orchestrationMarketingOpenai } from '../../assets/teams/orchestration_marketing.js';
+import { orchestrationLogisticsOpenai } from '../../assets/teams/orchestration_logistics.js';
+import { orchestrationResearchOpenai } from '../../assets/teams/orchestration_research.js';
+import { orchestrationEventPlanningOpenai } from '../../assets/teams/orchestration_event_planning.js';
+import { orchestrationConstructionOpenai } from '../../assets/teams/orchestration_construction.js';
+import { orchestrationGamingOpenai } from '../../assets/teams/orchestration_gaming.js';
+import { orchestrationNonprofitOpenai } from '../../assets/teams/orchestration_nonprofit.js';
+import { orchestrationHospitalityOpenai } from '../../assets/teams/orchestration_hospitality.js';
 
 const OrchestrationExamplesMenu = () => {
   const useAgentsPlaygroundStore = usePlaygroundStore();
@@ -40,53 +39,50 @@ const OrchestrationExamplesMenu = () => {
 
   const handleSelectExample = team => {
     switch (team) {
-      case 'orchestration01BasicOpenai':
-        setExampleCodeAction(orchestration01BasicOpenai);
+      case 'orchestrationHealthcareOpenai':
+        setExampleCodeAction(orchestrationHealthcareOpenai);
         break;
-      case 'orchestration02ConservativeOpenai':
-        setExampleCodeAction(orchestration02ConservativeOpenai);
+      case 'orchestrationFinanceOpenai':
+        setExampleCodeAction(orchestrationFinanceOpenai);
         break;
-      case 'orchestration03InnovativeOpenai':
-        setExampleCodeAction(orchestration03InnovativeOpenai);
+      case 'orchestrationEducationOpenai':
+        setExampleCodeAction(orchestrationEducationOpenai);
         break;
-      case 'orchestration04LearningOpenai':
-        setExampleCodeAction(orchestration04LearningOpenai);
+      case 'orchestrationRetailOpenai':
+        setExampleCodeAction(orchestrationRetailOpenai);
         break;
-      case 'orchestration05SkillsOpenai':
-        setExampleCodeAction(orchestration05SkillsOpenai);
+      case 'orchestrationManufacturingOpenai':
+        setExampleCodeAction(orchestrationManufacturingOpenai);
         break;
-      case 'orchestration06AiDrivenOpenai':
-        setExampleCodeAction(orchestration06AiDrivenOpenai);
+      case 'orchestrationLegalOpenai':
+        setExampleCodeAction(orchestrationLegalOpenai);
         break;
-      case 'orchestration07AdaptationOpenai':
-        setExampleCodeAction(orchestration07AdaptationOpenai);
+      case 'orchestrationMarketingOpenai':
+        setExampleCodeAction(orchestrationMarketingOpenai);
         break;
-      case 'orchestration08OptimizationOpenai':
-        setExampleCodeAction(orchestration08OptimizationOpenai);
+      case 'orchestrationLogisticsOpenai':
+        setExampleCodeAction(orchestrationLogisticsOpenai);
         break;
-      case 'orchestration09GenerationOpenai':
-        setExampleCodeAction(orchestration09GenerationOpenai);
+      case 'orchestrationResearchOpenai':
+        setExampleCodeAction(orchestrationResearchOpenai);
         break;
-      case 'orchestration10EnterpriseOpenai':
-        setExampleCodeAction(orchestration10EnterpriseOpenai);
+      case 'orchestrationEventPlanningOpenai':
+        setExampleCodeAction(orchestrationEventPlanningOpenai);
         break;
-      case 'orchestration11EcommerceOpenai':
-        setExampleCodeAction(orchestration11EcommerceOpenai);
+      case 'orchestrationConstructionOpenai':
+        setExampleCodeAction(orchestrationConstructionOpenai);
         break;
-      case 'orchestration12MicroservicesOpenai':
-        setExampleCodeAction(orchestration12MicroservicesOpenai);
+      case 'orchestrationGamingOpenai':
+        setExampleCodeAction(orchestrationGamingOpenai);
         break;
-      case 'orchestration13ContinuousOpenai':
-        setExampleCodeAction(orchestration13ContinuousOpenai);
+      case 'orchestrationNonprofitOpenai':
+        setExampleCodeAction(orchestrationNonprofitOpenai);
         break;
-      case 'orchestration14ComparisonOpenai':
-        setExampleCodeAction(orchestration14ComparisonOpenai);
-        break;
-      case 'orchestration15RuntimeOpenai':
-        setExampleCodeAction(orchestration15RuntimeOpenai);
+      case 'orchestrationHospitalityOpenai':
+        setExampleCodeAction(orchestrationHospitalityOpenai);
         break;
       default:
-        setExampleCodeAction(orchestration01BasicOpenai);
+        setExampleCodeAction(orchestrationHealthcareOpenai);
     }
   };
 
@@ -106,171 +102,206 @@ const OrchestrationExamplesMenu = () => {
       >
         <div className="kb-p-1 kb-max-h-96 kb-overflow-y-auto">
           <div className="kb-px-3 kb-py-2 kb-text-xs kb-font-semibold kb-text-slate-500 kb-uppercase kb-tracking-wider kb-border-b kb-border-slate-700 kb-mb-2">
-            Orchestration Examples
+            Industry Orchestration Examples
           </div>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration01BasicOpenai');
+              handleSelectExample('orchestrationHealthcareOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🚀 01 - Basic Orchestration
+              🏥 Healthcare - Hospital Operations
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Patient care coordination with safety protocols
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration02ConservativeOpenai');
+              handleSelectExample('orchestrationFinanceOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🛡️ 02 - Conservative Mode
+              💰 Finance - Investment Management
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Portfolio optimization with compliance focus
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration03InnovativeOpenai');
+              handleSelectExample('orchestrationEducationOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              ✨ 03 - Innovative Mode
+              🎓 Education - Course Development
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Adaptive learning with continuous improvement
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration04LearningOpenai');
+              handleSelectExample('orchestrationRetailOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🧠 04 - Learning Mode
+              🛒 Retail - E-commerce Operations
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              High-volume inventory and pricing management
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration05SkillsOpenai');
+              handleSelectExample('orchestrationManufacturingOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🎯 05 - Skills-Based Distribution
+              🏭 Manufacturing - Smart Factory
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Real-time production optimization with AI
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration06AiDrivenOpenai');
+              handleSelectExample('orchestrationLegalOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🤖 06 - AI-Driven Prioritization
+              ⚖️ Legal - Contract & Compliance
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Precise document analysis with validation
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration07AdaptationOpenai');
+              handleSelectExample('orchestrationMarketingOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🔄 07 - Task Adaptation
+              📣 Marketing - Campaign Management
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Creative campaigns with data optimization
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration08OptimizationOpenai');
+              handleSelectExample('orchestrationLogisticsOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              ⚡ 08 - Continuous Optimization
+              🚚 Logistics - Supply Chain
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Dynamic route and inventory optimization
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration09GenerationOpenai');
+              handleSelectExample('orchestrationResearchOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              ➕ 09 - Task Generation
+              🔬 Research - Scientific Studies
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Adaptive research with continuous learning
+            </p>
+          </CloseButton>
+          
+          <div className="kb-px-3 kb-py-2 kb-text-xs kb-font-semibold kb-text-slate-500 kb-uppercase kb-tracking-wider kb-border-b kb-border-slate-700 kb-mt-3 kb-mb-2">
+            Advanced Orchestration Patterns
+          </div>
+          
+          <CloseButton
+            className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
+            onClick={() => {
+              handleSelectExample('orchestrationEventPlanningOpenai');
+            }}
+          >
+            <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
+              🎉 Event Planning - Initial Orchestration
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              One-time planning with task generation enabled
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration10EnterpriseOpenai');
+              handleSelectExample('orchestrationConstructionOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🏢 10 - Enterprise Setup
+              🏗️ Construction - Continuous Adaptation
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Ongoing optimization without new task creation
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration11EcommerceOpenai');
+              handleSelectExample('orchestrationGamingOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🛒 11 - E-commerce Project
+              🎮 Gaming - Innovative AI-Driven
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Creative mode with AI priority optimization
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration12MicroservicesOpenai');
+              handleSelectExample('orchestrationNonprofitOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🔧 12 - Microservices Architecture
+              🤝 Nonprofit - Learning Mode
+            </p>
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Continuous improvement with mission focus
             </p>
           </CloseButton>
           
           <CloseButton
             className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
             onClick={() => {
-              handleSelectExample('orchestration13ContinuousOpenai');
+              handleSelectExample('orchestrationHospitalityOpenai');
             }}
           >
             <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🔄 13 - Continuous Orchestration
+              🏨 Hospitality - Adaptive Static
             </p>
-          </CloseButton>
-          
-          <CloseButton
-            className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
-            onClick={() => {
-              handleSelectExample('orchestration14ComparisonOpenai');
-            }}
-          >
-            <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              ⚖️ 14 - Mode Comparison
-            </p>
-          </CloseButton>
-          
-          <CloseButton
-            className="kb-group kb-block kb-w-full kb-rounded-lg kb-py-2 kb-px-3 kb-transition hover:kb-bg-purple-500/15"
-            onClick={() => {
-              handleSelectExample('orchestration15RuntimeOpenai');
-            }}
-          >
-            <p className="kb-text-sm kb-font-medium kb-text-slate-400 kb-text-left group-hover:kb-text-purple-400">
-              🎛️ 15 - Runtime Control
+            <p className="kb-text-xs kb-text-slate-500 kb-text-left kb-mt-1">
+              Dynamic mode with fixed priority structure
             </p>
           </CloseButton>
         </div>
