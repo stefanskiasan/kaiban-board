@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KaibanBoard Web Component Demo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .controls button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls button:hover {
+      background: #0056b3;
+    }
+    
+    kaiban-board {
+      display: block;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .event-log {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .event-log h3 {
+      margin-top: 0;
+    }
+    
+    .event-log pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>KaibanBoard Web Component Demo</h1>
+    
+    <div class="controls">
+      <button onclick="updateCode()">Update Code</button>
+      <button onclick="updateTeam()">Update Team</button>
+      <button onclick="updateUISettings()">Toggle Full Screen</button>
+      <button onclick="clearEventLog()">Clear Event Log</button>
+    </div>
+    
+    <!-- KaibanBoard Web Component -->
+    <kaiban-board id="myKaibanBoard"></kaiban-board>
+    
+    <div class="event-log">
+      <h3>Event Log</h3>
+      <pre id="eventLog">Waiting for events...</pre>
+    </div>
+  </div>
+
+  <!-- Include the web component -->
+  <script src="../dist/kaiban-board-element.js"></script>
+  <link rel="stylesheet" href="../dist/kaiban-board-element.css">
+  
+  <script type="module">
+    // Wait for the component to be defined
+    customElements.whenDefined('kaiban-board').then(() => {
+      console.log('KaibanBoard web component is ready!');
+    });
+    
+    // Get references
+    const board = document.getElementById('myKaibanBoard');
+    const eventLog = document.getElementById('eventLog');
+    let eventHistory = [];
+    
+    // Configure the board
+    board.isWebComponent = true;
+    
+    // Set initial configuration
+    board.uiSettings = {
+      showFullScreen: false, // Fixed: Don't use fixed positioning for web components
+      showExampleMenu: true,
+      showShareOption: false,
+      showSettingsOption: true,
+      isPreviewMode: false,
+      showWelcomeInfo: false, // Less intrusive for embedded usage
+      selectedTab: 0
+    };
+    
+    // Set initial code
+    board.code = `// Welcome to KaibanBoard Web Component!
+// This is a live code editor
+
+function greetUser(name) {
+  return \`Hello, \${name}! Welcome to KaibanBoard.\`;
+}
+
+// Try editing this code
+console.log(greetUser('Developer'));
+
+// You can also create AI agents
+const myAgent = {
+  name: 'Assistant',
+  role: 'Helper',
+  task: 'Assist with coding'
+};
+
+console.log('Agent created:', myAgent);`;
+    
+    // Set project info
+    board.project = {
+      name: 'Web Component Demo',
+      description: 'Demonstrating KaibanBoard as a web component',
+      version: '1.0.0',
+      author: 'AI Champions'
+    };
+    
+    // Set initial team
+    board.teams = [
+      {
+        id: 'demo-team',
+        name: 'Demo Team',
+        agents: [
+          {
+            id: 'agent-1',
+            name: 'Code Assistant',
+            role: 'Developer',
+            status: 'active'
+          },
+          {
+            id: 'agent-2',
+            name: 'Review Assistant',
+            role: 'Reviewer',
+            status: 'active'
+          }
+        ]
+      }
+    ];
+    
+    // Event logging function
+    function logEvent(eventName, detail) {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = {
+        time: timestamp,
+        event: eventName,
+        detail: detail
+      };
+      
+      eventHistory.unshift(entry);
+      if (eventHistory.length > 10) {
+        eventHistory.pop();
+      }
+      
+      eventLog.textContent = eventHistory
+        .map(e => `[${e.time}] ${e.event}\n${JSON.stringify(e.detail, null, 2)}`)
+        .join('\n\n');
+    }
+    
+    // Set up event listeners
+    board.addEventListener('code-change', (event) => {
+      logEvent('code-change', { 
+        codeLength: event.detail.code.length,
+        preview: event.detail.code.substring(0, 50) + '...'
+      });
+    });
+    
+    board.addEventListener('team-change', (event) => {
+      logEvent('team-change', event.detail.team);
+    });
+    
+    board.addEventListener('project-change', (event) => {
+      logEvent('project-change', event.detail.project);
+    });
+    
+    board.addEventListener('team-data-update', (event) => {
+      logEvent('team-data-update', event.detail.externalData);
+    });
+    
+    board.addEventListener('task-status-update', (event) => {
+      logEvent('task-status-update', event.detail.externalData);
+    });
+    
+    board.addEventListener('workflow-status-update', (event) => {
+      logEvent('workflow-status-update', event.detail.externalData);
+    });
+    
+    // Control functions
+    window.updateCode = function() {
+      board.code = `// Code updated at ${new Date().toLocaleTimeString()}
+function processData(data) {
+  return data.map(item => ({
+    ...item,
+    processed: true,
+    timestamp: Date.now()
+  }));
+}
+
+const testData = [
+  { id: 1, name: 'Item 1' },
+  { id: 2, name: 'Item 2' }
+];
+
+console.log('Processed:', processData(testData));`;
+    };
+    
+    window.updateTeam = function() {
+      board.teams = [
+        {
+          id: 'updated-team',
+          name: 'Updated Team',
+          agents: [
+            {
+              id: 'new-agent-1',
+              name: 'ML Engineer',
+              role: 'Machine Learning',
+              status: 'active'
+            },
+            {
+              id: 'new-agent-2',
+              name: 'Data Scientist',
+              role: 'Data Analysis',
+              status: 'active'
+            },
+            {
+              id: 'new-agent-3',
+              name: 'DevOps Engineer',
+              role: 'Infrastructure',
+              status: 'idle'
+            }
+          ]
+        }
+      ];
+    };
+    
+    window.updateUISettings = function() {
+      const currentSettings = board.uiSettings;
+      board.uiSettings = {
+        ...currentSettings,
+        showFullScreen: !currentSettings.showFullScreen
+      };
+      
+      // Log the change for demonstration
+      logEvent('ui-settings-changed', {
+        showFullScreen: board.uiSettings.showFullScreen,
+        hasFixedClass: document.getElementById('kaibanjs')?.classList.contains('kb-fixed')
+      });
+    };
+    
+    window.clearEventLog = function() {
+      eventHistory = [];
+      eventLog.textContent = 'Event log cleared. Waiting for events...';
+    };
+    
+    // Log initial load
+    logEvent('component-loaded', { 
+      message: 'KaibanBoard Web Component initialized successfully' 
+    });
+  </script>
+</body>
+</html>

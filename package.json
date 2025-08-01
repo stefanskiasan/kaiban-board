@@ -97,6 +97,7 @@
     "postcss": "8.4.47",
     "prettier": "^3.5.3",
     "prop-types": "^15.8.1",
+    "react-to-webcomponent": "^2.0.1",
     "rollup": "^4.22.4",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",

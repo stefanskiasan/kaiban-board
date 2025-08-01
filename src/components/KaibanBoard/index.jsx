@@ -24,6 +24,14 @@ const defaultUiSettings = {
   selectedTab: 0,
 };
 
+// Web Component specific default settings
+const defaultWebComponentUiSettings = {
+  ...defaultUiSettings,
+  showFullScreen: false, // Don't use fixed positioning for web components
+  isPreviewMode: false,  // Better defaults for embedded usage
+  showWelcomeInfo: false // Less intrusive for embedded usage
+};
+
 const filterUndefinedProps = obj => {
   const filteredProps = {};
   Object.keys(obj).forEach(key => {
@@ -34,8 +42,9 @@ const filterUndefinedProps = obj => {
   return filteredProps;
 };
 
-const mergeUiSettings = uiSettings => {
-  return { ...defaultUiSettings, ...uiSettings };
+const mergeUiSettings = (uiSettings, isWebComponent = false) => {
+  const baseSettings = isWebComponent ? defaultWebComponentUiSettings : defaultUiSettings;
+  return { ...baseSettings, ...uiSettings };
 };
 
 const KaibanBoardWrapper = ({ isWebComponent, externalDataStore }) => {
@@ -137,7 +146,7 @@ const KaibanBoard = ({
   isWebComponent,
   externalDataStore,
 }) => {
-  const mergedUiSettings = mergeUiSettings(uiSettings);
+  const mergedUiSettings = mergeUiSettings(uiSettings, isWebComponent);
   const initialState = filterUndefinedProps({
     uiSettings: mergedUiSettings,
     code,
@@ -161,3 +170,4 @@ const KaibanBoard = ({
 };
 
 export default KaibanBoard;
+export { defaultWebComponentUiSettings };
