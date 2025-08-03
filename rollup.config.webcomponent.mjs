@@ -25,11 +25,13 @@ export default {
       name: 'KaibanBoardElement',
       sourcemap: true,
       inlineDynamicImports: true, // Inline dynamic imports to avoid code splitting
+      // Global variables for external dependencies (CDN)
       globals: {
-        react: 'React',
+        'react': 'React',
         'react-dom': 'ReactDOM',
         'react-dom/client': 'ReactDOM',
-        kaibanjs: 'KaibanJS'
+        'kaibanjs': 'KaibanJS',
+        '@kaibanjs/tools': 'KaibanJSTools'
       }
     },
     {
@@ -45,11 +47,13 @@ export default {
       sourcemap: false,
       inlineDynamicImports: true,
       plugins: [terser()],
+      // Global variables for external dependencies (CDN)
       globals: {
-        react: 'React',
+        'react': 'React',
         'react-dom': 'ReactDOM',
         'react-dom/client': 'ReactDOM',
-        kaibanjs: 'KaibanJS'
+        'kaibanjs': 'KaibanJS',
+        '@kaibanjs/tools': 'KaibanJSTools'
       }
     }
   ],
@@ -84,6 +88,13 @@ export default {
     image(),
     json()
   ],
-  // Include React and ReactDOM in the bundle for standalone usage
-  external: ['kaibanjs'] // Only KaibanJS is external
+  // Smart external strategy: Externalize React to prevent Hook conflicts
+  // and KaibanJS to reduce bundle size (load from CDN)
+  external: [
+    'react', 
+    'react-dom', 
+    'react-dom/client',
+    'kaibanjs',
+    '@kaibanjs/tools'
+  ]
 };

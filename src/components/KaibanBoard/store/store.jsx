@@ -125,6 +125,12 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           try {
             const createTeam = code => {
               try {
+                // Check if required dependencies are available
+                if (typeof Agent === 'undefined' || typeof Task === 'undefined' || typeof Team === 'undefined') {
+                  console.error('KaibanJS dependencies not available. Agent:', typeof Agent, 'Task:', typeof Task, 'Team:', typeof Team);
+                  throw new Error('KaibanJS dependencies (Agent, Task, Team) are not available. Make sure kaibanjs is properly loaded.');
+                }
+
                 let valueToEvaluate = code;
 
                 // Define allowed modules
@@ -241,22 +247,22 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   Agent,
                   Task,
                   Team,
-                  TavilySearchResults,
-                  SearchApi,
-                  DallEAPIWrapper,
-                  WolframAlphaTool,
-                  SerperTool,
-                  Serper,
-                  ExaSearch,
-                  GithubIssues,
-                  Firecrawl,
-                  JinaUrlToMarkdown,
-                  SimpleRAG,
-                  WebsiteSearch,
-                  PdfSearch,
-                  TextFileSearch,
-                  ZapierWebhook,
-                  MakeWebhook
+                  TavilySearchResults || undefined,
+                  SearchApi || undefined,
+                  DallEAPIWrapper || undefined,
+                  WolframAlphaTool || undefined,
+                  SerperTool || undefined,
+                  Serper || undefined,
+                  ExaSearch || undefined,
+                  GithubIssues || undefined,
+                  Firecrawl || undefined,
+                  JinaUrlToMarkdown || undefined,
+                  SimpleRAG || undefined,
+                  WebsiteSearch || undefined,
+                  PdfSearch || undefined,
+                  TextFileSearch || undefined,
+                  ZapierWebhook || undefined,
+                  MakeWebhook || undefined
                 );
 
                 return team;
@@ -266,11 +272,17 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 // CRITICAL FIX: Don't treat API key errors as code errors during app initialization
                 // API key errors should only trigger the dialog when user starts workflow
                 const isApiKeyError = error.message && error.message.includes('API key is missing');
+                const isDependencyError = error.message && error.message.includes('KaibanJS dependencies');
                 
                 if (isApiKeyError) {
                   console.log('🔑 DEBUG: API key error detected during team creation - NOT setting error state');
                   // Don't set error state for API key issues during initialization
                   // The team creation will still fail gracefully, but no error dialog will show
+                  return null;
+                } else if (isDependencyError) {
+                  console.log('📦 DEBUG: Dependency error detected - KaibanJS not available');
+                  // Don't set error state for missing dependencies in web component
+                  // This is expected when running as standalone web component
                   return null;
                 } else {
                   // Only set error state for actual code errors (syntax, imports, etc.)
@@ -313,12 +325,13 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                 }
               }
             } else if (team === null) {
-              // Team creation failed due to API key error - store code for later use
-              console.log('🔑 DEBUG: Team creation returned null (API key error) - storing code only');
+              // Team creation failed due to API key error or missing dependencies - store code for later use
+              console.log('🔑 DEBUG: Team creation returned null (API key error or missing dependencies) - storing code only');
               set({
                 code,
                 selectedTab: 0,
                 errorState: { hasError: false, error: null },
+                teamStore: null, // Explicitly set to null to prevent undefined errors
               });
             }
           } catch (error) {
@@ -717,8 +730,11 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           const { keys, defaultEnvVars } = get();
 
           if (Array.isArray(defaultEnvVars) && defaultEnvVars.length > 0) {
+            // CRITICAL FIX: Ensure keys is always an array
+            const safeKeys = Array.isArray(keys) ? keys : [];
+            
             // Create a Set of existing keys for O(1) lookup
-            const existingKeySet = new Set(keys.map(k => k.key));
+            const existingKeySet = new Set(safeKeys.map(k => k.key));
 
             // Filter and process new environment variables
             const envVars = findEnvValues(defaultEnvVars || []).filter(
@@ -727,7 +743,7 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
 
             // Only update if we have new keys to add
             if (envVars.length > 0) {
-              set({ keys: [...keys, ...envVars] });
+              set({ keys: [...safeKeys, ...envVars] });
             }
           }
         },
@@ -773,9 +789,12 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
           const user = team.user;
           const name = extractTeamName(code);
 
+          // CRITICAL FIX: Ensure existingKeys is always an array
+          const safeExistingKeys = Array.isArray(existingKeys) ? existingKeys : [];
+
           // Merge keys: preserve existing manually set keys, add only missing keys from team
-          const existingKeysMap = new Map(existingKeys.map(k => [k.key, k.value]));
-          const mergedKeys = [...existingKeys];
+          const existingKeysMap = new Map(safeExistingKeys.map(k => [k.key, k.value]));
+          const mergedKeys = [...safeExistingKeys];
 
           teamKeys.forEach(teamKey => {
             if (!existingKeysMap.has(teamKey.key)) {

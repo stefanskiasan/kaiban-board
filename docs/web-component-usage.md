@@ -19,8 +19,18 @@ import 'kaiban-board/web-component';
 
 ### Option 2: Using CDN (Standalone)
 
+**IMPORTANT**: KaibanJS dependencies must be loaded before the web component:
+
 ```html
-<!-- Include the web component bundle -->
+<!-- 1. Load React (required by web component) -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<!-- 2. Load KaibanJS dependencies (required for AI functionality) -->
+<script src="https://unpkg.com/kaibanjs@latest/dist/kaibanjs.umd.js"></script>
+<script src="https://unpkg.com/@kaibanjs/tools@latest/dist/tools.umd.js"></script>
+
+<!-- 3. Finally load the web component (now much smaller!) -->
 <script src="https://unpkg.com/kaiban-board/dist/kaiban-board-element.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/kaiban-board/dist/kaiban-board-element.css">
 ```
@@ -41,6 +51,14 @@ import 'kaiban-board/web-component';
     is-web-component="true">
   </kaiban-board>
 
+  <!-- Load dependencies from CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/kaibanjs@latest/dist/kaibanjs.umd.js"></script>
+  <script src="https://unpkg.com/@kaibanjs/tools@latest/dist/tools.umd.js"></script>
+  <script src="https://unpkg.com/kaiban-board/dist/kaiban-board-element.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/kaiban-board/dist/kaiban-board-element.css">
+  
   <script>
     // Get reference to the element
     const kaibanBoard = document.getElementById('myKaibanBoard');

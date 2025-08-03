@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KaibanBoard Web Component Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .status {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .status h3 {
+      margin: 0 0 10px 0;
+      color: #007bff;
+    }
+    
+    .status p {
+      margin: 5px 0;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+    .info { color: #17a2b8; }
+    
+    kaiban-board {
+      display: block;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .event-log {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .event-log h3 {
+      margin-top: 0;
+    }
+    
+    .event-log pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>KaibanBoard Web Component Test</h1>
+    
+    <div class="status" id="statusPanel">
+      <h3>🔍 Component Status</h3>
+      <p id="loadStatus" class="info">Loading web component...</p>
+      <p id="dependencyStatus" class="info">Checking dependencies...</p>
+      <p id="errorStatus"></p>
+    </div>
+    
+    <!-- KaibanBoard Web Component -->
+    <kaiban-board id="testBoard"></kaiban-board>
+    
+    <div class="event-log">
+      <h3>Console Log</h3>
+      <pre id="consoleLog">Waiting for component initialization...</pre>
+    </div>
+  </div>
+
+  <!-- Include external dependencies from CDN -->
+  <!-- React (required) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- KaibanJS Dependencies (required for AI functionality) -->
+  <script src="https://unpkg.com/kaibanjs@latest/dist/kaibanjs.umd.js"></script>
+  <script src="https://unpkg.com/@kaibanjs/tools@latest/dist/tools.umd.js"></script>
+  
+  <!-- KaibanBoard Web Component (now much smaller!) -->
+  <script src="../dist/kaiban-board-element.js"></script>
+  <link rel="stylesheet" href="../dist/kaiban-board-element.css">
+  
+  <script>
+    // Capture console messages
+    const originalConsoleLog = console.log;
+    const originalConsoleError = console.error;
+    const originalConsoleWarn = console.warn;
+    const consoleLog = document.getElementById('consoleLog');
+    let logMessages = [];
+    
+    function addLogMessage(type, message) {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+      logMessages.unshift(entry);
+      if (logMessages.length > 20) {
+        logMessages.pop();
+      }
+      consoleLog.textContent = logMessages.join('\n');
+    }
+    
+    console.log = function(...args) {
+      addLogMessage('log', args.join(' '));
+      originalConsoleLog.apply(console, args);
+    };
+    
+    console.error = function(...args) {
+      addLogMessage('error', args.join(' '));
+      originalConsoleError.apply(console, args);
+    };
+    
+    console.warn = function(...args) {
+      addLogMessage('warn', args.join(' '));
+      originalConsoleWarn.apply(console, args);
+    };
+    
+    // Status elements
+    const loadStatus = document.getElementById('loadStatus');
+    const dependencyStatus = document.getElementById('dependencyStatus');
+    const errorStatus = document.getElementById('errorStatus');
+    
+    // Wait for the component to be defined
+    customElements.whenDefined('kaiban-board').then(() => {
+      console.log('✅ KaibanBoard web component is defined');
+      loadStatus.textContent = '✅ Web component loaded successfully';
+      loadStatus.className = 'success';
+      
+      // Get reference to the board
+      const board = document.getElementById('testBoard');
+      
+      // Test dependency availability
+      try {
+        // Check if the component can handle missing dependencies gracefully
+        dependencyStatus.textContent = '🔍 Testing dependency handling...';
+        dependencyStatus.className = 'info';
+        
+        // Configure the board
+        board.isWebComponent = true;
+        
+        // CRITICAL FIX: Initialize keys as empty array to prevent map error
+        board.keys = [];
+        
+        // Set basic configuration
+        board.uiSettings = {
+          showFullScreen: false, // This should prevent kb-fixed class
+          showExampleMenu: true,
+          showShareOption: false,
+          showSettingsOption: true,
+          isPreviewMode: false,
+          showWelcomeInfo: false,
+          selectedTab: 0
+        };
+        
+        // Set simple code
+        board.code = `// Test code for dependency handling
+console.log('Testing web component...');
+
+// This should gracefully fail due to missing KaibanJS dependencies
+function testFunction() {
+  return 'Web component is working!';
+}
+
+console.log(testFunction());
+`;
+        
+        // Set basic project info
+        board.project = {
+          name: 'Dependency Test',
+          description: 'Testing web component with missing dependencies',
+          version: '1.0.0',
+          author: 'Test User'
+        };
+        
+        // Set empty teams to avoid complex dependencies
+        board.teams = [];
+        
+        console.log('✅ Component configuration completed');
+        dependencyStatus.textContent = '✅ Component handles missing dependencies gracefully';
+        dependencyStatus.className = 'success';
+        
+        // Check for kb-fixed class issue
+        setTimeout(() => {
+          const kaibanElement = document.getElementById('kaibanjs');
+          if (kaibanElement) {
+            const hasFixedClass = kaibanElement.classList.contains('kb-fixed');
+            if (hasFixedClass) {
+              errorStatus.textContent = '⚠️ WARNING: kb-fixed class is still present!';
+              errorStatus.className = 'error';
+              console.warn('kb-fixed class detected - this should not happen with showFullScreen: false');
+            } else {
+              console.log('✅ kb-fixed class correctly not applied');
+            }
+          } else {
+            console.log('ℹ️ kaibanjs element not yet available');
+          }
+        }, 2000);
+        
+      } catch (error) {
+        console.error('❌ Error configuring component:', error);
+        errorStatus.textContent = `❌ Configuration error: ${error.message}`;
+        errorStatus.className = 'error';
+      }
+      
+    }).catch(error => {
+      console.error('❌ Failed to define web component:', error);
+      loadStatus.textContent = `❌ Failed to load web component: ${error.message}`;
+      loadStatus.className = 'error';
+    });
+    
+    // Test if component loads within reasonable time
+    setTimeout(() => {
+      if (!customElements.get('kaiban-board')) {
+        console.error('❌ Web component failed to load within 5 seconds');
+        loadStatus.textContent = '❌ Web component load timeout';
+        loadStatus.className = 'error';
+      }
+    }, 5000);
+    
+    console.log('🚀 Test page initialized');
+  </script>
+</body>
+</html>

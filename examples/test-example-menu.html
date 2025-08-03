@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Menu Toggle Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .controls button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls button:hover {
+      background: #0056b3;
+    }
+    
+    .controls button.active {
+      background: #28a745;
+    }
+    
+    .status {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .status h3 {
+      margin: 0 0 10px 0;
+      color: #007bff;
+    }
+    
+    .status p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+    .info { color: #17a2b8; }
+    
+    kaiban-board {
+      display: block;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Example Menu Toggle Test</h1>
+    
+    <div class="controls">
+      <h3>Test Controls</h3>
+      <button id="toggleExampleMenu" onclick="toggleExampleMenu()">Toggle Example Menu</button>
+      <button id="toggleBasicMenu" onclick="toggleBasicMenu()">Toggle Basic Examples</button>
+      <button id="toggleAIMenu" onclick="toggleAIMenu()">Toggle AI-Powered Examples</button>
+      <button id="toggleOrchestrationMenu" onclick="toggleOrchestrationMenu()">Toggle Orchestration Examples</button>
+      <button onclick="inspectMenus()">Inspect Menus</button>
+    </div>
+    
+    <div class="status" id="statusPanel">
+      <h3>📊 Menu Status</h3>
+      <p><strong>Show Example Menu:</strong> <span id="showExampleMenuStatus">Loading...</span></p>
+      <p><strong>Show Basic Examples:</strong> <span id="showBasicExamplesMenuStatus">Loading...</span></p>
+      <p><strong>Show AI-Powered Examples:</strong> <span id="showAIPoweredExamplesMenuStatus">Loading...</span></p>
+      <p><strong>Show Orchestration Examples:</strong> <span id="showOrchestrationExamplesMenuStatus">Loading...</span></p>
+      <div id="menuVisibility"></div>
+    </div>
+    
+    <!-- KaibanBoard Web Component -->
+    <kaiban-board id="testBoard"></kaiban-board>
+  </div>
+
+  <!-- Include the web component -->
+  <script src="../dist/kaiban-board-element.js"></script>
+  <link rel="stylesheet" href="../dist/kaiban-board-element.css">
+  
+  <script>
+    let board;
+    
+    // Wait for the component to be defined
+    customElements.whenDefined('kaiban-board').then(() => {
+      console.log('✅ KaibanBoard web component is ready');
+      
+      // Get reference to the board
+      board = document.getElementById('testBoard');
+      
+      // Configure the board
+      board.isWebComponent = true;
+      
+      // CRITICAL FIX: Initialize keys as empty array to prevent map error
+      board.keys = [];
+      
+      // Set initial configuration with showExampleMenu = true to test toggle
+      board.uiSettings = {
+        showFullScreen: false,
+        showExampleMenu: true, // Start with example menu enabled
+        showShareOption: false,
+        showSettingsOption: true,
+        isPreviewMode: false,
+        showWelcomeInfo: false,
+        selectedTab: 0
+      };
+      
+      // Set basic configuration
+      board.code = `// Example Menu Test
+console.log('Testing example menu visibility...');
+
+function testExampleMenus() {
+  console.log('Example menus should be visible based on showExampleMenu setting');
+  return 'Test complete';
+}
+
+testExampleMenus();
+`;
+      
+      board.project = {
+        name: 'Example Menu Test',
+        description: 'Testing example menu toggle functionality',
+        version: '1.0.0',
+        author: 'Test User'
+      };
+      
+      board.teams = [];
+      
+      // Update status initially
+      updateStatus();
+      
+      // Set up periodic status updates
+      setInterval(updateStatus, 1000);
+      
+    }).catch(error => {
+      console.error('❌ Failed to initialize web component:', error);
+    });
+    
+    function updateStatus() {
+      if (!board || !board.uiSettings) return;
+      
+      const settings = board.uiSettings;
+      
+      // Update status display
+      document.getElementById('showExampleMenuStatus').textContent = settings.showExampleMenu ? '✅ Enabled' : '❌ Disabled';
+      document.getElementById('showExampleMenuStatus').className = settings.showExampleMenu ? 'success' : 'error';
+      
+      document.getElementById('showBasicExamplesMenuStatus').textContent = settings.showBasicExamplesMenu ? '✅ Enabled' : '❌ Disabled';
+      document.getElementById('showBasicExamplesMenuStatus').className = settings.showBasicExamplesMenu ? 'success' : 'error';
+      
+      document.getElementById('showAIPoweredExamplesMenuStatus').textContent = settings.showAIPoweredExamplesMenu ? '✅ Enabled' : '❌ Disabled';
+      document.getElementById('showAIPoweredExamplesMenuStatus').className = settings.showAIPoweredExamplesMenu ? 'success' : 'error';
+      
+      document.getElementById('showOrchestrationExamplesMenuStatus').textContent = settings.showOrchestrationExamplesMenu ? '✅ Enabled' : '❌ Disabled';
+      document.getElementById('showOrchestrationExamplesMenuStatus').className = settings.showOrchestrationExamplesMenu ? 'success' : 'error';
+      
+      // Update button states
+      document.getElementById('toggleExampleMenu').className = settings.showExampleMenu ? 'active' : '';
+      document.getElementById('toggleBasicMenu').className = settings.showBasicExamplesMenu ? 'active' : '';
+      document.getElementById('toggleAIMenu').className = settings.showAIPoweredExamplesMenu ? 'active' : '';
+      document.getElementById('toggleOrchestrationMenu').className = settings.showOrchestrationExamplesMenu ? 'active' : '';
+    }
+    
+    function toggleExampleMenu() {
+      if (!board) return;
+      
+      const current = board.uiSettings.showExampleMenu;
+      board.uiSettings = {
+        ...board.uiSettings,
+        showExampleMenu: !current
+      };
+      
+      console.log(`🔄 Toggled showExampleMenu: ${current} → ${!current}`);
+      updateStatus();
+    }
+    
+    function toggleBasicMenu() {
+      if (!board) return;
+      
+      const current = board.uiSettings.showBasicExamplesMenu;
+      board.uiSettings = {
+        ...board.uiSettings,
+        showBasicExamplesMenu: !current
+      };
+      
+      console.log(`🔄 Toggled showBasicExamplesMenu: ${current} → ${!current}`);
+      updateStatus();
+    }
+    
+    function toggleAIMenu() {
+      if (!board) return;
+      
+      const current = board.uiSettings.showAIPoweredExamplesMenu;
+      board.uiSettings = {
+        ...board.uiSettings,
+        showAIPoweredExamplesMenu: !current
+      };
+      
+      console.log(`🔄 Toggled showAIPoweredExamplesMenu: ${current} → ${!current}`);
+      updateStatus();
+    }
+    
+    function toggleOrchestrationMenu() {
+      if (!board) return;
+      
+      const current = board.uiSettings.showOrchestrationExamplesMenu;
+      board.uiSettings = {
+        ...board.uiSettings,
+        showOrchestrationExamplesMenu: !current
+      };
+      
+      console.log(`🔄 Toggled showOrchestrationExamplesMenu: ${current} → ${!current}`);
+      updateStatus();
+    }
+    
+    function inspectMenus() {
+      // Try to find the menu elements in the DOM
+      setTimeout(() => {
+        const menuVisibility = document.getElementById('menuVisibility');
+        let html = '<h4>🔍 DOM Inspection:</h4>';
+        
+        // Look for menu-related elements
+        const menuElements = [
+          { name: 'Basic Examples', selector: '[class*="basic"], [class*="Basic"]' },
+          { name: 'AI Powered', selector: '[class*="ai"], [class*="AI"], [class*="powered"]' },
+          { name: 'Orchestration', selector: '[class*="orchestration"], [class*="Orchestration"]' }
+        ];
+        
+        menuElements.forEach(menu => {
+          const elements = document.querySelectorAll(menu.selector);
+          const visible = Array.from(elements).some(el => {
+            const style = window.getComputedStyle(el);
+            return style.display !== 'none' && style.visibility !== 'hidden';
+          });
+          
+          html += `<p><strong>${menu.name}:</strong> `;
+          html += `${elements.length} elements found, `;
+          html += `<span class="${visible ? 'success' : 'error'}">${visible ? '👁️ Visible' : '🙈 Hidden'}</span></p>`;
+        });
+        
+        // Look for the web component root
+        const kaibanRoot = document.querySelector('kaiban-board');
+        if (kaibanRoot) {
+          html += `<p><strong>Web Component:</strong> <span class="success">✅ Found</span></p>`;
+          
+          // Try to access shadow DOM or internal structure
+          const shadowRoot = kaibanRoot.shadowRoot;
+          if (shadowRoot) {
+            html += `<p><strong>Shadow DOM:</strong> <span class="info">📦 Present</span></p>`;
+          } else {
+            html += `<p><strong>Shadow DOM:</strong> <span class="info">❌ Not found (light DOM mode)</span></p>`;
+          }
+        }
+        
+        menuVisibility.innerHTML = html;
+      }, 500);
+    }
+    
+    console.log('🚀 Example Menu Test page initialized');
+  </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔧 Agent Error Fix Verification</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .status {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+    .info { color: #17a2b8; }
+    
+    kaiban-board {
+      display: block;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .log {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .log pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Agent Error Fix Verification</h1>
+    
+    <div class="status" id="statusPanel">
+      <h3>📊 Test Results</h3>
+      <p><strong>Original Error:</strong> <span id="originalErrorStatus">Testing...</span></p>
+      <p><strong>Bundle Contains KaibanJS:</strong> <span id="bundleStatus">Testing...</span></p>
+      <p><strong>Basic Example Loading:</strong> <span id="exampleStatus">Testing...</span></p>
+    </div>
+    
+    <!-- KaibanBoard Web Component -->
+    <kaiban-board id="testBoard"></kaiban-board>
+    
+    <div class="log">
+      <h3>📋 Test Log</h3>
+      <pre id="testLog">Starting Agent Error Fix verification...</pre>
+    </div>
+  </div>
+
+  <!-- Include React CDN for external dependencies -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Include the web component with bundled KaibanJS -->
+  <script src="../dist/kaiban-board-element.js"></script>
+  <link rel="stylesheet" href="../dist/kaiban-board-element.css">
+  
+  <script>
+    let board;
+    let testLog = [];
+    let originalErrorDetected = false;
+    
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+      testLog.unshift(entry);
+      if (testLog.length > 30) {
+        testLog.pop();
+      }
+      document.getElementById('testLog').textContent = testLog.join('\\n');
+      console.log(entry);
+    }
+    
+    function updateStatus(statusId, text, className) {
+      const element = document.getElementById(statusId);
+      if (element) {
+        element.textContent = text;
+        element.className = className;
+      }
+    }
+    
+    // Capture specific Agent error
+    const originalConsoleError = console.error;
+    console.error = function(...args) {
+      const message = args.join(' ');
+      if (message.includes("Cannot read properties of undefined (reading 'Agent')")) {
+        originalErrorDetected = true;
+        log('🚨 ORIGINAL ERROR DETECTED: ' + message, 'error');
+        updateStatus('originalErrorStatus', '❌ Error Still Present', 'error');
+      } else if (message.includes('Agent') || message.includes('Task') || message.includes('Team')) {
+        log('⚠️ KaibanJS related error: ' + message, 'warning');
+      } else {
+        log('Error: ' + message, 'error');
+      }
+      originalConsoleError.apply(console, args);
+    };
+    
+    // Wait for the component to be defined
+    customElements.whenDefined('kaiban-board').then(() => {
+      log('✅ KaibanBoard web component loaded');
+      
+      // Get reference to the board
+      board = document.getElementById('testBoard');
+      
+      // Configure the board
+      board.isWebComponent = true;
+      board.keys = []; // Initialize keys array to prevent keys error
+      
+      // Set basic configuration  
+      board.uiSettings = {
+        showFullScreen: false,
+        showExampleMenu: true,
+        showShareOption: false,
+        showSettingsOption: true,
+        isPreviewMode: true,
+        showWelcomeInfo: false,
+        selectedTab: 0
+      };
+      
+      // Set code that would normally trigger the Agent error
+      board.code = \`// Agent Error Test Code
+import { Agent, Task, Team } from 'kaibanjs';
+
+// This code should work now with bundled KaibanJS
+const testAgent = new Agent({
+  name: 'Test Agent',
+  role: 'Error Tester',
+  goal: 'Verify that Agent error is fixed',
+  backstory: 'An agent created to test the fix'
+});
+
+console.log('Agent created successfully:', testAgent.name);
+\`;
+      
+      board.project = {
+        name: 'Agent Error Fix Test',
+        description: 'Testing if the Agent error is fixed',
+        version: '1.0.0',
+        author: 'Test User'
+      };
+      
+      board.teams = [];
+      
+      log('🎯 Web Component configured');
+      
+      // Test bundle content
+      const bundleScript = document.querySelector('script[src*="kaiban-board-element.js"]');
+      if (bundleScript) {
+        log('📦 Bundle script found');
+        updateStatus('bundleStatus', '✅ Bundle Loaded', 'success');
+      } else {
+        log('❌ Bundle script not found');
+        updateStatus('bundleStatus', '❌ Bundle Missing', 'error');
+      }
+      
+      // Wait a bit and check for the original error
+      setTimeout(() => {
+        if (!originalErrorDetected) {
+          log('✅ SUCCESS: Original Agent error is FIXED!', 'success');
+          updateStatus('originalErrorStatus', '✅ Error Fixed', 'success');
+        }
+        
+        // Test example loading
+        log('🧪 Testing basic example loading...', 'test');
+        updateStatus('exampleStatus', '🔄 Testing...', 'info');
+        
+        // This should not produce the original error anymore
+        setTimeout(() => {
+          if (!originalErrorDetected) {
+            log('✅ Example loading works without Agent error!', 'success');
+            updateStatus('exampleStatus', '✅ Working', 'success');
+          } else {
+            log('❌ Example loading still produces Agent error', 'error');
+            updateStatus('exampleStatus', '❌ Still Failing', 'error');
+          }
+        }, 2000);
+        
+      }, 3000);
+      
+    }).catch(error => {
+      log(\`❌ Failed to initialize web component: \${error.message}\`, 'error');
+    });
+    
+    log('🚀 Agent Error Fix test initialized');
+  </script>
+</body>
+</html>

@@ -73,6 +73,251 @@
       max-height: 200px;
       overflow-y: auto;
     }
+    
+    /* Configuration Panel Styles */
+    .config-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 400px;
+      max-height: 80vh;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #007bff;
+      color: white;
+    }
+    
+    .config-header h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .close-btn:hover {
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+    }
+    
+    .config-tabs {
+      display: flex;
+      background: #f8f9fa;
+      overflow-x: auto;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 12px;
+      color: #666;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .tab-btn:hover {
+      background: #e9ecef;
+      color: #007bff;
+    }
+    
+    .tab-btn.active {
+      color: #007bff;
+      border-bottom-color: #007bff;
+      background: white;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 20px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .tab-content h4 {
+      margin: 0 0 15px 0;
+      color: #333;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    
+    .form-group input[type="text"]:focus,
+    .form-group input[type="password"]:focus,
+    .form-group textarea:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+    }
+    
+    .form-group input[type="checkbox"] {
+      margin-right: 8px;
+    }
+    
+    .form-group input[type="range"] {
+      width: 100%;
+      margin: 5px 0;
+    }
+    
+    .key-input-group {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .key-input-group input {
+      flex: 1;
+    }
+    
+    .key-input-group button {
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .key-input-group button:hover {
+      background: #e9ecef;
+    }
+    
+    .preset-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    
+    .preset-buttons button,
+    .event-buttons button {
+      padding: 6px 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+    }
+    
+    .preset-buttons button:hover,
+    .event-buttons button:hover {
+      background: #0056b3;
+    }
+    
+    .event-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .validation-message {
+      margin-top: 5px;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 3px;
+    }
+    
+    .validation-message.error {
+      background: #fee;
+      color: #d63384;
+      border: 1px solid #f5c2c7;
+    }
+    
+    .validation-message.success {
+      background: #d1edff;
+      color: #0f5132;
+      border: 1px solid #b3d7ff;
+    }
+    
+    .json-preview {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 12px;
+      font-size: 11px;
+      line-height: 1.4;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    
+    @media (max-width: 768px) {
+      .config-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: auto;
+        max-height: none;
+        border-radius: 0;
+      }
+      
+      .config-tabs {
+        flex-wrap: wrap;
+      }
+      
+      .tab-btn {
+        flex: 1;
+        min-width: 80px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -84,6 +329,212 @@
       <button onclick="updateTeam()">Update Team</button>
       <button onclick="updateUISettings()">Toggle Full Screen</button>
       <button onclick="clearEventLog()">Clear Event Log</button>
+      <button onclick="toggleConfigPanel()">Toggle Config Panel</button>
+      <button onclick="exportConfig()">Export Config</button>
+    </div>
+
+    <!-- Configuration Panel -->
+    <div id="configPanel" class="config-panel" style="display: none;">
+      <div class="config-header">
+        <h3>🔧 Web Component Configuration</h3>
+        <button onclick="toggleConfigPanel()" class="close-btn">×</button>
+      </div>
+      
+      <div class="config-tabs">
+        <button class="tab-btn active" onclick="switchTab('ui-settings')">UI Settings</button>
+        <button class="tab-btn" onclick="switchTab('code-editor')">Code Editor</button>
+        <button class="tab-btn" onclick="switchTab('teams-config')">Teams</button>
+        <button class="tab-btn" onclick="switchTab('project-config')">Project</button>
+        <button class="tab-btn" onclick="switchTab('api-keys')">API Keys</button>
+        <button class="tab-btn" onclick="switchTab('events')">Events</button>
+        <button class="tab-btn" onclick="switchTab('json-preview')">JSON Preview</button>
+      </div>
+
+      <!-- UI Settings Tab -->
+      <div id="ui-settings" class="tab-content active">
+        <h4>UI Settings</h4>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showFullScreen" onchange="updateConfig()"> Show Full Screen
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showExampleMenu" onchange="updateConfig()"> Show Example Menu (Master Control)
+          </label>
+        </div>
+        <div class="form-group" style="margin-left: 20px;">
+          <label>
+            <input type="checkbox" id="showBasicExamplesMenu" onchange="updateConfig()"> └─ Show Basic Examples
+          </label>
+        </div>
+        <div class="form-group" style="margin-left: 20px;">
+          <label>
+            <input type="checkbox" id="showAIPoweredExamplesMenu" onchange="updateConfig()"> └─ Show AI-Powered Examples
+          </label>
+        </div>
+        <div class="form-group" style="margin-left: 20px;">
+          <label>
+            <input type="checkbox" id="showOrchestrationExamplesMenu" onchange="updateConfig()"> └─ Show Orchestration Examples
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showShareOption" onchange="updateConfig()"> Show Share Option
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showSettingsOption" onchange="updateConfig()"> Show Settings Option
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showExampleTeams" onchange="updateConfig()"> Show Example Teams
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="isPreviewMode" onchange="updateConfig()"> Preview Mode
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showSimpleShareOption" onchange="updateConfig()"> Show Simple Share Option
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="showWelcomeInfo" onchange="updateConfig()"> Show Welcome Info
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Selected Tab: <span id="selectedTabValue">0</span></label>
+          <input type="range" id="selectedTab" min="0" max="3" value="0" onchange="updateConfig()">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="maximizeActive" onchange="updateConfig()"> Maximize Active
+          </label>
+        </div>
+      </div>
+
+      <!-- Code Editor Tab -->
+      <div id="code-editor" class="tab-content">
+        <h4>Code Editor</h4>
+        <div class="form-group">
+          <label>Code Content:</label>
+          <textarea id="codeContent" rows="8" onchange="updateConfig()" placeholder="Enter JavaScript code here..."></textarea>
+        </div>
+        <div class="preset-buttons">
+          <button onclick="loadCodePreset('hello')">Hello World</button>
+          <button onclick="loadCodePreset('agents')">AI Agents</button>
+          <button onclick="loadCodePreset('async')">Async Example</button>
+          <button onclick="loadCodePreset('complex')">Complex Example</button>
+        </div>
+      </div>
+
+      <!-- Teams Configuration Tab -->
+      <div id="teams-config" class="tab-content">
+        <h4>Teams Configuration</h4>
+        <div class="form-group">
+          <label>Teams JSON:</label>
+          <textarea id="teamsJson" rows="10" onchange="updateConfig()" placeholder="Enter teams configuration as JSON..."></textarea>
+          <div class="validation-message" id="teamsValidation"></div>
+        </div>
+        <div class="preset-buttons">
+          <button onclick="loadTeamPreset('dev')">Development Team</button>
+          <button onclick="loadTeamPreset('marketing')">Marketing Team</button>
+          <button onclick="loadTeamPreset('research')">Research Team</button>
+          <button onclick="loadTeamPreset('empty')">Empty</button>
+        </div>
+      </div>
+
+      <!-- Project Configuration Tab -->
+      <div id="project-config" class="tab-content">
+        <h4>Project Configuration</h4>
+        <div class="form-group">
+          <label>Project Name:</label>
+          <input type="text" id="projectName" onchange="updateConfig()" placeholder="My Project">
+        </div>
+        <div class="form-group">
+          <label>Project Description:</label>
+          <textarea id="projectDescription" rows="3" onchange="updateConfig()" placeholder="Project description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Version:</label>
+          <input type="text" id="projectVersion" onchange="updateConfig()" placeholder="1.0.0">
+        </div>
+        <div class="form-group">
+          <label>Author:</label>
+          <input type="text" id="projectAuthor" onchange="updateConfig()" placeholder="Your Name">
+        </div>
+      </div>
+
+      <!-- API Keys Tab -->
+      <div id="api-keys" class="tab-content">
+        <h4>API Keys Configuration</h4>
+        <div class="form-group">
+          <label>OpenAI API Key:</label>
+          <div class="key-input-group">
+            <input type="password" id="openaiKey" onchange="updateConfig()" placeholder="sk-...">
+            <button type="button" onclick="toggleKeyVisibility('openaiKey')">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Anthropic API Key:</label>
+          <div class="key-input-group">
+            <input type="password" id="anthropicKey" onchange="updateConfig()" placeholder="claude-...">
+            <button type="button" onclick="toggleKeyVisibility('anthropicKey')">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Google API Key:</label>
+          <div class="key-input-group">
+            <input type="password" id="googleKey" onchange="updateConfig()" placeholder="AIza...">
+            <button type="button" onclick="toggleKeyVisibility('googleKey')">👁️</button>
+          </div>
+        </div>
+        <div class="preset-buttons">
+          <button onclick="loadDemoKeys()">Load Demo Keys</button>
+          <button onclick="clearAllKeys()">Clear All Keys</button>
+        </div>
+      </div>
+
+      <!-- Events Tab -->
+      <div id="events" class="tab-content">
+        <h4>Event Testing</h4>
+        <div class="form-group">
+          <label>Trigger Events:</label>
+          <div class="event-buttons">
+            <button onclick="triggerEvent('team-data-update')">Team Data Update</button>
+            <button onclick="triggerEvent('task-status-update')">Task Status Update</button>
+            <button onclick="triggerEvent('workflow-log-add')">Workflow Log Add</button>
+            <button onclick="triggerEvent('workflow-status-update')">Workflow Status Update</button>
+            <button onclick="triggerEvent('agent-status-update')">Agent Status Update</button>
+            <button onclick="triggerEvent('batch-update')">Batch Update</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Custom Event Data:</label>
+          <textarea id="customEventData" rows="4" placeholder='{"key": "value"}'></textarea>
+          <button onclick="triggerCustomEvent()">Trigger Custom Event</button>
+        </div>
+      </div>
+
+      <!-- JSON Preview Tab -->
+      <div id="json-preview" class="tab-content">
+        <h4>Current Configuration</h4>
+        <div class="form-group">
+          <label>Live Configuration JSON:</label>
+          <pre id="configPreview" class="json-preview"></pre>
+        </div>
+        <div class="form-group">
+          <label>Import Configuration:</label>
+          <textarea id="importConfig" rows="6" placeholder="Paste configuration JSON here..."></textarea>
+          <button onclick="importConfiguration()">Import Config</button>
+        </div>
+      </div>
     </div>
     
     <!-- KaibanBoard Web Component -->
@@ -95,11 +546,20 @@
     </div>
   </div>
 
-  <!-- Include the web component -->
+  <!-- Include external dependencies from CDN -->
+  <!-- React (required) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- KaibanJS Dependencies (required for AI functionality) -->
+  <script src="https://unpkg.com/kaibanjs@latest/dist/kaibanjs.umd.js"></script>
+  <script src="https://unpkg.com/@kaibanjs/tools@latest/dist/tools.umd.js"></script>
+  
+  <!-- KaibanBoard Web Component (now much smaller!) -->
   <script src="../dist/kaiban-board-element.js"></script>
   <link rel="stylesheet" href="../dist/kaiban-board-element.css">
   
-  <script type="module">
+  <script>
     // Wait for the component to be defined
     customElements.whenDefined('kaiban-board').then(() => {
       console.log('KaibanBoard web component is ready!');
@@ -113,10 +573,13 @@
     // Configure the board
     board.isWebComponent = true;
     
+    // CRITICAL FIX: Initialize keys as empty array to prevent map error
+    board.keys = [];
+    
     // Set initial configuration
     board.uiSettings = {
       showFullScreen: false, // Fixed: Don't use fixed positioning for web components
-      showExampleMenu: true,
+      showExampleMenu: true, // Enable example menu to demonstrate functionality
       showShareOption: false,
       showSettingsOption: true,
       isPreviewMode: false,
@@ -292,6 +755,584 @@ console.log('Processed:', processData(testData));`;
     logEvent('component-loaded', { 
       message: 'KaibanBoard Web Component initialized successfully' 
     });
+    
+    // Initialize configuration panel
+    initializeConfigPanel();
+    
+    // Configuration Panel Functions
+    window.toggleConfigPanel = function() {
+      const panel = document.getElementById('configPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    };
+    
+    window.switchTab = function(tabId) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab content
+      document.getElementById(tabId).classList.add('active');
+      
+      // Add active class to clicked button
+      event.target.classList.add('active');
+      
+      // Update JSON preview if on that tab
+      if (tabId === 'json-preview') {
+        updateJsonPreview();
+      }
+    };
+    
+    function initializeConfigPanel() {
+      // Initialize all form controls with current board values
+      populateConfigFromBoard();
+      updateJsonPreview();
+    }
+    
+    function populateConfigFromBoard() {
+      const currentSettings = board.uiSettings || {};
+      
+      // UI Settings
+      document.getElementById('showFullScreen').checked = currentSettings.showFullScreen || false;
+      document.getElementById('showExampleMenu').checked = currentSettings.showExampleMenu || false;
+      document.getElementById('showBasicExamplesMenu').checked = currentSettings.showBasicExamplesMenu || false;
+      document.getElementById('showAIPoweredExamplesMenu').checked = currentSettings.showAIPoweredExamplesMenu || false;
+      document.getElementById('showOrchestrationExamplesMenu').checked = currentSettings.showOrchestrationExamplesMenu || false;
+      document.getElementById('showShareOption').checked = currentSettings.showShareOption || false;
+      document.getElementById('showSettingsOption').checked = currentSettings.showSettingsOption || false;
+      document.getElementById('showExampleTeams').checked = currentSettings.showExampleTeams || false;
+      document.getElementById('isPreviewMode').checked = currentSettings.isPreviewMode || false;
+      document.getElementById('showSimpleShareOption').checked = currentSettings.showSimpleShareOption || false;
+      document.getElementById('showWelcomeInfo').checked = currentSettings.showWelcomeInfo || false;
+      document.getElementById('selectedTab').value = currentSettings.selectedTab || 0;
+      document.getElementById('selectedTabValue').textContent = currentSettings.selectedTab || 0;
+      document.getElementById('maximizeActive').checked = currentSettings.maximizeConfig?.isActive || false;
+      
+      // Code
+      document.getElementById('codeContent').value = board.code || '';
+      
+      // Teams
+      document.getElementById('teamsJson').value = JSON.stringify(board.teams || [], null, 2);
+      
+      // Project
+      const project = board.project || {};
+      document.getElementById('projectName').value = project.name || '';
+      document.getElementById('projectDescription').value = project.description || '';
+      document.getElementById('projectVersion').value = project.version || '';
+      document.getElementById('projectAuthor').value = project.author || '';
+      
+      // API Keys
+      const keys = board.keys || {};
+      document.getElementById('openaiKey').value = keys.openai || '';
+      document.getElementById('anthropicKey').value = keys.anthropic || '';
+      document.getElementById('googleKey').value = keys.google || '';
+    }
+    
+    window.updateConfig = function() {
+      try {
+        // Update UI Settings
+        const uiSettings = {
+          showFullScreen: document.getElementById('showFullScreen').checked,
+          showExampleMenu: document.getElementById('showExampleMenu').checked,
+          showBasicExamplesMenu: document.getElementById('showBasicExamplesMenu').checked,
+          showAIPoweredExamplesMenu: document.getElementById('showAIPoweredExamplesMenu').checked,
+          showOrchestrationExamplesMenu: document.getElementById('showOrchestrationExamplesMenu').checked,
+          showShareOption: document.getElementById('showShareOption').checked,
+          showSettingsOption: document.getElementById('showSettingsOption').checked,
+          showExampleTeams: document.getElementById('showExampleTeams').checked,
+          isPreviewMode: document.getElementById('isPreviewMode').checked,
+          showSimpleShareOption: document.getElementById('showSimpleShareOption').checked,
+          showWelcomeInfo: document.getElementById('showWelcomeInfo').checked,
+          selectedTab: parseInt(document.getElementById('selectedTab').value),
+          maximizeConfig: {
+            isActive: document.getElementById('maximizeActive').checked,
+            scrollPosition: 0
+          }
+        };
+        
+        // Update slider display
+        document.getElementById('selectedTabValue').textContent = uiSettings.selectedTab;
+        
+        board.uiSettings = uiSettings;
+        
+        // Update Code
+        board.code = document.getElementById('codeContent').value;
+        
+        // Update Teams (with validation)
+        const teamsJsonText = document.getElementById('teamsJson').value.trim();
+        if (teamsJsonText) {
+          try {
+            const teamsData = JSON.parse(teamsJsonText);
+            board.teams = teamsData;
+            showValidation('teamsValidation', 'Valid JSON', 'success');
+          } catch (e) {
+            showValidation('teamsValidation', 'Invalid JSON: ' + e.message, 'error');
+          }
+        } else {
+          board.teams = [];
+          showValidation('teamsValidation', '', '');
+        }
+        
+        // Update Project
+        board.project = {
+          name: document.getElementById('projectName').value,
+          description: document.getElementById('projectDescription').value,
+          version: document.getElementById('projectVersion').value,
+          author: document.getElementById('projectAuthor').value
+        };
+        
+        // Update API Keys
+        board.keys = {
+          openai: document.getElementById('openaiKey').value,
+          anthropic: document.getElementById('anthropicKey').value,
+          google: document.getElementById('googleKey').value
+        };
+        
+        // Update JSON preview
+        updateJsonPreview();
+        
+        // Log the update
+        logEvent('config-updated', {
+          timestamp: Date.now(),
+          showFullScreen: uiSettings.showFullScreen,
+          hasFixedClass: document.getElementById('kaibanjs')?.classList.contains('kb-fixed')
+        });
+        
+      } catch (error) {
+        console.error('Config update error:', error);
+        logEvent('config-error', { error: error.message });
+      }
+    };
+    
+    function showValidation(elementId, message, type) {
+      const element = document.getElementById(elementId);
+      element.textContent = message;
+      element.className = 'validation-message' + (type ? ' ' + type : '');
+    }
+    
+    function updateJsonPreview() {
+      const config = {
+        uiSettings: board.uiSettings,
+        code: board.code,
+        teams: board.teams,
+        project: board.project,
+        keys: board.keys,
+        isWebComponent: board.isWebComponent,
+        externalDataStore: board.externalDataStore
+      };
+      
+      document.getElementById('configPreview').textContent = JSON.stringify(config, null, 2);
+    }
+    
+    // Slider update for selectedTab
+    document.getElementById('selectedTab').addEventListener('input', function() {
+      document.getElementById('selectedTabValue').textContent = this.value;
+      updateConfig();
+    });
+    
+    // Code Presets
+    window.loadCodePreset = function(preset) {
+      const presets = {
+        hello: `// Hello World Example
+console.log('Hello, KaibanBoard!');
+
+function greetUser(name) {
+  return \`Welcome to KaibanBoard, \${name}!\`;
+}
+
+const user = 'Developer';
+console.log(greetUser(user));`,
+        
+        agents: `// AI Agents Example
+import { Agent, Task, Team } from 'kaibanjs';
+
+// Create AI agents
+const researcher = new Agent({
+  name: 'Research Agent',
+  role: 'Researcher',
+  goal: 'Gather and analyze information'
+});
+
+const writer = new Agent({
+  name: 'Content Writer',
+  role: 'Writer', 
+  goal: 'Create engaging content'
+});
+
+// Define tasks
+const researchTask = new Task({
+  description: 'Research the latest AI trends',
+  agent: researcher
+});
+
+const writeTask = new Task({
+  description: 'Write an article based on research',
+  agent: writer,
+  dependencies: [researchTask]
+});
+
+// Create team
+const team = new Team({
+  name: 'Content Creation Team',
+  agents: [researcher, writer],
+  tasks: [researchTask, writeTask]
+});
+
+console.log('Team created:', team);`,
+        
+        async: `// Async Operations Example
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    return null;
+  }
+}
+
+async function processData() {
+  console.log('Starting data processing...');
+  
+  const data = await fetchData('/api/data');
+  if (data) {
+    console.log('Data received:', data);
+    
+    // Process the data
+    const processed = data.map(item => ({
+      ...item,
+      processed: true,
+      timestamp: Date.now()
+    }));
+    
+    console.log('Processing complete:', processed);
+    return processed;
+  }
+}
+
+// Execute
+processData().then(result => {
+  console.log('Final result:', result);
+});`,
+        
+        complex: `// Complex AI Workflow Example
+import { Agent, Task, Team, Workflow } from 'kaibanjs';
+
+class AIWorkflowManager {
+  constructor() {
+    this.agents = new Map();
+    this.workflows = new Map();
+    this.results = new Map();
+  }
+  
+  createAgent(config) {
+    const agent = new Agent({
+      name: config.name,
+      role: config.role,
+      goal: config.goal,
+      backstory: config.backstory || '',
+      tools: config.tools || [],
+      llm: config.llm || 'gpt-4'
+    });
+    
+    this.agents.set(config.name, agent);
+    return agent;
+  }
+  
+  async executeWorkflow(workflowName, inputs = {}) {
+    const workflow = this.workflows.get(workflowName);
+    if (!workflow) {
+      throw new Error(\`Workflow '\${workflowName}' not found\`);
+    }
+    
+    console.log(\`🚀 Starting workflow: \${workflowName}\`);
+    
+    try {
+      const result = await workflow.execute(inputs);
+      this.results.set(workflowName, result);
+      
+      console.log(\`✅ Workflow completed: \${workflowName}\`);
+      return result;
+    } catch (error) {
+      console.error(\`❌ Workflow failed: \${workflowName}\`, error);
+      throw error;
+    }
+  }
+  
+  getResults(workflowName) {
+    return this.results.get(workflowName);
+  }
+}
+
+// Initialize manager
+const manager = new AIWorkflowManager();
+
+// Create specialized agents
+manager.createAgent({
+  name: 'DataAnalyst',
+  role: 'Senior Data Analyst',
+  goal: 'Analyze complex datasets and extract insights',
+  backstory: 'Expert in statistical analysis and machine learning'
+});
+
+manager.createAgent({
+  name: 'ReportWriter', 
+  role: 'Technical Writer',
+  goal: 'Create comprehensive reports and documentation',
+  backstory: 'Specialized in translating technical analysis into clear reports'
+});
+
+console.log('AI Workflow Manager initialized');
+console.log('Available agents:', Array.from(manager.agents.keys()));`
+      };
+      
+      document.getElementById('codeContent').value = presets[preset] || '';
+      updateConfig();
+      logEvent('code-preset-loaded', { preset });
+    };
+    
+    // Team Presets
+    window.loadTeamPreset = function(preset) {
+      const presets = {
+        dev: [
+          {
+            id: 'dev-team-1',
+            name: 'Full-Stack Development Team',
+            agents: [
+              {
+                id: 'frontend-dev',
+                name: 'Frontend Developer',
+                role: 'UI/UX Developer',
+                status: 'active',
+                skills: ['React', 'JavaScript', 'CSS', 'Figma']
+              },
+              {
+                id: 'backend-dev', 
+                name: 'Backend Developer',
+                role: 'API Developer',
+                status: 'active',
+                skills: ['Node.js', 'Python', 'PostgreSQL', 'Docker']
+              },
+              {
+                id: 'devops-eng',
+                name: 'DevOps Engineer',
+                role: 'Infrastructure',
+                status: 'active',
+                skills: ['AWS', 'Kubernetes', 'CI/CD', 'Terraform']
+              }
+            ]
+          }
+        ],
+        
+        marketing: [
+          {
+            id: 'marketing-team-1',
+            name: 'Digital Marketing Team',
+            agents: [
+              {
+                id: 'content-manager',
+                name: 'Content Marketing Manager',
+                role: 'Content Strategy',
+                status: 'active',
+                skills: ['SEO', 'Content Creation', 'Analytics', 'Social Media']
+              },
+              {
+                id: 'seo-specialist',
+                name: 'SEO Specialist', 
+                role: 'Search Optimization',
+                status: 'active',
+                skills: ['Technical SEO', 'Keyword Research', 'Link Building']
+              },
+              {
+                id: 'designer',
+                name: 'Graphic Designer',
+                role: 'Visual Design',
+                status: 'active',
+                skills: ['Adobe Creative Suite', 'Branding', 'Web Design']
+              }
+            ]
+          }
+        ],
+        
+        research: [
+          {
+            id: 'research-team-1',
+            name: 'AI Research Team',
+            agents: [
+              {
+                id: 'lead-researcher',
+                name: 'Lead AI Researcher',
+                role: 'Research Director',
+                status: 'active',
+                skills: ['Machine Learning', 'Deep Learning', 'Research Methodology']
+              },
+              {
+                id: 'data-scientist',
+                name: 'Data Scientist',
+                role: 'Data Analysis',
+                status: 'active',
+                skills: ['Python', 'Statistics', 'Data Visualization', 'SQL']
+              },
+              {
+                id: 'ml-engineer',
+                name: 'ML Engineer',
+                role: 'Model Implementation',
+                status: 'active',
+                skills: ['TensorFlow', 'PyTorch', 'MLOps', 'Cloud Platforms']
+              }
+            ]
+          }
+        ],
+        
+        empty: []
+      };
+      
+      const teamData = presets[preset] || [];
+      document.getElementById('teamsJson').value = JSON.stringify(teamData, null, 2);
+      updateConfig();
+      logEvent('team-preset-loaded', { preset, teamCount: teamData.length });
+    };
+    
+    // API Keys Functions
+    window.toggleKeyVisibility = function(keyInputId) {
+      const input = document.getElementById(keyInputId);
+      const button = input.nextElementSibling;
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+      }
+    };
+    
+    window.loadDemoKeys = function() {
+      document.getElementById('openaiKey').value = 'sk-demo-key-for-testing-only';
+      document.getElementById('anthropicKey').value = 'claude-demo-key-for-testing-only';
+      document.getElementById('googleKey').value = 'AIza-demo-key-for-testing-only';
+      updateConfig();
+      logEvent('demo-keys-loaded', { message: 'Demo API keys loaded' });
+    };
+    
+    window.clearAllKeys = function() {
+      document.getElementById('openaiKey').value = '';
+      document.getElementById('anthropicKey').value = '';
+      document.getElementById('googleKey').value = '';
+      updateConfig();
+      logEvent('keys-cleared', { message: 'All API keys cleared' });
+    };
+    
+    // Event Testing Functions
+    window.triggerEvent = function(eventType) {
+      const sampleData = {
+        'team-data-update': { teamId: 'demo-team', status: 'updated', timestamp: Date.now() },
+        'task-status-update': { taskId: 'demo-task', status: 'completed', progress: 100 },
+        'workflow-log-add': { message: 'Demo workflow step completed', level: 'info' },
+        'workflow-status-update': { workflowId: 'demo-workflow', status: 'running', progress: 75 },
+        'agent-status-update': { agentId: 'demo-agent', status: 'active', currentTask: 'processing' },
+        'batch-update': { batchId: 'demo-batch', itemsProcessed: 50, totalItems: 100 }
+      };
+      
+      const eventData = sampleData[eventType] || { message: 'Test event triggered' };
+      const customEvent = new CustomEvent(eventType, { 
+        detail: { externalData: eventData },
+        bubbles: true,
+        composed: true
+      });
+      
+      board.dispatchEvent(customEvent);
+      logEvent('external-event-triggered', { eventType, data: eventData });
+    };
+    
+    window.triggerCustomEvent = function() {
+      try {
+        const customData = JSON.parse(document.getElementById('customEventData').value || '{}');
+        const customEvent = new CustomEvent('custom-event', {
+          detail: { externalData: customData },
+          bubbles: true,
+          composed: true
+        });
+        
+        board.dispatchEvent(customEvent);
+        logEvent('custom-event-triggered', { data: customData });
+      } catch (error) {
+        logEvent('custom-event-error', { error: error.message });
+      }
+    };
+    
+    // Export/Import Functions
+    window.exportConfig = function() {
+      const config = {
+        uiSettings: board.uiSettings,
+        code: board.code,
+        teams: board.teams,
+        project: board.project,
+        keys: board.keys,
+        isWebComponent: board.isWebComponent,
+        externalDataStore: board.externalDataStore,
+        exportedAt: new Date().toISOString(),
+        version: '1.0.0'
+      };
+      
+      const configJson = JSON.stringify(config, null, 2);
+      const blob = new Blob([configJson], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `kaiban-board-config-${Date.now()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      logEvent('config-exported', { timestamp: Date.now() });
+    };
+    
+    window.importConfiguration = function() {
+      try {
+        const configText = document.getElementById('importConfig').value.trim();
+        if (!configText) {
+          alert('Please paste a configuration JSON first');
+          return;
+        }
+        
+        const config = JSON.parse(configText);
+        
+        // Apply imported configuration
+        if (config.uiSettings) board.uiSettings = config.uiSettings;
+        if (config.code) board.code = config.code;
+        if (config.teams) board.teams = config.teams;
+        if (config.project) board.project = config.project;
+        if (config.keys) board.keys = config.keys;
+        if (config.externalDataStore) board.externalDataStore = config.externalDataStore;
+        
+        // Update form controls
+        populateConfigFromBoard();
+        updateJsonPreview();
+        
+        // Clear import field
+        document.getElementById('importConfig').value = '';
+        
+        logEvent('config-imported', { 
+          importedAt: Date.now(),
+          originalExportTime: config.exportedAt 
+        });
+        
+        alert('Configuration imported successfully!');
+        
+      } catch (error) {
+        logEvent('import-error', { error: error.message });
+        alert('Import failed: ' + error.message);
+      }
+    };
   </script>
 </body>
 </html>

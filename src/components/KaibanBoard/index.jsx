@@ -44,7 +44,24 @@ const filterUndefinedProps = obj => {
 
 const mergeUiSettings = (uiSettings, isWebComponent = false) => {
   const baseSettings = isWebComponent ? defaultWebComponentUiSettings : defaultUiSettings;
-  return { ...baseSettings, ...uiSettings };
+  const merged = { ...baseSettings, ...uiSettings };
+  
+  // Handle showExampleMenu - it should control all example menu visibility
+  if (typeof merged.showExampleMenu !== 'undefined') {
+    // If showExampleMenu is explicitly set, use it to control individual menus
+    // unless they are explicitly set to different values
+    if (typeof merged.showBasicExamplesMenu === 'undefined') {
+      merged.showBasicExamplesMenu = merged.showExampleMenu;
+    }
+    if (typeof merged.showAIPoweredExamplesMenu === 'undefined') {
+      merged.showAIPoweredExamplesMenu = merged.showExampleMenu;
+    }
+    if (typeof merged.showOrchestrationExamplesMenu === 'undefined') {
+      merged.showOrchestrationExamplesMenu = merged.showExampleMenu;
+    }
+  }
+  
+  return merged;
 };
 
 const KaibanBoardWrapper = ({ isWebComponent, externalDataStore }) => {

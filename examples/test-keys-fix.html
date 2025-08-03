@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keys Array Fix Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .controls button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls button:hover {
+      background: #0056b3;
+    }
+    
+    .status {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .status h3 {
+      margin: 0 0 10px 0;
+      color: #007bff;
+    }
+    
+    .status p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+    .info { color: #17a2b8; }
+    
+    kaiban-board {
+      display: block;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .log {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .log pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Keys Array Fix Test</h1>
+    
+    <div class="controls">
+      <h3>Test Controls</h3>
+      <button onclick="testBasicExample()">🧪 Test Basic Example Load</button>
+      <button onclick="testKeysState()">🔍 Check Keys State</button>
+      <button onclick="simulateNoKeys()">❌ Simulate No Keys (Break)</button>
+      <button onclick="fixKeys()">✅ Fix Keys Array</button>
+      <button onclick="clearLog()">🗑️ Clear Log</button>
+    </div>
+    
+    <div class="status" id="statusPanel">
+      <h3>📊 Test Status</h3>
+      <p><strong>Keys State:</strong> <span id="keysStatus">Loading...</span></p>
+      <p><strong>Example Loading:</strong> <span id="exampleStatus">Not tested</span></p>
+      <p><strong>Error Count:</strong> <span id="errorCount">0</span></p>
+    </div>
+    
+    <!-- KaibanBoard Web Component -->
+    <kaiban-board id="testBoard"></kaiban-board>
+    
+    <div class="log">
+      <h3>📋 Test Log</h3>
+      <pre id="testLog">Initializing test...</pre>
+    </div>
+  </div>
+
+  <!-- Include the web component -->
+  <script src="../dist/kaiban-board-element.js"></script>
+  <link rel="stylesheet" href="../dist/kaiban-board-element.css">
+  
+  <script>
+    let board;
+    let errorCount = 0;
+    let testLog = [];
+    
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+      testLog.unshift(entry);
+      if (testLog.length > 50) {
+        testLog.pop();
+      }
+      document.getElementById('testLog').textContent = testLog.join('\n');
+      console.log(entry);
+    }
+    
+    function updateStatus() {
+      try {
+        if (!board) {
+          document.getElementById('keysStatus').textContent = 'Board not ready';
+          document.getElementById('keysStatus').className = 'error';
+          return;
+        }
+        
+        const keysState = board.keys;
+        const isArray = Array.isArray(keysState);
+        const keysLength = isArray ? keysState.length : 'N/A';
+        
+        document.getElementById('keysStatus').textContent = 
+          `${isArray ? '✅ Array' : '❌ Not Array'} (${typeof keysState}) - Length: ${keysLength}`;
+        document.getElementById('keysStatus').className = isArray ? 'success' : 'error';
+        
+        document.getElementById('errorCount').textContent = errorCount;
+        document.getElementById('errorCount').className = errorCount === 0 ? 'success' : 'error';
+        
+      } catch (error) {
+        log(`Status update error: ${error.message}`, 'error');
+      }
+    }
+    
+    // Capture console errors
+    const originalConsoleError = console.error;
+    console.error = function(...args) {
+      errorCount++;
+      const message = args.join(' ');
+      if (message.includes('existingKeys.map')) {
+        log(`🚨 KEYS MAP ERROR DETECTED: ${message}`, 'error');
+        document.getElementById('exampleStatus').textContent = '❌ Keys Error';
+        document.getElementById('exampleStatus').className = 'error';
+      } else {
+        log(`Error: ${message}`, 'error');
+      }
+      updateStatus();
+      originalConsoleError.apply(console, args);
+    };
+    
+    // Wait for the component to be defined
+    customElements.whenDefined('kaiban-board').then(() => {
+      log('✅ KaibanBoard web component is ready');
+      
+      // Get reference to the board
+      board = document.getElementById('testBoard');
+      
+      // Configure the board
+      board.isWebComponent = true;
+      
+      // CRITICAL: Initialize keys as empty array
+      board.keys = [];
+      log('🔧 Initialized keys as empty array');
+      
+      // Set basic configuration
+      board.uiSettings = {
+        showFullScreen: false,
+        showExampleMenu: true, // Enable example menu for testing
+        showShareOption: false,
+        showSettingsOption: true,
+        isPreviewMode: false,
+        showWelcomeInfo: false,
+        selectedTab: 0
+      };
+      
+      board.code = `// Keys Fix Test
+console.log('Testing keys array functionality...');
+
+function testKeys() {
+  return 'Keys test ready';
+}
+
+testKeys();
+`;
+      
+      board.project = {
+        name: 'Keys Fix Test',
+        description: 'Testing keys array initialization',
+        version: '1.0.0',
+        author: 'Test User'
+      };
+      
+      board.teams = [];
+      
+      log('🎯 Component configured successfully');
+      updateStatus();
+      
+      // Set up periodic status updates
+      setInterval(updateStatus, 2000);
+      
+    }).catch(error => {
+      log(`❌ Failed to initialize web component: ${error.message}`, 'error');
+    });
+    
+    function testBasicExample() {
+      log('🧪 Testing basic example load...', 'test');
+      document.getElementById('exampleStatus').textContent = '🔄 Testing...';
+      document.getElementById('exampleStatus').className = 'info';
+      
+      try {
+        // Simulate clicking a basic example (this would normally come from the UI)
+        // We'll simulate the example loading process
+        const mockExampleCode = () => ({
+          code: `// Mock Basic Example
+console.log('This is a basic example');
+
+function basicFunction() {
+  return 'Basic example loaded successfully!';
+}
+
+basicFunction();`,
+          keys: [
+            { key: 'OPENAI_API_KEY', value: '' },
+            { key: 'TEST_KEY', value: 'test-value' }
+          ],
+          user: 'test-user'
+        });
+        
+        // This should trigger the setExampleCodeAction
+        // We'll simulate this by directly testing the logic
+        log('📝 Simulating example code load...', 'test');
+        
+        // Check if keys is array before testing
+        if (!Array.isArray(board.keys)) {
+          throw new Error('Keys is not an array - this should cause the original error');
+        }
+        
+        log('✅ Keys is properly an array, test should succeed', 'success');
+        document.getElementById('exampleStatus').textContent = '✅ Keys Array OK';
+        document.getElementById('exampleStatus').className = 'success';
+        
+        // Try to simulate the map operation that was failing
+        const existingKeysMap = new Map(board.keys.map(k => [k.key, k.value]));
+        log(`📊 Successfully created Map from ${board.keys.length} keys`, 'success');
+        
+      } catch (error) {
+        log(`❌ Basic example test failed: ${error.message}`, 'error');
+        document.getElementById('exampleStatus').textContent = '❌ Test Failed';
+        document.getElementById('exampleStatus').className = 'error';
+        errorCount++;
+      }
+      
+      updateStatus();
+    }
+    
+    function testKeysState() {
+      log('🔍 Checking keys state...', 'test');
+      
+      try {
+        const keys = board.keys;
+        log(`Keys type: ${typeof keys}`, 'info');
+        log(`Keys is array: ${Array.isArray(keys)}`, 'info');
+        log(`Keys length: ${keys ? keys.length : 'N/A'}`, 'info');
+        log(`Keys content: ${JSON.stringify(keys)}`, 'info');
+        
+        if (Array.isArray(keys)) {
+          log('✅ Keys state is correct', 'success');
+        } else {
+          log('❌ Keys state is incorrect', 'error');
+        }
+        
+      } catch (error) {
+        log(`❌ Error checking keys state: ${error.message}`, 'error');
+        errorCount++;
+      }
+      
+      updateStatus();
+    }
+    
+    function simulateNoKeys() {
+      log('❌ Simulating broken keys state...', 'test');
+      
+      try {
+        // This simulates the original bug condition
+        board.keys = null; // This would cause the original error
+        log('🚨 Set keys to null - this should break example loading', 'warning');
+        
+      } catch (error) {
+        log(`Error simulating broken state: ${error.message}`, 'error');
+      }
+      
+      updateStatus();
+    }
+    
+    function fixKeys() {
+      log('✅ Fixing keys array...', 'test');
+      
+      try {
+        board.keys = [];
+        log('🔧 Reset keys to empty array', 'success');
+        
+      } catch (error) {
+        log(`Error fixing keys: ${error.message}`, 'error');
+      }
+      
+      updateStatus();
+    }
+    
+    function clearLog() {
+      testLog = [];
+      errorCount = 0;
+      document.getElementById('testLog').textContent = 'Log cleared.';
+      document.getElementById('exampleStatus').textContent = 'Not tested';
+      document.getElementById('exampleStatus').className = 'info';
+      updateStatus();
+      log('🗑️ Test log cleared', 'info');
+    }
+    
+    log('🚀 Keys Fix Test page initialized');
+  </script>
+</body>
+</html>
