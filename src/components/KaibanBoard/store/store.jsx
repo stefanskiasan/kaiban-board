@@ -30,6 +30,8 @@ import {
 import { TavilySearchResults } from '@langchain/community/tools/tavily_search';
 import { SearchApi } from '@langchain/community/tools/searchapi';
 import { DallEAPIWrapper } from '@langchain/openai';
+import { StructuredTool } from '@langchain/core/tools';
+import { z } from 'zod';
 // TODO: Remove this import and delete the tools folder
 import { SerperTool } from '../tools';
 
@@ -122,6 +124,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   'TextFileSearch',
                   'ZapierWebhook',
                   'MakeWebhook',
+                  'StructuredTool',
+                  'z',
                 ];
 
                 // Check if allowed modules are imported
@@ -202,6 +206,8 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   'TextFileSearch',
                   'ZapierWebhook',
                   'MakeWebhook',
+                  'StructuredTool',
+                  'z',
                   valueToEvaluate
                 );
                 const team = func(
@@ -223,7 +229,9 @@ const createAgentsPlaygroundStore = (initialState = {}) => {
                   PdfSearch,
                   TextFileSearch,
                   ZapierWebhook,
-                  MakeWebhook
+                  MakeWebhook,
+                  StructuredTool,
+                  z
                 );
 
                 return team;
