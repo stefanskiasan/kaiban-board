@@ -23,7 +23,7 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
-    "kaibanjs": "^0.19.0",
+    "kaibanjs": "^0.22.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
